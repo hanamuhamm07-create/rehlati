@@ -1,0 +1,1981 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-accent="violet" data-size="m">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#08060F">
+<meta name="color-scheme" content="dark">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="رحلتي">
+<title>رحلتي الدراسية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Readex+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#08060F;--s1:#110D1C;--s2:#191328;--s3:#231A38;--line:#2C2345;
+  --v:#8B5CF6;--v2:#A78BFA;--v3:#CDBFFC;--vd:#5B33C9;--vg:rgba(139,92,246,.16);
+  --tx:#F5F2FB;--mut:#B1A9C6;--dim:#8F86A8;
+  --ok:#6FD3B0;--warm:#F0B866;--bad:#F58A9A;
+  --r1:26px;--r2:18px;--r3:12px;
+  --ui:'Readex Pro','SF Arabic','Geeza Pro','Segoe UI',system-ui,sans-serif;
+  --serif:'Amiri','Geeza Pro','Noto Naskh Arabic',serif;
+  --hh:64px;--vvh:100dvh;
+}
+[data-accent=indigo]{--v:#6D7CFF;--v2:#9AA5FF;--v3:#C9CEFF;--vd:#3F4CC9;--vg:rgba(109,124,255,.16)}
+[data-accent=orchid]{--v:#B565F0;--v2:#CD94F6;--v3:#E5C8FB;--vd:#8A32C9;--vg:rgba(181,101,240,.16)}
+[data-accent=lilac]{--v:#9F8BE8;--v2:#BBAEF0;--v3:#DDD6F8;--vd:#6C58BF;--vg:rgba(159,139,232,.16)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:17px;-webkit-text-size-adjust:100%}
+html[data-size=s]{font-size:16px}html[data-size=l]{font-size:19.5px}
+body{background:var(--bg);color:var(--tx);font-family:var(--ui);line-height:1.7;direction:rtl;min-height:100dvh;overflow-x:hidden;-webkit-tap-highlight-color:transparent;
+  background-image:radial-gradient(900px 420px at 90% -90px,var(--vg),transparent 70%);background-repeat:no-repeat}
+body.noscroll{overflow:hidden}
+[hidden]{display:none!important}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:0;text-align:inherit}
+svg.i{width:1.4em;height:1.4em;flex:none;display:block}
+:focus-visible{outline:2px solid var(--v2);outline-offset:2px;border-radius:8px}
+.num{direction:ltr;unicode-bidi:isolate;display:inline-block;font-variant-numeric:tabular-nums}
+.sp{flex:1}
+.mut{color:var(--mut)}.dim{color:var(--dim)}.sm{font-size:.86rem}.xs{font-size:.78rem}
+.serif{font-family:var(--serif)}
+
+/* header */
+.hdr{position:sticky;top:0;z-index:30;background:rgba(8,6,15,.82);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top)}
+.hdr-in{height:var(--hh);display:flex;align-items:center;gap:6px;padding:0 max(14px,env(safe-area-inset-right)) 0 max(14px,env(safe-area-inset-left));max-width:1120px;margin:0 auto}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-size:1.5rem;font-weight:700;padding:6px 8px;border-radius:14px}
+.brand svg{width:34px;height:34px}
+.icon-btn{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;color:var(--mut);transition:background .2s,color .2s;flex:none}
+.icon-btn:hover,.icon-btn[aria-expanded=true]{background:var(--s3);color:var(--tx)}
+.icon-btn.sm{width:42px;height:42px}
+.pill{display:flex;align-items:center;gap:9px;padding:0 16px;height:44px;border-radius:99px;background:var(--s3);border:1px solid var(--line);font-weight:500}
+.pill .dot{width:9px;height:9px;border-radius:50%;background:var(--ok)}
+.pill.run .dot{animation:pulse 1.6s infinite}
+.pill.pause .dot{background:var(--warm)}
+@keyframes pulse{50%{opacity:.25;transform:scale(.7)}}
+
+/* menu */
+#menu-root .scrim{position:fixed;inset:0;z-index:40;background:rgba(4,2,10,.5)}
+.menu{position:fixed;z-index:41;top:calc(var(--hh) + env(safe-area-inset-top) - 4px);left:max(12px,env(safe-area-inset-left));width:min(340px,calc(100vw - 24px));max-height:calc(100dvh - var(--hh) - 24px - env(safe-area-inset-top));overflow:auto;background:var(--s2);border:1px solid var(--line);border-radius:22px;padding:8px;box-shadow:0 24px 60px rgba(0,0,0,.6);transform-origin:top left;animation:menuIn .18s ease-out}
+@keyframes menuIn{from{opacity:0;transform:scale(.94) translateY(-6px)}}
+.menu button{display:flex;align-items:center;gap:14px;width:100%;min-height:54px;padding:0 14px;border-radius:14px;font-weight:400}
+.menu button svg{color:var(--v2)}
+.menu button:hover{background:var(--s3)}
+.menu button.on{background:var(--vg);color:var(--v3);font-weight:500}
+.menu hr{border:0;border-top:1px solid var(--line);margin:6px 8px}
+
+/* layout */
+.page{max-width:1120px;margin:0 auto;padding:22px max(18px,env(safe-area-inset-right)) calc(110px + env(safe-area-inset-bottom)) max(18px,env(safe-area-inset-left));outline:0}
+h1{font-family:var(--serif);font-size:2.1rem;line-height:1.3;font-weight:700;margin-bottom:6px}
+h2{font-size:1.1rem;font-weight:500}
+h3{font-size:1rem;font-weight:500}
+.sub{color:var(--mut);margin-bottom:18px}
+.ph{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.ph>div:first-child{flex:1;min-width:200px}.ph .sub{margin:0}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(min(100%,118px),1fr))}
+.cols{display:grid;gap:18px;grid-template-columns:1fr}
+@media(min-width:920px){.cols.c2{grid-template-columns:1.12fr .88fr}.cols.c2b{grid-template-columns:.9fr 1.1fr}}
+.card{background:var(--s1);border:1px solid var(--line);border-radius:var(--r1);padding:22px;min-width:0}
+.card>h2{margin-bottom:12px}
+.card.tight{padding:14px}
+.sec{margin-top:26px}
+.sec>h2{margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.rule{border:0;border-top:1px solid var(--line);margin:16px 0}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 24px;border-radius:16px;font-weight:500;background:var(--s3);border:1px solid var(--line);transition:transform .12s,background .2s;white-space:nowrap;text-align:center}
+.btn:active{transform:scale(.97)}
+.btn.primary{background:linear-gradient(180deg,var(--v),var(--vd));border-color:transparent;color:#fff;box-shadow:0 8px 22px -8px var(--v)}
+.btn.soft{background:var(--vg);border-color:transparent;color:var(--v3)}
+.btn.ghost{background:transparent}
+.btn.danger{background:rgba(245,138,154,.14);border-color:transparent;color:var(--bad)}
+.btn.lg{min-height:64px;font-size:1.15rem;padding:0 34px;border-radius:20px}
+.btn.block{width:100%}
+.btn[disabled]{opacity:.5;pointer-events:none}
+.lnk{color:var(--v2);text-decoration:underline;text-underline-offset:4px;padding:6px 2px}
+.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.row.end{justify-content:flex-end}
+
+/* forms */
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;min-width:0}
+.field>label,.lbl{font-size:.9rem;color:var(--mut)}
+input[type=text],input[type=password],input[type=search],input[type=date],input[type=time],input[type=number],input[type=datetime-local],select,textarea{width:100%;min-height:52px;background:var(--s2);border:1px solid var(--line);border-radius:14px;padding:10px 14px;color:var(--tx);appearance:none;-webkit-appearance:none;font-size:1rem}
+input[type=date],input[type=datetime-local],input[type=time]{text-align:right}
+select{background-image:linear-gradient(45deg,transparent 50%,var(--mut) 50%),linear-gradient(135deg,var(--mut) 50%,transparent 50%);background-position:18px 52%,24px 52%;background-size:6px 6px;background-repeat:no-repeat;padding-left:42px}
+textarea{resize:vertical;min-height:84px;line-height:1.7}
+input::placeholder,textarea::placeholder{color:var(--dim)}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--v);outline-offset:0;border-color:transparent}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:520px){.two{grid-template-columns:1fr}}
+.seg{display:flex;background:var(--s2);border:1px solid var(--line);border-radius:16px;padding:4px;gap:4px;flex-wrap:wrap}
+.seg button{flex:1;min-height:44px;padding:0 14px;border-radius:12px;color:var(--mut);text-align:center;white-space:nowrap}
+.seg button.on{background:var(--v);color:#fff;font-weight:500}
+.switch{position:relative;width:56px;height:32px;flex:none;border-radius:99px;background:var(--s3);border:1px solid var(--line);transition:background .2s}
+.switch::after{content:"";position:absolute;top:3px;right:3px;width:24px;height:24px;border-radius:50%;background:var(--mut);transition:transform .2s,background .2s}
+.switch.on{background:var(--v);border-color:transparent}
+.switch.on::after{transform:translateX(-24px);background:#fff}
+.opt{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid var(--line);min-height:60px}
+.opt:last-child{border-bottom:0}
+.opt>div:first-child{flex:1;min-width:0}
+.opt .d{color:var(--dim);font-size:.85rem;line-height:1.5}
+.opt select,.opt input[type=number]{width:auto;min-width:130px}
+.err{color:var(--bad);font-size:.92rem;min-height:1.4em}
+.hint{color:var(--dim);font-size:.85rem}
+.strength{height:6px;border-radius:9px;background:var(--s3);overflow:hidden;margin-top:6px}
+.strength i{display:block;height:100%;width:0;background:var(--bad);transition:width .25s,background .25s}
+
+/* chips */
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{display:inline-flex;align-items:center;gap:8px;min-height:46px;padding:0 16px;border-radius:99px;background:var(--s2);border:1.5px solid var(--line);color:var(--mut)}
+.chip.sel.on{border-color:var(--c,var(--v));color:var(--tx);background:color-mix(in srgb,var(--c,var(--v)) 20%,var(--s2))}
+.mchip{display:inline-flex;align-items:center;gap:5px;font-size:.78rem;padding:1px 10px;border-radius:99px;background:color-mix(in srgb,var(--c,var(--dim)) 18%,transparent);color:var(--tx)}
+.mchip.late{background:rgba(240,184,102,.15);color:var(--warm)}
+.sbadge{width:46px;height:46px;border-radius:15px;display:grid;place-items:center;font-size:1.4rem;background:color-mix(in srgb,var(--c,var(--v)) 24%,var(--s2));flex:none}
+.sbadge.sm{width:38px;height:38px;font-size:1.15rem;border-radius:12px}
+
+/* hero (home) */
+.hero{border-radius:30px;padding:26px;background:linear-gradient(160deg,var(--s3),var(--s1) 70%);border:1px solid var(--line);position:relative;overflow:hidden}
+.hero .dt{font-family:var(--serif);font-size:2.3rem;line-height:1.25;font-weight:700}
+.hero .hj{color:var(--dim);margin-top:2px}
+.quote{font-family:var(--serif);font-size:1.45rem;line-height:1.85;margin:20px 0 6px;color:var(--v3);min-height:3.4em}
+.quote-row{display:flex;gap:6px;align-items:flex-start}
+.quote-row .quote{flex:1}
+.tile{background:var(--s1);border:1px solid var(--line);border-radius:var(--r2);padding:16px 18px}
+.tile b{display:block;font-size:1.45rem;font-weight:500;line-height:1.3;color:var(--tx)}
+.tile span{color:var(--mut);font-size:.88rem}
+.tile.acc{background:var(--vg);border-color:transparent}
+.bar{height:10px;background:var(--s3);border-radius:9px;overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--vd),var(--v2));border-radius:9px;transition:width .5s}
+.empty{padding:26px 16px;text-align:center;color:var(--mut);border:1.5px dashed var(--line);border-radius:var(--r2)}
+.empty b{display:block;color:var(--tx);font-weight:500;margin-bottom:4px}
+.empty .btn{margin-top:12px}
+.empty-s{color:var(--mut);padding:8px 0}
+.banner{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:14px 18px;border-radius:var(--r2);background:rgba(240,184,102,.1);border:1px solid rgba(240,184,102,.25);color:#F6D9A8;margin-bottom:16px}
+.banner .sp{min-width:10px}
+.banner.info{background:var(--vg);border-color:transparent;color:var(--v3)}
+
+/* tasks */
+.trow{display:flex;align-items:center;gap:6px;padding:6px 0;border-bottom:1px solid var(--line)}
+.trow:last-child{border-bottom:0}
+.chk{width:34px;height:34px;border-radius:50%;border:2px solid var(--dim);flex:none;display:grid;place-items:center;color:#fff;margin:0 4px;transition:all .2s;position:relative}
+.chk::before{content:"";position:absolute;inset:-9px}
+.chk.on{background:var(--ok);border-color:var(--ok);color:#06241A}
+.chk svg{width:20px;height:20px;stroke-width:3}
+.tmain{flex:1;min-width:0;display:block;padding:8px 6px;border-radius:12px}
+.ttl{display:block;font-weight:400;overflow-wrap:anywhere}
+.trow.done .ttl{color:var(--dim);text-decoration:line-through}
+.tmeta{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;align-items:center}
+.prio{font-size:.74rem;color:var(--dim);display:inline-flex;align-items:center;gap:5px}
+.prio::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--dim)}
+.prio.p1::before{background:var(--bad)}.prio.p2::before{background:var(--warm)}.prio.p3::before{background:var(--ok)}
+
+/* timer */
+.timer-wrap{display:flex;flex-direction:column;align-items:center;gap:20px}
+.ringbox{position:relative;width:min(78vw,340px);aspect-ratio:1}
+.ring{width:100%;height:100%;overflow:visible}
+.ring-bg{fill:none;stroke:var(--s3);stroke-width:10}
+.ring-fg{fill:none;stroke:var(--v2);stroke-width:10;stroke-linecap:round;transition:stroke-dashoffset .9s linear;filter:drop-shadow(0 0 10px var(--v))}
+.ringbox.idle .ring-fg{opacity:0}
+.ringbox.paused .ring-fg{stroke:var(--warm);filter:none}
+.ringbox.break .ring-fg{stroke:var(--ok);filter:drop-shadow(0 0 8px var(--ok))}
+.ringbox.break::before{content:"";position:absolute;inset:8%;border-radius:50%;background:radial-gradient(circle,rgba(111,211,176,.14),transparent 68%);animation:breathe 6s ease-in-out infinite}
+.ringbox.run::before{content:"";position:absolute;inset:8%;border-radius:50%;background:radial-gradient(circle,var(--vg),transparent 68%);animation:breathe 5s ease-in-out infinite}
+@keyframes breathe{50%{transform:scale(1.12);opacity:.5}}
+.ringc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-align:center;padding:0 16%}
+.ringc .clock{font-size:clamp(2.2rem,11vw,3.3rem);font-weight:300;letter-spacing:.02em;line-height:1.2}
+.ringc .st{color:var(--mut);font-size:.95rem}
+.ringc .sn{font-family:var(--serif);font-size:1.2rem;color:var(--v3);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tbtns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+
+/* lists */
+.srow{display:flex;align-items:center;gap:14px;padding:12px 4px;border-bottom:1px solid var(--line);width:100%}
+.srow:last-child{border-bottom:0}
+.srow .mid{flex:1;min-width:0}
+.srow .t{font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.srow .m{color:var(--dim);font-size:.84rem}
+.srow .dur{font-weight:500;color:var(--v3);white-space:nowrap}
+button.srow{border-radius:12px}button.srow:hover{background:var(--s2)}
+.dayh{display:flex;justify-content:space-between;color:var(--mut);font-size:.9rem;padding:16px 4px 4px;border-bottom:1px solid var(--line)}
+.sbar{display:flex;align-items:center;gap:12px;margin:10px 0}
+.sbar .nm{width:34%;min-width:90px;display:flex;align-items:center;gap:8px;font-size:.92rem;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.sbar .bar{flex:1}.sbar .bar i{background:var(--c)}
+.sbar .vl{width:84px;text-align:left;font-size:.86rem;color:var(--mut)}
+
+/* charts */
+.chart{width:100%;height:auto;display:block;overflow:visible}
+.chart .bgl{stroke:var(--line);stroke-width:1}
+.chart rect.b{fill:var(--v);rx:5;transition:fill .15s;cursor:pointer}
+.chart rect.b.z{fill:var(--s3)}
+.chart rect.b.sel{fill:var(--v3)}
+.chart text{fill:var(--dim);font-size:11px;font-family:var(--ui)}
+.chart text.ax{font-size:10px}
+.readout{min-height:1.8em;color:var(--v3);margin-top:6px;text-align:center}
+.delta{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+
+/* calendar */
+.calhead{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.calhead h2{flex:1;text-align:center;font-family:var(--serif);font-size:1.6rem;font-weight:700}
+.calgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.cwd{text-align:center;color:var(--dim);font-size:.82rem;padding:4px 0}
+.cday{position:relative;aspect-ratio:1/.96;min-height:48px;border-radius:14px;background:var(--s1);border:1.5px solid transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;transition:border-color .15s}
+.cday.l1{background:rgba(139,92,246,.2);background:color-mix(in srgb,var(--v) 20%,var(--s1))}
+.cday.l2{background:rgba(139,92,246,.38);background:color-mix(in srgb,var(--v) 38%,var(--s1))}
+.cday.l3{background:rgba(139,92,246,.56);background:color-mix(in srgb,var(--v) 56%,var(--s1))}
+.cday.l4{background:rgba(139,92,246,.8);background:color-mix(in srgb,var(--v) 80%,var(--s1))}
+.cday.today{border-color:var(--v3)}
+.cday.sel{border-color:var(--tx)}
+.cday.empty-c{background:transparent;pointer-events:none}
+.cday .n{font-size:1rem}
+.cday .ex{position:absolute;top:5px;left:8px;font-style:normal;font-size:.72rem;color:var(--v3);line-height:1}
+.cday .tk{width:6px;height:6px;border-radius:50%;background:var(--warm);position:absolute;bottom:7px}
+.cday .ck{width:6px;height:6px;border-radius:50%;background:var(--ok);position:absolute;bottom:7px;right:calc(50% + 6px)}
+.legend{display:flex;gap:6px;align-items:center;color:var(--dim);font-size:.8rem;margin-top:12px;flex-wrap:wrap}
+.legend i{width:18px;height:18px;border-radius:6px;display:inline-block}
+
+/* tabs */
+.tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:14px;scrollbar-width:none;flex-wrap:wrap}
+.tabs button{min-height:46px;padding:0 18px;border-radius:99px;background:var(--s1);border:1px solid var(--line);color:var(--mut);white-space:nowrap}
+.tabs button.on{background:var(--vg);color:var(--v3);border-color:transparent;font-weight:500}
+
+/* stickers */
+.stk{--sz:72px;width:var(--sz);height:var(--sz);border-radius:28%;display:grid;place-items:center;background:radial-gradient(circle at 30% 22%,var(--v2),var(--vd));box-shadow:0 10px 26px -8px var(--vd);flex:none;overflow:hidden}
+.stk .e{font-size:calc(var(--sz)*.56);line-height:1}
+.stk.img{background:none;box-shadow:none;border-radius:0;overflow:visible}
+.stk img{width:100%;height:100%;object-fit:contain}
+.dayhero{text-align:center;padding:30px 20px}
+.dayhero .stk{margin:0 auto 14px;animation:pop .6s cubic-bezier(.2,1.4,.4,1)}
+@keyframes pop{from{transform:scale(.5) rotate(-12deg);opacity:0}}
+.dua{font-family:var(--serif);font-size:1.7rem;line-height:2;color:var(--v3);text-align:center;padding:10px 6px}
+.big-msg{font-family:var(--serif);font-size:1.5rem;line-height:1.8}
+
+/* celebrate + toast */
+.cele-root{position:fixed;inset:auto 0 calc(18px + env(safe-area-inset-bottom)) 0;z-index:95;display:flex;justify-content:center;pointer-events:none;padding:0 14px}
+.cele{pointer-events:auto;display:flex;align-items:center;gap:14px;background:var(--s3);border:1px solid var(--v);border-radius:24px;padding:12px 14px;max-width:460px;width:100%;box-shadow:0 18px 50px rgba(0,0,0,.6);animation:rise .45s cubic-bezier(.2,1.2,.4,1)}
+@keyframes rise{from{transform:translateY(40px);opacity:0}}
+.cele-t{flex:1;display:flex;flex-direction:column;line-height:1.5;min-width:0}
+.cele-t span{color:var(--mut);font-size:.9rem}
+.cele .stk{--sz:60px}
+.cele-spark{width:48px;height:48px;color:var(--v2);display:grid;place-items:center}
+.cele-spark svg{width:34px;height:34px}
+.toast-root{position:fixed;left:0;right:0;top:calc(var(--hh) + 14px + env(safe-area-inset-top));z-index:100;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none;padding:0 14px}
+.toast{background:var(--s3);border:1px solid var(--line);padding:12px 20px;border-radius:99px;box-shadow:0 12px 34px rgba(0,0,0,.5);animation:rise .3s ease-out;max-width:100%;text-align:center}
+.toast.ok{border-color:var(--ok)}.toast.bad{border-color:var(--bad);color:var(--bad)}
+
+/* sheet */
+.modal-root{position:fixed;inset:0;z-index:90;display:none}
+.modal-root.open{display:block}
+.modal-root .scrim{position:absolute;inset:0;background:rgba(4,2,10,.66)}
+.sheet{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(560px,calc(100vw - 24px));max-height:calc(var(--vvh) - 24px);display:flex;flex-direction:column;background:var(--s1);border:1px solid var(--line);border-radius:28px;box-shadow:0 30px 80px rgba(0,0,0,.7);animation:sheetIn .22s ease-out}
+.sheet.wide{width:min(760px,calc(100vw - 24px))}
+@keyframes sheetIn{from{opacity:0;transform:translate(-50%,-46%)}}
+.sheet-h{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 22px 6px}
+.sheet-h h2{font-family:var(--serif);font-size:1.5rem;font-weight:700}
+.sheet-b{padding:8px 22px 16px;overflow:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+.sheet-f{display:flex;gap:10px;padding:12px 22px calc(18px + env(safe-area-inset-bottom) * 0);border-top:1px solid var(--line);flex-wrap:wrap}
+.sheet-f .btn{flex:1;min-width:120px}
+.sheet .msg{line-height:1.9;color:var(--mut)}
+.sheet .msg b{color:var(--tx);font-weight:500}
+.sheet ul.pl{padding-inline-start:20px;color:var(--mut);line-height:1.9;margin:8px 0}
+.sheet ul.pl li{margin-bottom:6px}
+@media(max-width:620px){
+  .sheet{top:auto;bottom:max(8px,env(safe-area-inset-bottom));transform:translate(-50%,0);border-radius:26px;max-height:calc(var(--vvh) - 16px)}
+  @keyframes sheetIn{from{opacity:0;transform:translate(-50%,40px)}}
+  .hero .dt{font-size:1.9rem}h1{font-size:1.8rem}
+  .card{padding:18px}
+}
+.lm-item{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--line)}
+.lm-item .tx{flex:1;min-width:0;overflow-wrap:anywhere;line-height:1.7}
+.lm-item.off .tx{opacity:.45}
+.stkgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:12px;margin:10px 0}
+.stkcell{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 4px;border-radius:16px;background:var(--s2)}
+.stkcell.off .stk{opacity:.35}
+.stkcell .stk{--sz:56px}
+.stkcell .acts{display:flex;gap:2px}
+.picker{display:flex;gap:8px;flex-wrap:wrap}
+.pc{width:42px;height:42px;border-radius:50%;border:3px solid transparent;background:var(--c)}
+.pc.on{border-color:var(--tx)}
+.pi{width:46px;height:46px;border-radius:14px;background:var(--s2);font-size:1.4rem;display:grid;place-items:center;border:2px solid transparent}
+.pi.on{border-color:var(--v)}
+
+/* gate */
+.gate{position:fixed;inset:0;z-index:80;background:var(--bg);overflow:auto;display:flex;align-items:center;justify-content:center;padding:24px;background-image:radial-gradient(700px 500px at 50% -10%,var(--vg),transparent 70%)}
+.gate-box{width:min(440px,100%);text-align:center}
+.gate-box .logo svg{width:84px;height:84px;margin:0 auto 10px}
+.gate-box h1{font-size:2.4rem;margin-bottom:4px}
+.gate-box .sub{margin-bottom:24px}
+.gate-box .field{text-align:right}
+.pwrap{position:relative}
+.pwrap input{padding-left:56px}
+.pwrap button{position:absolute;left:4px;top:4px;width:44px;height:44px;display:grid;place-items:center;color:var(--mut)}
+.gate-links{display:flex;justify-content:center;gap:18px;margin-top:18px;flex-wrap:wrap}
+
+.calm *,.calm *::before,.calm *::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}}
+.rvcard{background:var(--s2);border-radius:20px;padding:24px 18px;font-family:var(--serif);font-size:1.45rem;line-height:1.9;text-align:center;white-space:pre-wrap;overflow-wrap:anywhere;min-height:130px;display:flex;align-items:center;justify-content:center}
+.gradegrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px}
+.gradegrid .btn{min-height:68px;white-space:normal}
+.kv{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--line)}
+.kv:last-child{border-bottom:0}.kv span:first-child{color:var(--mut)}
+.note-box{background:var(--s2);border-radius:14px;padding:12px 14px;color:var(--mut);font-size:.9rem;line-height:1.8}
+.spin{width:22px;height:22px;border-radius:50%;border:3px solid rgba(255,255,255,.3);border-top-color:#fff;animation:sp .8s linear infinite;display:inline-block}
+@keyframes sp{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<noscript><p style="padding:24px">يحتاج التطبيق إلى تفعيل JavaScript.</p></noscript>
+<div id="gate" class="gate" hidden></div>
+<div id="app" hidden>
+  <header class="hdr" id="hdr"></header>
+  <main id="main" class="page" tabindex="-1"></main>
+</div>
+<div id="menu-root"></div>
+<div id="modal-root" class="modal-root"></div>
+<div id="cele-root" class="cele-root" aria-live="polite"></div>
+<div id="toast-root" class="toast-root" aria-live="polite"></div>
+<script>
+(()=>{'use strict';
+/* ================= أدوات عامة ================= */
+const APP_VER='2026.10.25.4';
+const VKEY='rehlati.vault.v1';
+const ITER=600000;
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,8);
+const clamp=(n,a,b)=>Math.min(b,Math.max(a,n));
+const sum=(a,f)=>a.reduce((n,x)=>n+f(x),0);
+const num=n=>Number(n).toLocaleString('en-US');
+const pad=n=>String(n).padStart(2,'0');
+const DAY=864e5;
+const dkey=t=>{const d=new Date(t);return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());};
+const parseKey=k=>{const [y,m,d]=k.split('-').map(Number);return new Date(y,m-1,d);};
+const sod=t=>{const d=new Date(t);d.setHours(0,0,0,0);return d.getTime();};
+const addDays=(t,n)=>{const d=new Date(t);d.setDate(d.getDate()+n);return d.getTime();};
+const isKey=k=>/^\d{4}-\d{2}-\d{2}$/.test(k||'');
+const toLocalInput=t=>{const d=new Date(t);return dkey(t)+'T'+pad(d.getHours())+':'+pad(d.getMinutes());};
+const L='ar-u-nu-latn';
+const F={
+  full:new Intl.DateTimeFormat(L,{weekday:'long',day:'numeric',month:'long',year:'numeric'}),
+  dm:new Intl.DateTimeFormat(L,{day:'numeric',month:'long'}),
+  dmy:new Intl.DateTimeFormat(L,{day:'numeric',month:'long',year:'numeric'}),
+  my:new Intl.DateTimeFormat(L,{month:'long',year:'numeric'}),
+  wd:new Intl.DateTimeFormat(L,{weekday:'long'}),
+  wds:new Intl.DateTimeFormat(L,{weekday:'short'}),
+  time:new Intl.DateTimeFormat(L,{hour:'numeric',minute:'2-digit'}),
+  mon:new Intl.DateTimeFormat(L,{month:'short'}),
+  dtm:new Intl.DateTimeFormat(L,{day:'numeric',month:'long',hour:'numeric',minute:'2-digit'})
+};
+let hijriF=null;try{hijriF=new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura-nu-latn',{day:'numeric',month:'long',year:'numeric'});}catch(e){}
+const hijri=t=>{try{return hijriF?hijriF.format(t):'';}catch(e){return '';}};
+const fmtClock=ms=>{const s=Math.floor(Math.max(0,ms)/1000);return pad(Math.floor(s/3600))+':'+pad(Math.floor(s%3600/60))+':'+pad(s%60);};
+function fmtDur(ms){
+  if(!(ms>0))return '0 د';
+  if(ms<60000)return 'أقل من دقيقة';
+  const m=Math.round(ms/60000);
+  if(S().durFmt==='dec')return (m/60).toFixed(1).replace(/\.0$/,'')+' ساعة';
+  const h=Math.floor(m/60),r=m%60;
+  return h&&r?`${h} س ${r} د`:h?`${h} س`:`${r} د`;
+}
+function dateLabel(k){
+  const td=sod(Date.now()),d=parseKey(k).getTime();
+  if(d===td)return 'اليوم';if(d===addDays(td,1))return 'غدًا';if(d===addDays(td,-1))return 'أمس';
+  return (new Date(d).getFullYear()===new Date(td).getFullYear()?F.dm:F.dmy).format(d);
+}
+
+/* ================= الأيقونات ================= */
+const I=(d,f)=>`<svg class="i" viewBox="0 0 24 24" aria-hidden="true" ${f?'fill="currentColor"':'fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"'}>${d}</svg>`;
+const ic={
+  dots:I('<circle cx="12" cy="5" r="1.9"/><circle cx="12" cy="12" r="1.9"/><circle cx="12" cy="19" r="1.9"/>',1),
+  home:I('<path d="M3 11l9-8 9 8M5 10v10h14V10M10 20v-6h4v6"/>'),
+  timer:I('<circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/>'),
+  book:I('<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2V5zM4 19a2 2 0 0 1 2-2h13"/>'),
+  tasks:I('<path d="M9 6h11M9 12h11M9 18h11M3.5 6l1.5 1.5L7 5M3.5 12l1.5 1.5L7 11M3.5 18l1.5 1.5L7 17"/>'),
+  calendar:I('<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/>'),
+  chart:I('<path d="M4 20v-8M10 20V5M16 20v-11M21 20H3"/>'),
+  archive:I('<path d="M3 5h18v4H3zM5 9v10h14V9M10 13h4"/>'),
+  backup:I('<path d="M12 3v12M7 10l5 5 5-5M4 21h16"/>'),
+  upload:I('<path d="M12 16V4M7 9l5-5 5 5M4 21h16"/>'),
+  settings:I('<path d="M3 6h9M18 6h3M3 12h3M12 12h9M3 18h11M20 18h1"/><circle cx="15" cy="6" r="2.4"/><circle cx="9" cy="12" r="2.4"/><circle cx="17" cy="18" r="2.4"/>'),
+  lock:I('<rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>'),
+  plus:I('<path d="M12 5v14M5 12h14"/>'),
+  edit:I('<path d="M4 20h4L19 9l-4-4L4 16v4zM13.5 6.5l4 4"/>'),
+  trash:I('<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/>'),
+  play:I('<path d="M7 4.5l12 7.5-12 7.5z"/>',1),
+  pause:I('<rect x="6" y="4" width="4" height="16" rx="1.2"/><rect x="14" y="4" width="4" height="16" rx="1.2"/>',1),
+  check:I('<path d="M5 12.5l4.5 4.5L19 7.5"/>'),
+  x:I('<path d="M6 6l12 12M18 6L6 18"/>'),
+  sparkle:I('<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/>'),
+  search:I('<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/>'),
+  eye:I('<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>'),
+  refresh:I('<path d="M20 11a8 8 0 1 0-2 6M20 5v6h-6"/>'),
+  next:I('<path d="M15 6l-6 6 6 6"/>'),
+  prev:I('<path d="M9 6l6 6-6 6"/>'),
+  moon:I('<path d="M20 14a8 8 0 1 1-10-10 7 7 0 0 0 10 10z"/>'),
+  shield:I('<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/>'),
+  restore:I('<path d="M4 12a8 8 0 1 1 2.5 5.8M4 6v6h6"/>'),
+  restore2:I('<path d="M4 12a8 8 0 1 1 2.5 5.8M4 6v6h6"/>'),
+  flag:I('<path d="M5 21V4M5 4h12l-2.5 4L17 12H5"/>'),
+  info:I('<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.1"/>')
+};
+const LOGO=`<svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#A78BFA"/><stop offset="1" stop-color="#5B33C9"/></linearGradient></defs><rect width="64" height="64" rx="19" fill="url(#lg)"/><path d="M14 22c6-3 13-3 18 1 5-4 12-4 18-1v22c-6-3-13-3-18 1-5-4-12-4-18-1z" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round"/><path d="M32 23v22" stroke="#fff" stroke-width="3"/><path d="M46 10l1.4 3.6L51 15l-3.6 1.4L46 20l-1.4-3.6L41 15l3.6-1.4z" fill="#fff"/></svg>`;
+
+/* ================= المحتوى الافتراضي ================= */
+const B_QUOTES=[
+'كل خطوة صغيرة تقرّبك من هدفك.','مش مطلوب منك الكمال، المطلوب منك الاستمرار.','الإنجاز مش بعدد الساعات فقط، الإنجاز في الشيء اللي فهمته وتعلمته.','ابدأ بما تستطيع، والباقي يجي خطوة بخطوة.','تعب اليوم هو جزء من بناء مستقبلك.','حتى لو كان تقدمك بطيئًا، المهم أنك لم تتوقف.','افتخر بكل مجهود بذلته، مهما كان بسيطًا.',
+'الفهم العميق لدرس واحد أثمن من المرور السريع على عشرة.','استراحة قصيرة لا تعني أنك تراجعت، بل أنك تستعد.','أنت لا تنافس أحدًا، أنت فقط تصبح أفضل مما كنت عليه أمس.','البدايات المتواضعة تصنع النهايات الكبيرة.','اكتب ما تعلمته اليوم بكلماتك، فهذا أول طريق الإتقان.','لا بأس أن تتعثر، المهم أن تعود إلى الطريق.','الاستمرارية الهادئة تتغلب على الحماس المتقطع.','سؤال لم تفهمه اليوم هو درس ستتقنه غدًا.','يوم واحد من المذاكرة الصادقة يغيّر نظرتك لنفسك.','خذ نفسًا عميقًا، ثم افتح الصفحة التالية.','ما تتعلمه اليوم يبقى معك مهما تغيّرت الظروف.','اجعل هدفك صغيرًا بما يكفي لتبدأ الآن.','تقدّمك يُقاس بما فهمت، لا بما حفظت على عجل.','النوم الجيد والماء والراحة جزء من خطة الدراسة الناجحة.','كل مادة أتقنتها هي بابٌ جديد فُتح أمامك.','لا تؤجل ما تستطيع إنجازه الآن، ولو لعشر دقائق فقط.','الصبر على الفهم يثمر ثقة لا تُشترى.','أنت أقدر مما تظن، وأقرب مما تتخيل.'];
+const B_DUAS=[
+'رَبِّ زِدْنِي عِلْمًا.','اللهم بارك لي في وقتي وجهدي.','اللهم علّمني ما ينفعني، وانفعني بما علّمتني، وزدني علمًا.','اللهم يسّر لي أمري، واشرح لي صدري.','اللهم ارزقني الفهم والتوفيق والسداد.',
+'اللهم إني أسألك علمًا نافعًا، ورزقًا طيبًا، وعملًا متقبّلًا.','رَبِّ اشْرَحْ لِي صَدْرِي، وَيَسِّرْ لِي أَمْرِي، وَاحْلُلْ عُقْدَةً مِّن لِّسَانِي يَفْقَهُوا قَوْلِي.','رَبَّنَا آتِنَا مِن لَّدُنكَ رَحْمَةً وَهَيِّئْ لَنَا مِنْ أَمْرِنَا رَشَدًا.','اللهم أعنّي على ذكرك وشكرك وحسن عبادتك.','الحمد لله الذي بنعمته تتم الصالحات.','اللهم لا سهل إلا ما جعلته سهلًا، وأنت تجعل الحزن إذا شئت سهلًا.','حسبنا الله ونعم الوكيل.'];
+const B_STK=['🌟','🏆','🎉','🚀','📚','💜','🌙','✨','🌱','🧠','🎯','🦋','☕','🏅','🌈','🪐'];
+const MSG={
+  session:['أحسنت، جلسة تستحق الفخر.','خطوة جديدة في رحلتك.','وقتٌ ثمين صرفته فيما ينفعك.','استراحة قصيرة تستحقها الآن.','جهدك يُرى حتى لو لم يصفّق لك أحد.'],
+  task:['مهمة أُنجزت، وأنت أقرب لهدفك.','رائع، شطبتَ بندًا جديدًا.','بارك الله في جهدك.','واحدة تلو الأخرى، هكذا تُبنى الإنجازات.'],
+  goal:['وصلت إلى هدفك اليومي، هنيئًا لك.']
+};
+
+/* ================= التخزين والتشفير ================= */
+const store=(()=>{let ok=false;const mem={};try{localStorage.setItem('__t','1');localStorage.removeItem('__t');ok=true;}catch(e){}
+  return {persistent:ok,get:k=>ok?localStorage.getItem(k):(mem[k]??null),set:(k,v)=>{ok?localStorage.setItem(k,v):(mem[k]=v);},del:k=>{ok?localStorage.removeItem(k):delete mem[k];}};})();
+const enc=new TextEncoder(),dec=new TextDecoder();
+const b64=buf=>{const u=new Uint8Array(buf);let s='';for(let i=0;i<u.length;i+=0x8000)s+=String.fromCharCode.apply(null,u.subarray(i,i+0x8000));return btoa(s);};
+const unb64=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+const hasCrypto=!!(window.crypto&&crypto.subtle);
+async function deriveKey(pw,salt,iter){
+  const base=await crypto.subtle.importKey('raw',enc.encode(pw),'PBKDF2',false,['deriveKey']);
+  return crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:iter,hash:'SHA-256'},base,{name:'AES-GCM',length:256},false,['encrypt','decrypt']);
+}
+async function encJSON(obj,k){
+  const iv=crypto.getRandomValues(new Uint8Array(12));
+  const ct=await crypto.subtle.encrypt({name:'AES-GCM',iv},k,enc.encode(JSON.stringify(obj)));
+  return {iv:b64(iv),ct:b64(ct)};
+}
+async function decJSON(blob,k){
+  const pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:unb64(blob.iv)},k,unb64(blob.ct));
+  return JSON.parse(dec.decode(pt));
+}
+
+const newDek=()=>crypto.subtle.generateKey({name:'AES-GCM',length:256},true,['encrypt','decrypt']);
+async function wrapDek(dek,wk){const raw=await crypto.subtle.exportKey('raw',dek),iv=crypto.getRandomValues(new Uint8Array(12));return {iv:b64(iv),ct:b64(await crypto.subtle.encrypt({name:'AES-GCM',iv},wk,raw))};}
+async function unwrapDek(w,wk){const raw=await crypto.subtle.decrypt({name:'AES-GCM',iv:unb64(w.iv)},wk,unb64(w.ct));return crypto.subtle.importKey('raw',raw,{name:'AES-GCM'},true,['encrypt','decrypt']);}
+const B32='ABCDEFGHIJKLMNOPQRSTUVWXYZ234567',RITER=100000;
+function genRecovery(){const u=crypto.getRandomValues(new Uint8Array(17));let bits='';u.forEach(b=>bits+=b.toString(2).padStart(8,'0'));let o='';for(let i=0;i<130;i+=5)o+=B32[parseInt(bits.slice(i,i+5),2)];return o;}
+const normRec=s=>String(s||'').toUpperCase().replace(/[^A-Z2-7]/g,'');
+const prettyRec=k=>k.match(/.{1,4}/g).join('-');
+async function makeRecoveryWrap(dek){const rk=genRecovery(),rs=crypto.getRandomValues(new Uint8Array(16));return {rk,rsalt:b64(rs),riter:RITER,wrapRec:await wrapDek(dek,await deriveKey(rk,rs,RITER))};}
+
+/* ================= الحالة ================= */
+let state=null,key=null,vaultMeta=null;
+const ui={page:'home',arg:null,menu:false,pick:{sub:'',title:'',note:''},taskFilter:'today',
+  rev:{sub:'',limit:50},report:{range:'week',off:0,from:'',to:'',sel:-1},cal:{y:new Date().getFullYear(),m:new Date().getMonth(),sel:null},
+  arch:{tab:'sessions',q:'',sub:'',from:'',to:'',limit:60},quote:null,quoteAt:0,daySticker:{},saveError:false,lastActive:Date.now()};
+const S=()=>state?state.settings:{durFmt:'hm'};
+
+function defaultState(){
+  return {v:1,createdAt:Date.now(),
+    settings:{accent:'violet',size:'m',calm:false,autoLockMin:10,lockKeepSession:true,lockOnHide:false,durFmt:'hm',weekStart:6,defaultRange:'week',showCompare:true,showCalAvg:true,dailyGoalMin:0,stickersOn:true,wakeLock:false,backupRemindDays:7,lastBackup:null,email:'',recoveryAt:null,installHide:false,onboarded:false,focusMode:'free',focusSound:true,welcomeSticker:true,weekGoals:{},reviewLimit:30,reminderOn:false,notifyOn:false,reminderTime:'17:00',lastRemind:''},
+    subjects:[],sessions:[],tasks:[],exams:[],cards:[],lectures:[],revLog:{},trash:[],closures:{},timer:null,recent:{},
+    quotes:B_QUOTES.map((t,i)=>({id:'q'+i,text:t,on:true})),
+    duas:B_DUAS.map((t,i)=>({id:'d'+i,text:t,on:true})),
+    stickers:B_STK.map((t,i)=>({id:'s'+i,type:'emoji',content:t,on:true}))
+  };
+}
+function normalizeState(s){
+  const d=defaultState();const o=Object.assign({},d,s||{});
+  o.settings=Object.assign({},d.settings,(s&&s.settings)||{});
+  ['subjects','sessions','tasks','exams','cards','lectures','trash','quotes','duas','stickers'].forEach(k=>{if(!Array.isArray(o[k]))o[k]=d[k];});
+  if(!o.revLog||typeof o.revLog!=='object'||Array.isArray(o.revLog))o.revLog={};
+  if(!o.settings.weekGoals||typeof o.settings.weekGoals!=='object'||Array.isArray(o.settings.weekGoals))o.settings.weekGoals={};
+  if(!o.closures||typeof o.closures!=='object'||Array.isArray(o.closures))o.closures={};
+  if(!o.recent||typeof o.recent!=='object')o.recent={};
+  return o;
+}
+function validateState(d){
+  const bad=m=>({ok:false,err:m});
+  if(!d||typeof d!=='object'||Array.isArray(d))return bad('محتوى النسخة غير صالح.');
+  const arr=(k)=>d[k]===undefined||Array.isArray(d[k]);
+  for(const k of ['subjects','sessions','tasks','exams','cards','lectures','trash','quotes','duas','stickers'])if(!arr(k))return bad('بنية النسخة غير سليمة (القسم «'+k+'» تالف).');
+  const isObj=x=>x&&typeof x==='object'&&!Array.isArray(x);
+  const nn=x=>typeof x==='number'&&isFinite(x);
+  for(const s of d.subjects||[])if(!isObj(s)||typeof s.id!=='string'||typeof s.name!=='string')return bad('وُجدت مادة دراسية غير صالحة داخل النسخة.');
+  for(const s of d.sessions||[])if(!isObj(s)||typeof s.id!=='string'||!nn(s.start)||!nn(s.end)||!nn(s.dur)||s.dur<0||s.end<s.start)return bad('وُجدت جلسة دراسة غير صالحة داخل النسخة.');
+  for(const t of d.tasks||[])if(!isObj(t)||typeof t.id!=='string'||typeof t.title!=='string'||(t.date&&!isKey(t.date)))return bad('وُجدت مهمة غير صالحة داخل النسخة.');
+  for(const x of d.exams||[])if(!isObj(x)||typeof x.id!=='string'||typeof x.title!=='string'||!isKey(x.date))return bad('وُجد اختبار غير صالح داخل النسخة.');
+  for(const x of d.cards||[])if(!isObj(x)||typeof x.id!=='string'||typeof x.front!=='string'||typeof x.back!=='string'||!nn(x.due)||!nn(x.ivl)||x.ivl<0||!nn(x.ease)||!nn(x.reps))return bad('وُجدت بطاقة مراجعة غير صالحة داخل النسخة.');
+  for(const x of d.lectures||[])if(!isObj(x)||typeof x.id!=='string'||typeof x.title!=='string'||!isKey(x.date)||!Array.isArray(x.steps)||!x.steps.length||x.steps.some(n=>!Number.isInteger(n)||n<1||n>365))return bad('وُجدت محاضرة مراجعة غير صالحة داخل النسخة.');
+  for(const t of d.trash||[])if(!isObj(t)||!isObj(t.item)||!nn(t.at)||!['session','task'].includes(t.type))return bad('عناصر سلة المحذوفات غير صالحة.');
+  for(const k of ['quotes','duas'])for(const q of d[k]||[])if(!isObj(q)||typeof q.id!=='string'||typeof q.text!=='string')return bad('العبارات أو الأدعية داخل النسخة غير صالحة.');
+  for(const q of d.stickers||[])if(!isObj(q)||typeof q.id!=='string'||typeof q.content!=='string'||!['emoji','image'].includes(q.type)||(q.type==='image'&&!/^data:image\/(png|jpeg|webp);base64,/.test(q.content)))return bad('الملصقات داخل النسخة غير صالحة.');
+  const o=JSON.parse(JSON.stringify(d));
+  if(isObj(o.closures)){for(const k of Object.keys(o.closures))if(!isKey(k)||!isObj(o.closures[k]))delete o.closures[k];}else o.closures={};
+  o.timer=null;
+  (o.lectures||[]).forEach(x=>{if(!isObj(x.done))x.done={};for(const k of Object.keys(x.done))if(typeof x.done[k]!=='number')delete x.done[k];});
+  if(isObj(o.revLog)){for(const k of Object.keys(o.revLog))if(!isKey(k)||typeof o.revLog[k]!=='number')delete o.revLog[k];}else o.revLog={};
+  if(isObj(o.settings)&&isObj(o.settings.weekGoals)){for(const k of Object.keys(o.settings.weekGoals)){const v=o.settings.weekGoals[k];if(typeof v!=='number'||!isFinite(v)||v<=0)delete o.settings.weekGoals[k];}}
+  return {ok:true,state:normalizeState(o)};
+}
+
+/* حفظ مشفّر متسلسل */
+let saveT=null,chain=Promise.resolve(),dirty=false;
+function save(now){dirty=true;clearTimeout(saveT);saveT=setTimeout(()=>flush(),now?0:350);}
+function flush(){
+  chain=chain.then(async()=>{
+    if(!state||!key||!dirty)return;dirty=false;
+    try{
+      const blob=await encJSON(state,key);
+      store.set(VKEY,JSON.stringify(Object.assign({v:2},vaultMeta,{iv:blob.iv,ct:blob.ct})));
+      if(ui.saveError){ui.saveError=false;toast('تم الحفظ بنجاح','ok');}
+    }catch(e){dirty=true;if(!ui.saveError){ui.saveError=true;toast('تعذّر حفظ البيانات (قد تكون مساحة التخزين ممتلئة). صدّر نسخة احتياطية الآن.','bad');}}
+  });
+  return chain;
+}
+
+/* ================= واجهة: عناصر أساسية ================= */
+function toast(msg,type){
+  const r=$('#toast-root');const d=document.createElement('div');d.className='toast '+(type||'');d.textContent=msg;r.appendChild(d);
+  setTimeout(()=>d.remove(),type==='bad'?6000:3000);
+}
+let sheetBtns=[],sheetDismiss=null,sheetClick=null;
+function sheetOn(fn){const r=$('#modal-root');if(sheetClick)r.removeEventListener('click',sheetClick);sheetClick=fn;r.addEventListener('click',fn);}
+function openSheet({title,body,buttons=[],onOpen,wide}){
+  closeSheet();
+  const root=$('#modal-root');
+  root.innerHTML=`<div class="scrim" data-sclose></div><div class="sheet ${wide?'wide':''}" role="dialog" aria-modal="true" aria-label="${esc(title)}"><div class="sheet-h"><h2>${esc(title)}</h2><button class="icon-btn" data-sclose aria-label="إغلاق">${ic.x}</button></div><div class="sheet-b" id="sheet-b">${body}<p class="err" id="sheet-err" role="alert"></p></div>${buttons.length?`<div class="sheet-f">${buttons.map((b,i)=>`<button class="btn ${b.cls||''}" data-sbtn="${i}">${b.label}</button>`).join('')}</div>`:''}</div>`;
+  root.classList.add('open');document.body.classList.add('noscroll');
+  sheetBtns=buttons;
+  if(onOpen)onOpen(root);
+  const f=$('.sheet-b input:not([type=file]):not([type=checkbox]),.sheet-b textarea',root);if(f&&!/Mobi|iPad|iPhone/.test(navigator.userAgent))f.focus();
+}
+function closeSheet(){
+  const root=$('#modal-root');
+  if(!root.classList.contains('open'))return;
+  if(sheetClick){root.removeEventListener('click',sheetClick);sheetClick=null;}root.classList.remove('open');root.innerHTML='';document.body.classList.remove('noscroll');
+  const d=sheetDismiss;sheetDismiss=null;sheetBtns=[];if(d)d();
+}
+function sheetErr(m){const e=$('#sheet-err');if(e){e.textContent=m||'';if(m)e.scrollIntoView({block:'nearest'});}}
+function confirmDlg({title,msg,ok='تأكيد',cancel='إلغاء',danger=false,typed=null,extra=''}){
+  return new Promise(res=>{
+    openSheet({title,body:`<p class="msg">${msg}</p>${extra}${typed?`<div class="field" style="margin-top:14px"><label for="cf-t">للتأكيد اكتب: <b>${esc(typed)}</b></label><input id="cf-t" type="text" autocomplete="off"></div>`:''}`,
+      buttons:[{label:cancel,cls:'ghost',onClick:()=>{res(false);}},{label:ok,cls:danger?'danger':'primary',onClick:()=>{if(typed&&$('#cf-t').value.trim()!==typed){sheetErr('اكتب الكلمة المطلوبة كما هي للمتابعة.');return false;}confirmDlg.chk=$('#cf-bk')?$('#cf-bk').checked:null;res(true);}}]});
+    sheetDismiss=()=>res(false);
+  });
+}
+function askText({title,msg,label,type='password',ok='متابعة'}){
+  return new Promise(res=>{
+    openSheet({title,body:`${msg?`<p class="msg">${msg}</p>`:''}<div class="field" style="margin-top:12px"><label for="ask-i">${esc(label)}</label><input id="ask-i" type="${type}" autocomplete="off"></div>`,
+      buttons:[{label:'إلغاء',cls:'ghost',onClick:()=>res(null)},{label:ok,cls:'primary',onClick:()=>{const v=$('#ask-i').value;if(!v){sheetErr('الحقل مطلوب.');return false;}res(v);}}]});
+    sheetDismiss=()=>res(null);
+  });
+}
+document.addEventListener('click',async e=>{
+  const sc=e.target.closest('[data-sclose]');
+  if(sc){closeSheet();return;}
+  const sb=e.target.closest('[data-sbtn]');
+  if(sb){const b=sheetBtns[+sb.dataset.sbtn];if(!b)return;
+    if(sb.disabled)return;
+    const r=b.onClick?await b.onClick():undefined;
+    if(r!==false)closeSheet();
+  }
+});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){if($('#modal-root').classList.contains('open'))closeSheet();else if(ui.menu)closeMenu();}
+  if(e.key==='Enter'&&e.target.matches&&e.target.matches('#ask-i,#cf-t')){const b=$('.sheet-f .btn:last-child');b&&b.click();}
+});
+if(window.visualViewport){const u=()=>document.documentElement.style.setProperty('--vvh',visualViewport.height+'px');visualViewport.addEventListener('resize',u);u();}
+document.addEventListener('focusin',e=>{if(e.target.closest&&e.target.closest('.sheet')&&e.target.matches('input,textarea,select'))setTimeout(()=>e.target.scrollIntoView({block:'center',behavior:'smooth'}),320);});
+
+/* منتقي التكرار للعبارات والملصقات */
+function pick(kind){
+  const list=state[kind].filter(x=>x.on!==false);if(!list.length)return null;
+  const rc=state.recent[kind]||(state.recent[kind]=[]);
+  let pool=list.filter(x=>!rc.includes(x.id));if(!pool.length){rc.length=0;pool=list;}
+  const it=pool[Math.floor(Math.random()*pool.length)];rc.push(it.id);
+  const keep=Math.max(0,Math.min(list.length-1,Math.floor(list.length*.7)));while(rc.length>keep)rc.shift();
+  return it;
+}
+const pickSticker=()=>S().stickersOn?pick('stickers'):null;
+function stickerHTML(st,size){
+  if(!st)return '';
+  return st.type==='image'?`<div class="stk img" style="--sz:${size}px"><img src="${esc(st.content)}" alt="ملصق"></div>`:`<div class="stk" style="--sz:${size}px"><span class="e" role="img" aria-label="ملصق">${esc(st.content)}</span></div>`;
+}
+let celeT=null;
+function celebrate(title,msg){
+  const st=pickSticker();
+  $('#cele-root').innerHTML=`<div class="cele" role="status"><div>${st?stickerHTML(st,60):`<span class="cele-spark">${ic.sparkle}</span>`}</div><div class="cele-t"><b>${esc(title)}</b><span>${esc(msg)}</span></div><button class="icon-btn sm" data-act="cele-x" aria-label="إغلاق">${ic.x}</button></div>`;
+  clearTimeout(celeT);celeT=setTimeout(()=>{$('#cele-root').innerHTML='';},7500);
+}
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
+
+/* ================= بيانات مشتقة ================= */
+const subj=id=>state.subjects.find(s=>s.id===id);
+const subjName=id=>{const s=subj(id);return s?s.name+(s.deleted?' (محذوفة)':''):'بدون مادة';};
+const liveSubjects=()=>state.subjects.filter(s=>!s.deleted);
+const sessionsIn=(a,b)=>state.sessions.filter(s=>s.start>=a&&s.start<b);
+const doneIn=(a,b)=>state.tasks.filter(t=>t.done&&t.doneAt>=a&&t.doneAt<b);
+const totalIn=(a,b)=>sum(sessionsIn(a,b),s=>s.dur);
+const PR={1:'أولوية عالية',2:'أولوية متوسطة',3:'أولوية منخفضة'};
+const taskSort=(a,b)=>(a.date||'9999').localeCompare(b.date||'9999')||(a.pr-b.pr)||(a.createdAt-b.createdAt);
+function dayStats(a){const b=addDays(a,1);const ss=sessionsIn(a,b).sort((x,y)=>x.start-y.start);const by={};ss.forEach(s=>{by[s.sub||'']=(by[s.sub||'']||0)+s.dur;});return {ss,done:doneIn(a,b),total:sum(ss,s=>s.dur),by};}
+const remainingToday=()=>state.tasks.filter(t=>!t.done&&t.date&&t.date<=dkey(Date.now())).sort(taskSort);
+function weekStartOf(t){const d=new Date(sod(t));return addDays(sod(t),-((d.getDay()-S().weekStart+7)%7));}
+function nowRanges(){
+  const td=sod(Date.now()),d=new Date(td);
+  return {day:[td,addDays(td,1)],week:[weekStartOf(td),addDays(weekStartOf(td),7)],month:[new Date(d.getFullYear(),d.getMonth(),1).getTime(),new Date(d.getFullYear(),d.getMonth()+1,1).getTime()],year:[new Date(d.getFullYear(),0,1).getTime(),new Date(d.getFullYear()+1,0,1).getTime()]};
+}
+function studyDaySet(){const s=new Set();state.sessions.forEach(x=>s.add(dkey(x.start)));return s;}
+function streaks(){
+  const set=studyDaySet();const td=sod(Date.now());
+  let cur=0,c=set.has(dkey(td))?td:addDays(td,-1);while(set.has(dkey(c))){cur++;c=addDays(c,-1);}
+  const keys=[...set].sort();let best=0,run=0,prev=null;
+  keys.forEach(k=>{const t=parseKey(k).getTime();run=(prev!==null&&Math.round((t-prev)/DAY)===1)?run+1:1;prev=t;best=Math.max(best,run);});
+  return {cur,best};
+}
+
+/* ================= المؤقت ================= */
+const timerElapsed=(t=state&&state.timer,now=Date.now())=>t?t.acc+(t.running?now-t.resumedAt:0):0;
+let wakeSentinel=null;
+async function wake(){
+  try{
+    if(S().wakeLock&&state.timer&&state.timer.running&&navigator.wakeLock&&!wakeSentinel){wakeSentinel=await navigator.wakeLock.request('screen');wakeSentinel.addEventListener('release',()=>{wakeSentinel=null;});}
+    if((!state||!state.timer||!state.timer.running||!S().wakeLock)&&wakeSentinel){await wakeSentinel.release();wakeSentinel=null;}
+  }catch(e){}
+}
+function timerFields(){return state.timer?state.timer:ui.pick;}
+const MODES={free:null,p50:{work:50,brk:10},p120:{work:120,brk:15}};
+const fmtMS=ms=>{const s=Math.ceil(Math.max(0,ms)/1000);return pad(Math.floor(s/60))+':'+pad(s%60);};
+let actx=null;
+function audioUnlock(){try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();if(actx.state==='suspended')actx.resume();}catch(e){}}
+function beep(){
+  try{
+    if(!S().focusSound)return;audioUnlock();if(!actx)return;
+    [[660,0],[880,.32]].forEach(([f,d])=>{const o=actx.createOscillator(),g=actx.createGain(),n=actx.currentTime+d;o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(.0001,n);g.gain.exponentialRampToValueAtTime(.22,n+.05);g.gain.exponentialRampToValueAtTime(.0001,n+.9);o.connect(g);g.connect(actx.destination);o.start(n);o.stop(n+1);});
+  }catch(e){}
+}
+function alertPhase(title,msg,btn){
+  beep();try{navigator.vibrate&&navigator.vibrate([220,110,220]);}catch(e){}
+  if(document.hidden)sysNotify(title,msg);
+  $('#cele-root').innerHTML=`<div class="cele" role="alert"><div class="cele-spark">${ic.timer}</div><div class="cele-t"><b>${esc(title)}</b><span>${esc(msg)}</span></div><button class="btn primary" data-act="t-next">${esc(btn)}</button><button class="icon-btn sm" data-act="cele-x" aria-label="إغلاق">${ic.x}</button></div>`;
+  clearTimeout(celeT);celeT=setTimeout(()=>{$('#cele-root').innerHTML='';},180000);
+}
+function timerView(t,now=Date.now()){
+  if(!t)return {text:'00:00:00',label:'جاهز للبدء',frac:0,cls:'idle',sweep:true};
+  const el=timerElapsed(t,now);
+  if(t.mode&&t.mode!=='free'){
+    if(t.breakUntil){const rem=Math.max(0,t.breakUntil-now);return {text:fmtMS(rem),label:rem?'وقت الراحة':'انتهت الراحة',frac:clamp(1-rem/t.brk,0,1),cls:'break'};}
+    const rem=Math.max(0,t.nextAt-el);
+    return {text:fmtMS(rem),label:!t.running?'متوقفة مؤقتًا':'وقت التركيز',frac:clamp(1-rem/t.target,0,1),cls:t.running?'run':'paused'};
+  }
+  return {text:fmtClock(el),label:t.running?'قيد الدراسة':'متوقفة مؤقتًا',frac:(el/1000%60)/60,cls:t.running?'run':'paused',sweep:true};
+}
+function phaseStep(t,n){
+  if(!t.mode||t.mode==='free')return;
+  if(t.breakUntil){
+    if(n>=t.breakUntil&&!t.bAlerted){t.bAlerted=true;save(true);alertPhase('انتهت الراحة','هيا نبدأ الدورة التالية بهدوء.','ابدأ الدورة التالية');renderAll();}
+  }else if(t.running){
+    const endTs=t.resumedAt+(t.nextAt-t.acc);
+    if(n>=endTs){
+      t.acc=t.nextAt;t.running=false;t.breakUntil=endTs+t.brk;t.cycles=(t.cycles||0)+1;t.bAlerted=false;t.lastSeen=n;save(true);
+      alertPhase('انتهى وقت التركيز','أحسنت! بدأت الراحة: '+Math.round(t.brk/60000)+' دقيقة.','تخطي الراحة');wake();renderAll();
+    }
+  }
+}
+function tStart(){
+  if(state.timer)return;const n=Date.now(),mode=S().focusMode||'free',m=MODES[mode];audioUnlock();
+  state.timer={id:uid(),sub:ui.pick.sub||'',title:ui.pick.title||'',note:ui.pick.note||'',startedAt:n,acc:0,running:true,resumedAt:n,lastSeen:n,mode:m?mode:'free',target:m?m.work*60000:0,brk:m?m.brk*60000:0,nextAt:m?m.work*60000:0,breakUntil:0,cycles:0,bAlerted:false};
+  save(true);renderAll();wake();
+}
+function tPause(){const t=state.timer;if(!t||!t.running)return;const n=Date.now();t.acc+=n-t.resumedAt;t.running=false;t.lastSeen=n;save(true);renderAll();wake();}
+function tResume(){const t=state.timer;if(!t||t.running)return;if(t.breakUntil)return tNextCycle();const n=Date.now();t.resumedAt=n;t.running=true;t.lastSeen=n;save(true);renderAll();wake();}
+function tNextCycle(){
+  const t=state.timer;if(!t)return;const n=Date.now(),el=timerElapsed(t,n);
+  $('#cele-root').innerHTML='';
+  t.breakUntil=0;t.running=true;t.resumedAt=n;t.nextAt=el+t.target;t.bAlerted=false;t.lastSeen=n;
+  save(true);renderAll();wake();
+}
+function tFinish(){
+  const t=state.timer;if(!t)return;
+  const end=Date.now(),dur=timerElapsed(t,end),was=t.running;
+  if(was){t.acc=dur;t.running=false;t.lastSeen=end;}
+  const back=()=>{if(was&&state.timer===t&&!t.running){t.resumedAt=Date.now();t.running=true;t.lastSeen=Date.now();save(true);renderAll();wake();}};
+  openSheet({title:'إنهاء الجلسة',body:`
+    <div class="note-box" style="margin-bottom:14px">مدة الدراسة الفعلية: <b class="num" style="color:var(--v3)">${fmtClock(dur)}</b><br>بدأت ${F.time.format(t.startedAt)} وانتهت ${F.time.format(end)}${dur<60000?'<br>هذه الجلسة أقل من دقيقة، يمكنك حفظها أو تجاهلها.':''}</div>
+    <div class="field"><label for="f-sub">المادة</label><select id="f-sub">${subjOptions(t.sub)}</select></div>
+    <div class="field"><label for="f-title">عنوان الجلسة</label><input id="f-title" type="text" value="${esc(t.title)}" placeholder="مثال: مراجعة الفصل الثالث"></div>
+    <div class="field"><label for="f-note">ملاحظة قصيرة</label><textarea id="f-note" rows="2" placeholder="ماذا أنجزت أو فهمت؟">${esc(t.note)}</textarea></div>`,
+    buttons:[
+      {label:'تجاهل',cls:'ghost',onClick:async()=>{
+        sheetDismiss=null;closeSheet();
+        const ok=await confirmDlg({title:'تجاهل الجلسة؟',msg:'لن يُحفظ وقت هذه الجلسة، ولا يمكن التراجع.',ok:'تجاهل الجلسة',cancel:'العودة',danger:true});
+        if(ok){state.timer=null;save(true);wake();renderAll();toast('تم تجاهل الجلسة');}else back();
+        return false;}},
+      {label:'متابعة الدراسة',cls:'soft',onClick:()=>{back();sheetDismiss=null;}},
+      {label:'حفظ الجلسة',cls:'primary',onClick:()=>{
+        const before=totalIn(sod(end),addDays(sod(end),1));
+        const s={id:uid(),sub:$('#f-sub').value,title:$('#f-title').value.trim().slice(0,120),note:$('#f-note').value.trim().slice(0,600),start:t.startedAt,end,dur,paused:Math.max(0,end-t.startedAt-dur)};
+        sheetDismiss=null;state.sessions.push(s);state.timer=null;ui.pick={sub:s.sub,title:'',note:''};save(true);wake();renderAll();
+        const g=S().dailyGoalMin*60000;
+        if(g>0&&before<g&&before+dur>=g)celebrate('بلغتَ هدفك اليومي!',rnd(MSG.goal));
+        else celebrate('تم حفظ الجلسة: '+fmtDur(dur),rnd(MSG.session));
+      }}
+    ]});
+  sheetDismiss=back;
+}
+function subjOptions(sel){return `<option value="">بدون مادة</option>`+liveSubjects().map(s=>`<option value="${s.id}" ${s.id===sel?'selected':''}>${s.icon} ${esc(s.name)}</option>`).join('')+(sel&&subj(sel)&&subj(sel).deleted?`<option value="${sel}" selected>${esc(subj(sel).name)} (محذوفة)</option>`:'');}
+
+/* ================= الموجّه ================= */
+const PAGES=['home','sessions','subjects','tasks','calendar','goals','review','reports','archive','backup','settings','day'];
+function route(){
+  const h=location.hash.replace(/^#\/?/,'');const [p,a]=h.split('/');
+  ui.page=PAGES.includes(p)?p:'home';ui.arg=a||null;
+  closeMenu(true);renderAll();window.scrollTo(0,0);
+  const m=$('#main');if(m)m.focus({preventScroll:true});
+}
+function go(p,a){const h='#/'+p+(a?'/'+a:'');if(location.hash===h)route();else location.hash=h;}
+window.addEventListener('hashchange',()=>{if(state)route();});
+
+/* ================= القائمة العلوية ================= */
+const MENU=[['home','الرئيسية','home'],['sessions','جلسات الدراسة','timer'],['subjects','المواد الدراسية','book'],['tasks','المهام','tasks'],['calendar','التقويم','calendar'],['goals','الاختبارات والأهداف','flag'],['review','المراجعة المتباعدة','restore'],null,['reports','الإحصائيات والتقارير','chart'],['archive','الأرشيف','archive'],null,['backup','النسخ الاحتياطي والاستعادة','backup'],['settings','الإعدادات والخصوصية','settings']];
+function openMenu(){
+  ui.menu=true;
+  $('#menu-root').innerHTML=`<div class="scrim" data-act="menu-x"></div><nav class="menu" role="menu" aria-label="أقسام التطبيق">${MENU.map(m=>m?`<button role="menuitem" class="${ui.page===m[0]?'on':''}" data-act="nav" data-go="${m[0]}">${ic[m[2]]}<span>${m[1]}</span></button>`:'<hr>').join('')}</nav>`;
+  const b=$('#menu-btn');if(b)b.setAttribute('aria-expanded','true');
+  const f=$('.menu button.on')||$('.menu button');f&&f.focus();
+}
+function closeMenu(silent){
+  if(!ui.menu)return;ui.menu=false;$('#menu-root').innerHTML='';
+  const b=$('#menu-btn');if(b){b.setAttribute('aria-expanded','false');if(!silent)b.focus();}
+}
+
+/* ================= الرأس والرسم العام ================= */
+function headerHTML(){
+  const t=state.timer;
+  return `<div class="hdr-in">
+    <button class="brand" data-act="nav" data-go="home" aria-label="الصفحة الرئيسية">${LOGO}<span>رحلتي الدراسية</span></button>
+    <div class="sp"></div>
+    ${t?`<button class="pill ${t.running?'run':'pause'}" data-act="nav" data-go="sessions" aria-label="الجلسة الجارية"><span class="dot"></span><span class="num" data-live="clock">${fmtClock(timerElapsed())}</span></button>`:''}
+    <button class="icon-btn" data-act="lock" aria-label="قفل التطبيق" title="قفل التطبيق">${ic.lock}</button>
+    <button class="icon-btn" id="menu-btn" data-act="menu" aria-label="القائمة" aria-haspopup="menu" aria-expanded="${ui.menu}">${ic.dots}</button>
+  </div>`;
+}
+const P={};
+function renderAll(){
+  if(!state)return;
+  $('#hdr').innerHTML=headerHTML();
+  renderMain();
+}
+function renderMain(){
+  if(!state)return;
+  const y=window.scrollY;
+  $('#main').innerHTML=(P[ui.page]||P.home)();
+  window.scrollTo(0,y);
+  applySettings();
+}
+function applySettings(){
+  const h=document.documentElement;h.dataset.accent=S().accent||'violet';h.dataset.size=S().size||'m';h.classList.toggle('calm',!!S().calm);
+}
+function pageHead(title,sub,actions){
+  return `<div class="ph"><div><h1>${esc(title)}</h1>${sub?`<p class="sub">${sub}</p>`:''}</div>${actions?`<div class="row">${actions}</div>`:''}</div>`;
+}
+function sessionRow(s,o={}){
+  const sb=subj(s.sub);
+  return `<div class="srow"><span class="sbadge sm" style="--c:${sb?sb.color:'#8F86A8'}">${sb?sb.icon:'📖'}</span>
+    <button class="mid" style="text-align:right" data-act="s-edit" data-id="${s.id}" aria-label="تفاصيل الجلسة"><div class="t">${esc(s.title||subjName(s.sub))}</div><div class="m">${o.date?F.dm.format(s.start)+' — ':''}${F.time.format(s.start)} إلى ${F.time.format(s.end)}${s.title&&s.sub?' — '+esc(subjName(s.sub)):''}</div></button>
+    <span class="dur num">${fmtDur(s.dur)}</span>
+    ${o.noDel?'':`<button class="icon-btn sm" data-act="s-del" data-id="${s.id}" aria-label="حذف الجلسة">${ic.trash}</button>`}</div>`;
+}
+function taskRow(t,o={}){
+  const s=subj(t.sub),late=!t.done&&t.date&&t.date<dkey(Date.now());
+  return `<div class="trow ${t.done?'done':''}">
+    <button class="chk ${t.done?'on':''}" role="checkbox" aria-checked="${!!t.done}" aria-label="تحديد المهمة كمكتملة" data-act="task-toggle" data-id="${t.id}">${t.done?ic.check:''}</button>
+    <button class="tmain" data-act="task-edit" data-id="${t.id}"><span class="ttl">${esc(t.title)}</span>
+      <span class="tmeta">${s?`<span class="mchip" style="--c:${s.color}">${s.icon} ${esc(s.name)}</span>`:''}${late?'<span class="mchip late">مؤجلة</span>':''}${t.date?`<span class="mchip ${late?'late':''}">${dateLabel(t.date)}</span>`:''}<span class="prio p${t.pr}">${PR[t.pr]}</span></span></button>
+    ${o.noDel?'':`<button class="icon-btn sm" data-act="task-del" data-id="${t.id}" aria-label="حذف المهمة">${ic.trash}</button>`}</div>`;
+}
+const stat=(v,l,cls)=>`<div class="tile ${cls||''}"><b>${v}</b><span>${l}</span></div>`;
+
+/* ================= الرئيسية ================= */
+function currentQuote(){
+  if(!ui.quote||Date.now()-ui.quoteAt>15*60000){ui.quote=pick('quotes');ui.quoteAt=Date.now();}
+  return ui.quote;
+}
+function backupDue(){
+  if(!state.sessions.length&&!state.tasks.length)return null;
+  const lb=state.settings.lastBackup,n=state.settings.backupRemindDays;
+  if(!n)return null;
+  if(!lb)return 'لم تحفظ نسخة احتياطية بعد.';
+  const d=Math.floor((Date.now()-lb)/DAY);
+  return d>=n?`آخر نسخة احتياطية كانت قبل ${d} يومًا.`:null;
+}
+P.home=function(){
+  const now=Date.now(),td=sod(now),st=dayStats(td),rem=remainingToday(),q=currentQuote(),t=state.timer;
+  const goal=S().dailyGoalMin,subs=liveSubjects(),bk=backupDue();
+  const todaySubs=Object.keys(st.by).map(k=>({id:k,ms:st.by[k]})).sort((a,b)=>b.ms-a.ms);
+  const totalTasks=st.done.length+rem.length;
+  const week=[];const ws=weekStartOf(td);for(let i=0;i<7;i++){const a=addDays(ws,i);week.push({a,ms:totalIn(a,addDays(a,1))});}
+  const wmax=Math.max(...week.map(w=>w.ms));
+  return `${!store.persistent?`<div class="banner">${ic.info}<span>التخزين الدائم غير متاح في هذه البيئة، وستُفقد البيانات عند إغلاق الصفحة. افتح الملف في Safari، أو صدّر نسخة احتياطية.</span></div>`:''}
+  ${ui.updAvail?`<div class="banner info">${ic.refresh}<span>يتوفر تحديث جديد للتطبيق. بعد التحديث سيُطلب منك فتح الدفتر بكلمة المرور.</span><span class="sp"></span><button class="btn primary" data-act="app-reload">تحديث الآن</button></div>`:''}
+  ${bk?`<div class="banner info">${ic.backup}<span>${bk}</span><span class="sp"></span><button class="btn soft" data-act="nav" data-go="backup">النسخ الاحتياطي</button></div>`:''}
+  ${!isStandalone()&&!S().installHide&&!bk?`<div class="banner info">${ic.plus}<span>ثبّت رحلتي الدراسية على الشاشة الرئيسية لتفتحه بنقرة.</span><span class="sp"></span><button class="btn soft" data-act="install">كيف؟</button><button class="icon-btn sm" data-act="install-hide" aria-label="إخفاء">${ic.x}</button></div>`:''}
+  <div class="cols c2">
+   <div class="grid">
+    <section class="hero">
+      <div class="dt">${F.full.format(now)}</div><div class="hj">${esc(hijri(now))}</div>
+      <div class="quote-row"><p class="quote" id="quote">${q?esc(q.text):'ابدأ بما تستطيع، والباقي يجي خطوة بخطوة.'}</p><button class="icon-btn" data-act="quote-new" aria-label="عبارة أخرى">${ic.refresh}</button></div>
+      <div class="row" style="margin-top:14px">
+        ${t?`<button class="btn primary lg" data-act="nav" data-go="sessions">${ic.timer}<span>العودة للجلسة الجارية</span><span class="num" data-live="clock">${fmtClock(timerElapsed())}</span></button>`
+           :`<button class="btn primary lg" data-act="nav" data-go="sessions">${ic.play}<span>ابدأ جلسة دراسة جديدة</span></button>`}
+      </div>
+    </section>
+    <div class="grid g4">
+      ${stat(fmtDur(st.total),'وقت الدراسة اليوم','acc')}${stat(num(st.ss.length),'جلسات دراسة')}${stat(num(st.done.length),'مهام مكتملة')}${stat(num(rem.length),'مهام متبقية')}
+    </div>
+    <section class="card"><h2>ملخص تقدم اليوم</h2>
+      ${goal>0?`<div class="kv"><span>هدف الوقت (اختياري)</span><span class="num">${fmtDur(st.total)} من ${fmtDur(goal*60000)}</span></div><div class="bar" style="margin:10px 0 14px"><i style="width:${clamp(st.total/(goal*60000)*100,0,100)}%"></i></div>`:''}
+      ${totalTasks>0?`<div class="kv"><span>المهام</span><span class="num">${st.done.length} من ${totalTasks}</span></div><div class="bar" style="margin:10px 0 8px"><i style="width:${clamp(st.done.length/totalTasks*100,0,100)}%"></i></div>`:''}
+      <p class="mut" style="margin-top:8px">${st.total===0&&st.done.length===0?'لم يبدأ يومك الدراسي بعد، وأي بداية صغيرة تكفي.':st.total<30*60000&&!st.done.length?'بدأت، وهذا هو الأهم. خطوة صغيرة تتبعها أخرى.':'يوم فيه جهد حقيقي، أحسنت.'}</p>
+    </section>
+    <section class="card"><h2>المواد التي أدرسها اليوم</h2>
+      ${todaySubs.length?`<div class="chips">${todaySubs.map(x=>{const s=subj(x.id);return `<span class="chip" style="--c:${s?s.color:'#8F86A8'}">${s?s.icon:'📖'} ${esc(subjName(x.id))} <b class="num" style="color:var(--v3);font-weight:500">${fmtDur(x.ms)}</b></span>`;}).join('')}</div>`
+        :subs.length?`<p class="mut">لم تسجّل مادة اليوم بعد. لديك ${num(subs.length)} ${subs.length>2?'مواد':'مادة'} جاهزة للاختيار.</p>`
+        :`<div class="empty"><b>أضف موادك الدراسية</b>اربط بها جلساتك ومهامك لترى إنجازك لكل مادة.<br><button class="btn primary" data-act="sub-add">${ic.plus}<span>إضافة مادة</span></button></div>`}
+    </section>
+   </div>
+   <div class="grid" style="align-content:start">
+    ${reviewCardHTML()}${examsCardHTML()}${goalsCardHTML()}
+    <section class="card"><div class="row" style="justify-content:space-between;margin-bottom:6px"><h2>مهام اليوم</h2><button class="btn soft" data-act="task-add">${ic.plus}<span>مهمة</span></button></div>
+      ${rem.length?rem.slice(0,6).map(t=>taskRow(t,{noDel:true})).join('')+(rem.length>6?`<button class="lnk" data-act="nav" data-go="tasks">عرض كل المهام (${rem.length})</button>`:''):`<div class="empty"><b>${st.done.length?'أنهيت مهام اليوم':'لا مهام لهذا اليوم'}</b>${st.done.length?'استمتع بما أنجزت.':'أضف مهمة إن أردت ترتيب يومك.'}</div>`}
+    </section>
+    <section class="card"><h2>هذا الأسبوع</h2>
+      ${wmax>0?`<div style="display:flex;gap:8px;align-items:flex-end;height:120px">${week.map(w=>`<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;justify-content:flex-end"><div style="width:100%;max-width:34px;border-radius:8px;background:${w.ms?'var(--v)':'var(--s3)'};height:${w.ms?Math.max(6,w.ms/wmax*88):4}px" title="${fmtDur(w.ms)}"></div><span class="xs dim">${F.wds.format(w.a)}</span></div>`).join('')}</div>`:'<p class="mut">لا توجد جلسات هذا الأسبوع بعد، وسيظهر هنا نمط دراستك حين تبدأ.</p>'}
+    </section>
+    <button class="btn block" style="min-height:60px" data-act="nav-day" data-key="${dkey(now)}">${ic.moon}<span>ملخص نهاية اليوم</span></button>
+   </div>
+  </div>`;
+};
+
+/* ================= جلسات الدراسة ================= */
+P.sessions=function(){
+  const t=state.timer,f=timerFields(),r=nowRanges(),C=2*Math.PI*128,subs=liveSubjects(),v=timerView(t),el=timerElapsed();
+  const mode=S().focusMode||'free',inBreak=!!(t&&t.breakUntil),pom=!!(t&&t.mode&&t.mode!=='free');
+  const today=sessionsIn(...r.day).sort((a,b)=>b.start-a.start);
+  const modeBtns=[['free','حر'],['p50','50 + 10'],['p120','120 + 15']];
+  const desc={free:'مؤقت حر بلا تقسيم.',p50:'تركيز 50 دقيقة ثم راحة 10 دقائق.',p120:'تركيز 120 دقيقة ثم راحة 15 دقيقة.'};
+  const btns=!t?`<button class="btn primary lg" data-act="t-start">${ic.play}<span>ابدأ الجلسة</span></button>`
+    :inBreak?`<button class="btn primary lg" data-act="t-next">${ic.play}<span>${t.breakUntil<=Date.now()?'ابدأ الدورة التالية':'تخطي الراحة'}</span></button><button class="btn lg" data-act="t-finish">${ic.check}<span>إنهاء وحفظ</span></button>`
+    :t.running?`<button class="btn lg" data-act="t-pause">${ic.pause}<span>إيقاف مؤقت</span></button><button class="btn primary lg" data-act="t-finish">${ic.check}<span>إنهاء وحفظ</span></button>`
+    :`<button class="btn primary lg" data-act="t-resume">${ic.play}<span>استئناف</span></button><button class="btn lg" data-act="t-finish">${ic.check}<span>إنهاء وحفظ</span></button>`;
+  const lost=t&&!pom?Date.now()-t.startedAt-el:0;
+  return `${pageHead('جلسات الدراسة','ابدأ جلستك، وسنحسب الوقت الفعلي بدقة حتى لو انتقلت بين الصفحات.',`<button class="btn" data-act="s-add">${ic.plus}<span>إضافة جلسة يدويًا</span></button>`)}
+  <div class="cols c2b">
+   <section class="card"><div class="timer-wrap">
+     ${!t?`<div style="width:100%"><div class="lbl" style="margin-bottom:8px;text-align:center">نمط الجلسة</div><div class="seg">${modeBtns.map(([k,l])=>`<button class="${mode===k?'on':''}" data-act="t-mode" data-v="${k}">${l}</button>`).join('')}</div><p class="hint" style="text-align:center;margin-top:8px">${desc[mode]}</p></div>`:''}
+     <div class="ringbox ${v.cls}" id="ringbox"><svg class="ring" viewBox="0 0 280 280" aria-hidden="true"><circle class="ring-bg" cx="140" cy="140" r="128"/><circle id="ringfg" class="ring-fg" cx="140" cy="140" r="128" transform="rotate(-90 140 140)" stroke-dasharray="${C}" stroke-dashoffset="${C*(1-clamp(v.frac,0,1))}"/></svg>
+       <div class="ringc"><span class="st" id="tstate">${v.label}</span><span class="clock num" data-live="ring" role="timer" aria-live="off">${v.text}</span><span class="sn">${f.sub&&subj(f.sub)?esc(subj(f.sub).icon+' '+subj(f.sub).name):''}</span></div></div>
+     <div class="tbtns">${btns}</div>
+     ${t?`<p class="hint" style="text-align:center">بدأت ${F.time.format(t.startedAt)}${pom?` — الدورة ${num((t.cycles||0)+(inBreak?0:1))} — الدراسة المحسوبة <span class="num" data-live="clock">${fmtClock(el)}</span>`:(lost>60000?` — توقفت مؤقتًا لمدة ${fmtDur(lost)}`:'')}</p>`:''}
+   </div></section>
+   <div class="grid" style="align-content:start">
+    <section class="card"><h2>تفاصيل الجلسة</h2>
+      <div class="lbl" style="margin-bottom:8px">المادة</div>
+      ${subs.length?`<div class="chips" style="margin-bottom:16px">${subs.map(s=>`<button class="chip sel ${f.sub===s.id?'on':''}" style="--c:${s.color}" data-act="t-sub" data-id="${s.id}" aria-pressed="${f.sub===s.id}">${s.icon} ${esc(s.name)}</button>`).join('')}</div>`:`<p class="mut" style="margin-bottom:14px">لم تضف مواد بعد. <button class="lnk" data-act="sub-add">أضف مادة</button></p>`}
+      <div class="field"><label for="t-title">عنوان الجلسة</label><input id="t-title" data-in="t-title" type="text" maxlength="120" value="${esc(f.title)}" placeholder="مثال: حل تمارين الفصل الثاني"></div>
+      <div class="field" style="margin:0"><label for="t-note">ملاحظة قصيرة</label><textarea id="t-note" data-in="t-note" rows="2" maxlength="600" placeholder="اختياري">${esc(f.note)}</textarea></div>
+    </section>
+    <div class="grid g4">${stat(fmtDur(totalIn(...r.day)),'اليوم')}${stat(fmtDur(totalIn(...r.week)),'هذا الأسبوع')}${stat(fmtDur(totalIn(...r.month)),'هذا الشهر')}${stat(fmtDur(totalIn(...r.year)),'هذه السنة')}</div>
+   </div>
+  </div>
+  <section class="sec"><h2>جلسات اليوم</h2><div class="card tight">${today.length?today.map(s=>sessionRow(s)).join(''):'<div class="empty"><b>لا جلسات محفوظة اليوم</b>ابدأ المؤقت وستظهر جلستك هنا بعد الحفظ.</div>'}</div></section>`;
+};
+
+/* ================= المواد ================= */
+const COLORS=['#8B5CF6','#6D7CFF','#38BDF8','#2DD4BF','#6FD3B0','#A3E635','#F0B866','#FB923C','#F472B6','#F58A9A'];
+const ICONS=['📘','📗','📙','📕','🧪','🧮','🌍','🧬','💻','🎨','✍️','🗣️','⚖️','🩺','📐','🎵'];
+const SUGGEST=['رياضيات','فيزياء','كيمياء','أحياء','لغة عربية','لغة إنجليزية','تاريخ','برمجة'];
+function subjStats(id){
+  const ss=state.sessions.filter(s=>s.sub===id),ts=state.tasks.filter(t=>t.sub===id);
+  return {total:sum(ss,s=>s.dur),n:ss.length,done:ts.filter(t=>t.done).length,open:ts.filter(t=>!t.done).length,last:ss.length?Math.max(...ss.map(s=>s.start)):0};
+}
+P.subjects=function(){
+  const subs=liveSubjects();
+  return `${pageHead('المواد الدراسية','أضف موادك وعدّلها بنفسك، وستُربط بها الجلسات والمهام.',`<button class="btn primary" data-act="sub-add">${ic.plus}<span>إضافة مادة</span></button>`)}
+  ${subs.length?`<div class="grid g3">${subs.map(s=>{const k=subjStats(s.id);return `<article class="card">
+    <div class="row" style="flex-wrap:nowrap"><span class="sbadge" style="--c:${s.color}">${s.icon}</span><h2 style="flex:1;overflow-wrap:anywhere">${esc(s.name)}</h2></div>
+    <div style="margin-top:14px"><div class="kv"><span>وقت الدراسة</span><span>${fmtDur(k.total)}</span></div><div class="kv"><span>الجلسات</span><span class="num">${k.n}</span></div><div class="kv"><span>المهام المنجزة</span><span class="num">${k.done}${k.open?' (متبقٍ '+k.open+')':''}</span></div><div class="kv"><span>آخر دراسة</span><span>${k.last?dateLabel(dkey(k.last)):'—'}</span></div></div>
+    <div class="row" style="margin-top:14px"><button class="btn soft" data-act="sub-log" data-id="${s.id}">السجل</button><button class="icon-btn" data-act="sub-edit" data-id="${s.id}" aria-label="تعديل المادة">${ic.edit}</button><button class="icon-btn" data-act="sub-del" data-id="${s.id}" aria-label="حذف المادة">${ic.trash}</button></div></article>`;}).join('')}</div>`
+  :`<div class="empty"><b>لا توجد مواد بعد</b>أضف أول مادة لتبدأ بتنظيم رحلتك.<br><button class="btn primary" data-act="sub-add">${ic.plus}<span>إضافة مادة</span></button></div>`}`;
+};
+function subjectSheet(id){
+  const s=id?subj(id):null;let color=s?s.color:COLORS[0],icon=s?s.icon:ICONS[0];
+  const paint=()=>{$$('.pc').forEach(b=>b.classList.toggle('on',b.dataset.c===color));$$('.pi').forEach(b=>b.classList.toggle('on',b.dataset.i===icon));};
+  openSheet({title:s?'تعديل المادة':'مادة جديدة',body:`
+    <div class="field"><label for="sn">اسم المادة</label><input id="sn" type="text" maxlength="40" value="${esc(s?s.name:'')}" placeholder="مثال: الفيزياء"></div>
+    ${s?'':`<div class="chips" style="margin:-4px 0 14px">${SUGGEST.map(x=>`<button class="chip" data-sug="${x}">${x}</button>`).join('')}</div>`}
+    <div class="lbl" style="margin-bottom:8px">اللون</div><div class="picker" style="margin-bottom:16px">${COLORS.map(c=>`<button class="pc" style="--c:${c}" data-c="${c}" aria-label="لون"></button>`).join('')}</div>
+    <div class="lbl" style="margin-bottom:8px">الرمز</div><div class="picker">${ICONS.map(i=>`<button class="pi" data-i="${i}">${i}</button>`).join('')}</div>`,
+    buttons:[{label:'إلغاء',cls:'ghost'},{label:'حفظ',cls:'primary',onClick:()=>{
+      const name=$('#sn').value.trim();if(!name){sheetErr('اكتب اسم المادة.');return false;}
+      if(liveSubjects().some(x=>x.name===name&&x.id!==id)){sheetErr('توجد مادة بهذا الاسم بالفعل.');return false;}
+      if(s){s.name=name;s.color=color;s.icon=icon;}else state.subjects.push({id:uid(),name,color,icon});
+      save(true);renderAll();toast(s?'تم تعديل المادة':'تمت إضافة المادة','ok');}}],
+    onOpen:r=>{paint();sheetOn(e=>{const c=e.target.closest('[data-c]'),i=e.target.closest('[data-i]'),g=e.target.closest('[data-sug]');if(c){color=c.dataset.c;paint();}if(i){icon=i.dataset.i;paint();}if(g)$('#sn').value=g.dataset.sug;});}});
+}
+async function deleteSubject(id){
+  const s=subj(id),k=subjStats(id);
+  const ok=await confirmDlg({title:'حذف المادة؟',msg:`ستُحذف المادة «<b>${esc(s.name)}</b>» من القوائم. ${k.n||k.done+k.open?`وستبقى ${k.n} جلسة و${k.done+k.open} مهمة مرتبطة بها محفوظة في الأرشيف باسم المادة المحذوفة.`:'لا توجد سجلات مرتبطة بها.'}`,ok:'حذف المادة',danger:true});
+  if(!ok)return;s.deleted=true;if(ui.pick.sub===id)ui.pick.sub='';if(state.timer&&state.timer.sub===id)state.timer.sub='';save(true);renderAll();toast('تم حذف المادة');
+}
+
+/* ================= المهام ================= */
+function taskList(filter){
+  const td=dkey(Date.now()),all=state.tasks;
+  const f={today:t=>!t.done&&t.date&&t.date<=td,upcoming:t=>!t.done&&t.date&&t.date>td,nodate:t=>!t.done&&!t.date,done:t=>t.done,all:()=>true}[filter]||(()=>true);
+  const l=all.filter(f);
+  return filter==='done'?l.sort((a,b)=>b.doneAt-a.doneAt):l.sort(taskSort);
+}
+P.tasks=function(){
+  const tabs=[['today','اليوم'],['upcoming','القادمة'],['nodate','بدون تاريخ'],['done','المكتملة'],['all','الكل']];
+  const list=taskList(ui.taskFilter);
+  const msg={today:['لا مهام لليوم','أضف مهمة أو استمتع بوقتك.'],upcoming:['لا مهام قادمة','المهام ذات التواريخ القادمة تظهر هنا.'],nodate:['لا مهام بدون تاريخ',''],done:['لا مهام مكتملة بعد','ستحتفظ هنا بسجل إنجازاتك.'],all:['لا مهام بعد','ابدأ بإضافة أول مهمة.']}[ui.taskFilter];
+  return `${pageHead('المهام','رتّب دراستك في خطوات صغيرة قابلة للإنجاز.',`<button class="btn primary" data-act="task-add">${ic.plus}<span>مهمة جديدة</span></button>`)}
+  <div class="tabs" role="tablist">${tabs.map(([k,l])=>`<button role="tab" aria-selected="${ui.taskFilter===k}" class="${ui.taskFilter===k?'on':''}" data-act="task-filter" data-v="${k}">${l} <span class="num xs">${taskList(k).length}</span></button>`).join('')}</div>
+  <div class="card tight">${list.length?list.map(t=>taskRow(t)).join(''):`<div class="empty"><b>${msg[0]}</b>${msg[1]}</div>`}</div>
+  ${ui.taskFilter==='done'&&list.length?`<p class="hint" style="margin-top:12px">المهام المكتملة محفوظة في الأرشيف أيضًا.</p>`:''}`;
+};
+function taskSheet(id,preset={}){
+  const t=id?state.tasks.find(x=>x.id===id):null;let pr=t?t.pr:2;
+  openSheet({title:t?'تعديل المهمة':'مهمة جديدة',body:`
+    <div class="field"><label for="tt">اسم المهمة</label><input id="tt" type="text" maxlength="140" value="${esc(t?t.title:'')}" placeholder="مثال: حل مسائل الفصل الرابع"></div>
+    <div class="field"><label for="td">وصف (اختياري)</label><textarea id="td" rows="2" maxlength="800">${esc(t?t.desc:'')}</textarea></div>
+    <div class="two"><div class="field"><label for="ts">المادة</label><select id="ts">${subjOptions(t?t.sub:(preset.sub||''))}</select></div>
+    <div class="field"><label for="tdt">التاريخ (اختياري)</label><input id="tdt" type="date" value="${esc(t?t.date:(preset.date||''))}"></div></div>
+    <div class="row" style="margin:-4px 0 14px"><button class="chip" data-d="0">اليوم</button><button class="chip" data-d="1">غدًا</button><button class="chip" data-d="x">بدون تاريخ</button></div>
+    <div class="lbl" style="margin-bottom:8px">الأولوية</div>
+    <div class="seg" id="tpr">${[1,2,3].map(n=>`<button data-p="${n}" class="${n===pr?'on':''}">${{1:'عالية',2:'متوسطة',3:'منخفضة'}[n]}</button>`).join('')}</div>`,
+    buttons:[{label:'إلغاء',cls:'ghost'},{label:'حفظ',cls:'primary',onClick:()=>{
+      const title=$('#tt').value.trim();if(!title){sheetErr('اكتب اسم المهمة.');return false;}
+      const date=$('#tdt').value;const o={title,desc:$('#td').value.trim(),sub:$('#ts').value,date:isKey(date)?date:'',pr};
+      if(t)Object.assign(t,o);else state.tasks.push(Object.assign({id:uid(),done:false,doneAt:null,createdAt:Date.now()},o));
+      save(true);renderAll();if(ui.page==='calendar')calDetail();toast(t?'تم تعديل المهمة':'تمت إضافة المهمة','ok');}}],
+    onOpen:r=>sheetOn(e=>{
+      const p=e.target.closest('[data-p]'),d=e.target.closest('[data-d]');
+      if(p){pr=+p.dataset.p;$$('#tpr button').forEach(b=>b.classList.toggle('on',+b.dataset.p===pr));}
+      if(d){$('#tdt').value=d.dataset.d==='x'?'':dkey(addDays(sod(Date.now()),+d.dataset.d));}
+    })});
+}
+function toggleTask(id){
+  const t=state.tasks.find(x=>x.id===id);if(!t)return;
+  t.done=!t.done;t.doneAt=t.done?Date.now():null;save(true);renderAll();if(ui.page==='calendar')calDetail();
+  if(t.done)celebrate('أنجزت: '+(t.title.length>40?t.title.slice(0,40)+'…':t.title),rnd(MSG.task));
+}
+async function trashItem(type,item){
+  state.trash.push({id:uid(),type,item:JSON.parse(JSON.stringify(item)),at:Date.now()});
+}
+async function deleteTask(id){
+  const t=state.tasks.find(x=>x.id===id);if(!t)return;
+  const ok=await confirmDlg({title:'حذف المهمة؟',msg:`سيتم نقل «<b>${esc(t.title)}</b>» إلى سلة المحذوفات في الأرشيف، ويمكنك استعادتها خلال 30 يومًا.`,ok:'حذف',danger:true});
+  if(!ok)return;trashItem('task',t);state.tasks=state.tasks.filter(x=>x.id!==id);save(true);renderAll();if(ui.page==='calendar')calDetail();toast('نُقلت المهمة إلى المحذوفات');
+}
+
+/* ================= محرّر الجلسات ================= */
+function sessionSheet(id){
+  const s=id?state.sessions.find(x=>x.id===id):null;
+  const n=Date.now(),st=s?s.start:n-3600000,en=s?s.end:n;
+  openSheet({title:s?'تفاصيل الجلسة':'إضافة جلسة يدويًا',body:`
+    <div class="field"><label for="e-sub">المادة</label><select id="e-sub">${subjOptions(s?s.sub:ui.pick.sub)}</select></div>
+    <div class="field"><label for="e-title">العنوان</label><input id="e-title" type="text" maxlength="120" value="${esc(s?s.title:'')}"></div>
+    <div class="field"><label for="e-note">الملاحظة</label><textarea id="e-note" rows="2" maxlength="600">${esc(s?s.note:'')}</textarea></div>
+    <div class="two"><div class="field"><label for="e-st">البداية</label><input id="e-st" type="datetime-local" value="${toLocalInput(st)}"></div>
+    <div class="field"><label for="e-en">النهاية</label><input id="e-en" type="datetime-local" value="${toLocalInput(en)}"></div></div>
+    <p class="hint" id="e-info">${s&&s.paused>0?`المدة الفعلية تستثني ${fmtDur(s.paused)} من التوقفات المؤقتة.`:'المدة = النهاية − البداية.'}</p>`,
+    buttons:[...(s?[{label:'حذف',cls:'danger',onClick:()=>{sheetDismiss=null;closeSheet();deleteSession(id);return false;}}]:[]),{label:'إلغاء',cls:'ghost'},{label:'حفظ',cls:'primary',onClick:()=>{
+      const a=new Date($('#e-st').value).getTime(),b=new Date($('#e-en').value).getTime();
+      if(!isFinite(a)||!isFinite(b)){sheetErr('أدخل وقتي البداية والنهاية.');return false;}
+      if(b<=a){sheetErr('وقت النهاية يجب أن يكون بعد وقت البداية.');return false;}
+      if(b>Date.now()+60000){sheetErr('لا يمكن أن تكون النهاية في المستقبل.');return false;}
+      if(b-a>24*3600000){sheetErr('الجلسة أطول من 24 ساعة، تأكد من التاريخين.');return false;}
+      const paused=s?Math.min(s.paused||0,b-a):0,dur=b-a-paused;
+      const o={sub:$('#e-sub').value,title:$('#e-title').value.trim(),note:$('#e-note').value.trim(),start:a,end:b,dur,paused};
+      if(s)Object.assign(s,o);else state.sessions.push(Object.assign({id:uid(),manual:true},o));
+      save(true);renderAll();if(ui.page==='archive')archList();toast('تم حفظ الجلسة','ok');}}]});
+}
+async function deleteSession(id){
+  const s=state.sessions.find(x=>x.id===id);if(!s)return;
+  const ok=await confirmDlg({title:'حذف الجلسة؟',msg:`ستُنقل جلسة (${fmtDur(s.dur)}) بتاريخ ${F.dm.format(s.start)} إلى سلة المحذوفات، ويمكنك استعادتها خلال 30 يومًا.`,ok:'حذف',danger:true});
+  if(!ok)return;trashItem('session',s);state.sessions=state.sessions.filter(x=>x.id!==id);save(true);renderAll();if(ui.page==='archive')archList();toast('نُقلت الجلسة إلى المحذوفات');
+}
+
+/* ================= التقويم ================= */
+const WD=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+P.calendar=function(){
+  const {y,m}=ui.cal,ws=S().weekStart,first=new Date(y,m,1),dim=new Date(y,m+1,0).getDate(),lead=(first.getDay()-ws+7)%7;
+  const a=first.getTime(),b=new Date(y,m+1,1).getTime(),tot={};
+  sessionsIn(a,b).forEach(s=>{const k=dkey(s.start);tot[k]=(tot[k]||0)+s.dur;});
+  const exm={};state.exams.forEach(x=>{exm[x.date]=1;});
+  const due={},dn={};state.tasks.forEach(t=>{if(t.date&&!t.done)due[t.date]=1;if(t.done&&t.doneAt)dn[dkey(t.doneAt)]=1;});
+  const td=dkey(Date.now());let cells='';
+  for(let i=0;i<lead;i++)cells+='<div class="cday empty-c"></div>';
+  for(let d=1;d<=dim;d++){const k=y+'-'+pad(m+1)+'-'+pad(d),min=(tot[k]||0)/60000,l=min>=180?4:min>=90?3:min>=30?2:min>0?1:0;
+    cells+=`<button class="cday ${l?'l'+l:''} ${k===td?'today':''} ${ui.cal.sel===k?'sel':''}" data-act="cal-day" data-key="${k}" aria-label="${F.dm.format(parseKey(k))}${tot[k]?'، دراسة '+fmtDur(tot[k]):''}"><span class="n num">${d}</span>${exm[k]?'<i class="ex">★</i>':''}${due[k]?'<i class="tk"></i>':''}${dn[k]?'<i class="ck"></i>':''}</button>`;}
+  const heads=[...Array(7)].map((_,i)=>`<div class="cwd">${WD[(ws+i)%7]}</div>`).join('');
+  return `${pageHead('التقويم','نظرة شهرية على أيام دراستك ومهامك.')}
+  <div class="cols c2b"><section class="card"><div class="calhead"><button class="icon-btn" data-act="cal-prev" aria-label="الشهر السابق">${ic.prev}</button><h2>${F.my.format(first)}</h2><button class="icon-btn" data-act="cal-next" aria-label="الشهر التالي">${ic.next}</button></div>
+    <div class="calgrid">${heads}${cells}</div>
+    <div class="legend"><span>الدراسة:</span><i style="background:var(--s1);border:1px solid var(--line)"></i><span>لا شيء</span><i style="background:color-mix(in srgb,var(--v) 20%,var(--s1))"></i><i style="background:color-mix(in srgb,var(--v) 38%,var(--s1))"></i><i style="background:color-mix(in srgb,var(--v) 56%,var(--s1))"></i><i style="background:color-mix(in srgb,var(--v) 80%,var(--s1))"></i><span>أكثر</span></div>
+    <div class="legend"><span style="color:var(--v3)">★</span><span>اختبار</span><i style="width:8px;height:8px;border-radius:50%;background:var(--warm)"></i><span>مهمة مستحقة</span><i style="width:8px;height:8px;border-radius:50%;background:var(--ok)"></i><span>مهمة منجزة</span></div>
+    <div class="row" style="margin-top:12px"><button class="btn soft" data-act="cal-today">اليوم</button></div></section>
+  <section class="card" id="cal-detail">${calDetailHTML()}</section></div>`;
+};
+function calDetailHTML(){
+  const k=ui.cal.sel;if(!k)return '<div class="empty"><b>اختر يومًا</b>اضغط على أي يوم لرؤية جلساته ومهامه.</div>';
+  const a=parseKey(k).getTime(),st=dayStats(a),due=state.tasks.filter(t=>t.date===k).sort(taskSort),cl=state.closures[k];
+  return `<h2>${F.full.format(a)}</h2>
+   <div class="grid g3" style="margin:12px 0"><div class="tile acc"><b>${fmtDur(st.total)}</b><span>وقت الدراسة</span></div><div class="tile"><b class="num">${st.ss.length}</b><span>جلسات</span></div><div class="tile"><b class="num">${st.done.length}</b><span>مهام منجزة</span></div></div>
+   ${st.ss.length?st.ss.map(s=>sessionRow(s,{noDel:true})).join(''):'<p class="mut">لا جلسات في هذا اليوم.</p>'}
+   ${state.exams.filter(x=>x.date===k).map(x=>`<div class="note-box" style="margin-top:12px">★ اختبار: <b>${esc(x.title)}</b>${x.sub&&subj(x.sub)?' — '+esc(subjName(x.sub)):''}</div>`).join('')}
+   <h3 style="margin:16px 0 4px">مهام هذا اليوم</h3>${due.length?due.map(t=>taskRow(t,{noDel:true})).join(''):'<p class="mut">لا مهام مجدولة.</p>'}
+   ${cl&&cl.note?`<div class="note-box" style="margin-top:14px">كلمتك لنفسك: ${esc(cl.note)}</div>`:''}
+   <div class="row" style="margin-top:14px"><button class="btn soft" data-act="task-add-date" data-key="${k}">${ic.plus}<span>مهمة لهذا اليوم</span></button><button class="btn" data-act="nav-day" data-key="${k}">ملخص اليوم</button></div>`;
+}
+function calDetail(){const d=$('#cal-detail');if(d)d.innerHTML=calDetailHTML();}
+
+/* ================= التقارير ================= */
+function periodFor(range,off){
+  const td=sod(Date.now()),d=new Date(td);let a,b,label;
+  if(range==='day'){a=addDays(td,off);b=addDays(a,1);label=F.full.format(a);}
+  else if(range==='week'){a=addDays(weekStartOf(td),off*7);b=addDays(a,7);label=F.dm.format(a)+' – '+F.dm.format(addDays(b,-1));}
+  else if(range==='month'){a=new Date(d.getFullYear(),d.getMonth()+off,1).getTime();b=new Date(d.getFullYear(),d.getMonth()+off+1,1).getTime();label=F.my.format(a);}
+  else if(range==='year'){a=new Date(d.getFullYear()+off,0,1).getTime();b=new Date(d.getFullYear()+off+1,0,1).getTime();label='سنة '+(d.getFullYear()+off);}
+  else{const f=ui.report.from,t=ui.report.to;if(!isKey(f)||!isKey(t)||t<f)return null;a=parseKey(f).getTime();b=addDays(parseKey(t).getTime(),1);label=F.dmy.format(a)+' – '+F.dmy.format(addDays(b,-1));}
+  const days=Math.max(1,Math.round((b-a)/DAY));
+  const elapsed=clamp(Math.round((Math.min(b,addDays(td,1))-a)/DAY),0,days);
+  return {a,b,label,days,elapsed,range,off,ongoing:b>addDays(td,0)&&a<=td};
+}
+function prevPeriod(p){
+  if(p.range==='month'||p.range==='year'||p.range==='week'||p.range==='day')return periodFor(p.range,p.off-1);
+  const len=p.b-p.a;return {a:p.a-len,b:p.a,label:'الفترة السابقة',range:'custom',days:p.days};
+}
+function metrics(a,b){
+  const ss=sessionsIn(a,b),total=sum(ss,s=>s.dur),days=new Set(ss.map(s=>dkey(s.start))),by={};
+  ss.forEach(s=>{by[s.sub||'']=(by[s.sub||'']||0)+s.dur;});
+  return {ss,total,n:ss.length,days:days.size,by,tasks:doneIn(a,b).length,longest:ss.length?Math.max(...ss.map(s=>s.dur)):0};
+}
+function buckets(p){
+  const out=[];
+  if(p.range==='day'){for(let h=0;h<24;h++)out.push({a:p.a+h*3600000,b:p.a+(h+1)*3600000,label:String(h),kind:'h'});return out;}
+  if(p.range==='year'||(p.range==='custom'&&p.days>400)){let c=new Date(p.a);c=new Date(c.getFullYear(),c.getMonth(),1);while(c.getTime()<p.b){const n=new Date(c.getFullYear(),c.getMonth()+1,1);out.push({a:Math.max(c.getTime(),p.a),b:Math.min(n.getTime(),p.b),label:F.mon.format(c),kind:'m'});c=n;}return out;}
+  if(p.range==='custom'&&p.days>62){let c=p.a;while(c<p.b){const n=Math.min(addDays(c,7),p.b);out.push({a:c,b:n,label:String(new Date(c).getDate()),kind:'w'});c=n;}return out;}
+  for(let c=p.a;c<p.b;c=addDays(c,1))out.push({a:c,b:addDays(c,1),label:p.range==='week'?F.wds.format(c):String(new Date(c).getDate()),kind:'d'});
+  return out;
+}
+function bucketValues(p,bk){
+  const v=bk.map(()=>0);
+  state.sessions.forEach(s=>{
+    if(s.start<p.a||s.start>=p.b)return;
+    if(p.range==='day'){const span=Math.max(1,s.end-s.start),f=s.dur/span;bk.forEach((x,i)=>{const o=Math.min(s.end,x.b)-Math.max(s.start,x.a);if(o>0)v[i]+=o*f;});}
+    else{const i=bk.findIndex(x=>s.start>=x.a&&s.start<x.b);if(i>=0)v[i]+=s.dur;}
+  });
+  return v;
+}
+function barChart(bk,v){
+  const W=640,H=200,pl=8,pb=26,pt=14,max=Math.max(...v,1),useH=max>=2*3600000,unit=useH?3600000:60000,top=Math.ceil(max/unit/ (useH?1:10))*(useH?1:10)*unit||unit;
+  const n=bk.length,step=(W-pl*2-44)/n,bw=Math.min(step*.66,34),ch=H-pb-pt;
+  let g=`<line class="bgl" x1="${pl+44}" x2="${W-pl}" y1="${pt}" y2="${pt}"/><line class="bgl" x1="${pl+44}" x2="${W-pl}" y1="${pt+ch}" y2="${pt+ch}"/><text class="ax" x="${pl+38}" y="${pt+4}" text-anchor="end">${top/unit}${useH?' س':' د'}</text><text class="ax" x="${pl+38}" y="${pt+ch+4}" text-anchor="end">0</text>`;
+  const every=n>24?Math.ceil(n/12):1;
+  bk.forEach((x,i)=>{const cx=W-pl-(i+.5)*step,h=v[i]>0?Math.max(3,v[i]/top*ch):2;
+    g+=`<rect class="b ${v[i]>0?'':'z'} ${ui.report.sel===i?'sel':''}" data-act="bar" data-i="${i}" x="${cx-bw/2}" y="${pt+ch-h}" width="${bw}" height="${h}" rx="5"/>`;
+    if(i%every===0)g+=`<text x="${cx}" y="${H-6}" text-anchor="middle">${esc(x.label)}</text>`;});
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="رسم بياني لوقت الدراسة">${g}</svg>`;
+}
+function bucketName(p,x){return p.range==='day'?`الساعة ${x.label}`:x.kind==='m'?F.my.format(x.a):x.kind==='w'?`أسبوع يبدأ ${F.dm.format(x.a)}`:F.full.format(x.a);}
+P.reports=function(){
+  const R=ui.report,p=periodFor(R.range,R.off),ranges=[['day','اليوم'],['week','الأسبوع'],['month','الشهر'],['year','السنة'],['custom','فترة مخصصة']];
+  let body='';
+  if(!p){body='<div class="empty"><b>حدّد بداية الفترة ونهايتها</b>اختر تاريخين صحيحين لعرض التقرير.</div>';}
+  else{
+    const m=metrics(p.a,p.b),pp=S().showCompare?prevPeriod(p):null,pm=pp?metrics(pp.a,pp.b):null,st=streaks();
+    if(!m.n&&!m.tasks){body=`<div class="empty"><b>لا توجد سجلات في هذه الفترة</b>لن نعرض أرقامًا أو رسومًا إلا من بيانات حقيقية. ابدأ جلسة وسيظهر تقريرك هنا.</div>`;}
+    else{
+      const bk=buckets(p),v=bucketValues(p,bk);R.cache={p,bk,v};
+      const avgStudy=m.days?m.total/m.days:0,avgCal=p.elapsed?m.total/p.elapsed:0;
+      const subs=Object.keys(m.by).map(k=>({id:k,ms:m.by[k]})).sort((a,b)=>b.ms-a.ms);
+      const diff=(c,pv,f)=>{const d=c-pv;return d===0?'مطابق للفترة السابقة':`${d>0?'أكثر':'أقل'} بـ ${f(Math.abs(d))} من الفترة السابقة`;};
+      body=`<div class="grid g4">${stat(fmtDur(m.total),'إجمالي وقت الدراسة','acc')}${stat(num(m.n),'عدد الجلسات')}${stat(num(m.tasks),'مهام مكتملة')}${stat(`${m.days} من ${p.days}`,'أيام درست فيها')}</div>
+      <div class="cols c2" style="margin-top:18px"><section class="card"><h2>${R.range==='day'?'توزيع اليوم بالساعات':'توزيع وقت الدراسة'}</h2>${barChart(bk,v)}<div class="readout" id="readout">اضغط على عمود لرؤية قيمته.</div></section>
+      <section class="card"><h2>المواد التي درستها</h2>${subs.length?subs.map(x=>{const s=subj(x.id);return `<div class="sbar"><span class="nm">${s?s.icon:'📖'} ${esc(subjName(x.id))}</span><div class="bar"><i style="--c:${s?s.color:'#8F86A8'};width:${x.ms/m.total*100}%"></i></div><span class="vl">${fmtDur(x.ms)}</span></div>`;}).join(''):'<p class="mut">لا مواد.</p>'}</section></div>
+      <div class="cols c2" style="margin-top:18px"><section class="card"><h2>المتوسطات</h2>
+        <div class="kv"><span>متوسط وقت الدراسة في يوم دراسة</span><b>${m.days?fmtDur(avgStudy):'—'}</b></div><p class="hint">يُحسب بقسمة إجمالي الوقت (${fmtDur(m.total)}) على ${m.days} يوم درست فيه فعليًا.</p>
+        ${S().showCalAvg?`<div class="kv" style="margin-top:8px"><span>متوسط يومي على كل أيام الفترة</span><b>${p.elapsed?fmtDur(avgCal):'—'}</b></div><p class="hint">يُحسب بقسمة الإجمالي على ${p.elapsed} يوم مضى من الفترة، بما فيها أيام الراحة.</p>`:''}
+        <div class="kv" style="margin-top:8px"><span>متوسط مدة الجلسة</span><b>${fmtDur(m.total/m.n)}</b></div><div class="kv"><span>أطول جلسة</span><b>${fmtDur(m.longest)}</b></div></section>
+      <section class="card"><h2>الاستمرارية والمقارنة</h2>
+        <div class="kv"><span>أيام دراسة متتالية حاليًا</span><b class="num">${st.cur}</b></div><div class="kv"><span>أطول سلسلة سابقة</span><b class="num">${st.best}</b></div>
+        ${pp&&pm?(pm.n?`<div style="margin-top:12px"><div class="mut sm" style="margin-bottom:6px">مقارنة مع ${esc(pp.label)}</div><p>• الوقت: ${diff(m.total,pm.total,fmtDur)}</p><p>• الجلسات: ${diff(m.n,pm.n,x=>num(x))}</p><p>• المهام: ${diff(m.tasks,pm.tasks,x=>num(x))}</p>${p.ongoing?'<p class="hint">الفترة الحالية لم تنتهِ بعد، فالمقارنة تقريبية.</p>':''}</div>`:`<p class="mut" style="margin-top:12px">لا توجد بيانات كافية في الفترة السابقة للمقارنة.</p>`):''}</section></div>`;
+    }
+  }
+  return `${pageHead('الإحصائيات والتقارير','لتفهم نمط دراستك وتحسّنه، لا لملاحقة الأرقام.')}
+  <div class="tabs" role="tablist">${ranges.map(([k,l])=>`<button role="tab" aria-selected="${R.range===k}" class="${R.range===k?'on':''}" data-act="rep-range" data-v="${k}">${l}</button>`).join('')}</div>
+  ${R.range==='custom'?`<div class="card tight two" style="margin-bottom:14px"><div class="field" style="margin:0"><label for="rf">من</label><input id="rf" type="date" data-set-rep="from" value="${esc(R.from)}"></div><div class="field" style="margin:0"><label for="rt">إلى</label><input id="rt" type="date" data-set-rep="to" value="${esc(R.to)}"></div></div>`
+    :`<div class="calhead"><button class="icon-btn" data-act="rep-prev" aria-label="الفترة السابقة">${ic.prev}</button><h2 style="font-size:1.25rem">${p?esc(p.label):''}</h2><button class="icon-btn" data-act="rep-next" aria-label="الفترة التالية" ${R.off>=0?'disabled style="opacity:.3"':''}>${ic.next}</button></div>`}
+  ${body}`;
+};
+
+/* ================= الأرشيف ================= */
+function archFilter(){
+  const A=ui.arch,q=A.q.trim().toLowerCase();
+  const fromT=isKey(A.from)?parseKey(A.from).getTime():-Infinity,toT=isKey(A.to)?addDays(parseKey(A.to).getTime(),1):Infinity;
+  const hit=(txt)=>!q||txt.toLowerCase().includes(q);
+  if(A.tab==='sessions')return state.sessions.filter(s=>s.start>=fromT&&s.start<toT&&(!A.sub||s.sub===A.sub)&&hit(`${s.title} ${s.note} ${subjName(s.sub)}`)).sort((a,b)=>b.start-a.start);
+  if(A.tab==='tasks')return state.tasks.filter(t=>t.done&&t.doneAt>=fromT&&t.doneAt<toT&&(!A.sub||t.sub===A.sub)&&hit(`${t.title} ${t.desc} ${subjName(t.sub)}`)).sort((a,b)=>b.doneAt-a.doneAt);
+  if(A.tab==='days')return Object.keys(state.closures).filter(k=>{const t=parseKey(k).getTime();return t>=fromT&&t<toT&&hit(state.closures[k].note||'');}).sort().reverse();
+  return state.trash.slice().sort((a,b)=>b.at-a.at);
+}
+function archList(){const l=$('#arch-list');if(l)l.innerHTML=archListHTML();}
+function archListHTML(){
+  const A=ui.arch,items=archFilter(),shown=items.slice(0,A.limit);
+  if(!items.length)return `<div class="empty"><b>${A.tab==='trash'?'سلة المحذوفات فارغة':'لا نتائج'}</b>${A.q||A.sub||A.from||A.to?'جرّب تغيير البحث أو التصفية.':'ستظهر السجلات هنا عند حفظها.'}</div>`;
+  let h='';
+  if(A.tab==='sessions'){let last='';shown.forEach(s=>{const k=dkey(s.start);if(k!==last){last=k;const tot=sum(items.filter(x=>dkey(x.start)===k),x=>x.dur);h+=`<div class="dayh"><span>${F.full.format(s.start)}</span><span>${fmtDur(tot)}</span></div>`;}h+=sessionRow(s);});}
+  else if(A.tab==='tasks'){shown.forEach(t=>{h+=taskRow(t,{noDel:false})+`<div class="xs dim" style="padding:0 52px 8px">أُنجزت ${F.dtm.format(t.doneAt)}</div>`;});}
+  else if(A.tab==='days'){shown.forEach(k=>{const c=state.closures[k],st=dayStats(parseKey(k).getTime());h+=`<button class="srow" data-act="nav-day" data-key="${k}"><span class="sbadge sm">🌙</span><div class="mid"><div class="t">${F.full.format(parseKey(k))}</div><div class="m">${c.note?esc(c.note.slice(0,80)):'بدون ملاحظة'}</div></div><span class="dur num">${fmtDur(st.total)}</span></button>`;});}
+  else{shown.forEach(x=>{const title=x.type==='session'?`جلسة ${fmtDur(x.item.dur)} — ${esc(x.item.title||subjName(x.item.sub))}`:`مهمة: ${esc(x.item.title)}`;h+=`<div class="srow"><div class="mid"><div class="t">${title}</div><div class="m">حُذفت ${F.dtm.format(x.at)} — تُحذف نهائيًا بعد ${Math.max(0,30-Math.floor((Date.now()-x.at)/DAY))} يومًا</div></div><button class="btn soft" data-act="tr-restore" data-id="${x.id}">استعادة</button><button class="icon-btn sm" data-act="tr-purge" data-id="${x.id}" aria-label="حذف نهائي">${ic.trash}</button></div>`;});}
+  if(items.length>A.limit)h+=`<div class="row" style="justify-content:center;margin:14px"><button class="btn" data-act="arch-more">عرض المزيد (${items.length-A.limit})</button></div>`;
+  return h;
+}
+P.archive=function(){
+  const A=ui.arch,tabs=[['sessions','الجلسات'],['tasks','المهام المنجزة'],['days','ملخصات الأيام'],['trash','المحذوفات']];
+  const showF=A.tab!=='trash';
+  return `${pageHead('الأرشيف','سجل رحلتك الدراسية: ابحث، راجع، عدّل، وارجع إليه وقت الحاجة.')}
+  <div class="tabs" role="tablist">${tabs.map(([k,l])=>`<button role="tab" aria-selected="${A.tab===k}" class="${A.tab===k?'on':''}" data-act="arch-tab" data-v="${k}">${l}</button>`).join('')}</div>
+  ${showF?`<div class="card tight" style="margin-bottom:14px"><div class="field"><label for="aq">بحث</label><input id="aq" type="search" data-in="arch-q" value="${esc(A.q)}" placeholder="ابحث في العناوين والملاحظات"></div>
+   <div class="two"><div class="field" style="margin:0"><label for="afrom">من تاريخ</label><input id="afrom" type="date" data-in="arch-from" value="${esc(A.from)}"></div><div class="field" style="margin:0"><label for="ato">إلى تاريخ</label><input id="ato" type="date" data-in="arch-to" value="${esc(A.to)}"></div></div>
+   ${A.tab!=='days'?`<div class="field" style="margin:14px 0 0"><label for="asub">المادة</label><select id="asub" data-in="arch-sub"><option value="">كل المواد</option>${state.subjects.map(s=>`<option value="${s.id}" ${A.sub===s.id?'selected':''}>${s.icon} ${esc(s.name)}${s.deleted?' (محذوفة)':''}</option>`).join('')}</select></div>`:''}</div>`:`<p class="hint" style="margin-bottom:12px">العناصر المحذوفة تبقى هنا 30 يومًا ثم تُزال نهائيًا.</p>`}
+  <div class="card tight" id="arch-list">${archListHTML()}</div>`;
+};
+
+/* ================= ملخص نهاية اليوم ================= */
+P.day=function(){
+  const k=isKey(ui.arg)?ui.arg:dkey(Date.now()),a=parseKey(k).getTime(),st=dayStats(a),cl=state.closures[k]||{};
+  const isToday=k===dkey(Date.now());
+  if(!ui.daySticker[k])ui.daySticker[k]={st:pickSticker()||false,dua:pick('duas')};
+  const ds=ui.daySticker[k],mins=st.total/60000;
+  const msg=(!st.ss.length&&!st.done.length)?'كان يومًا هادئًا، والراحة جزء من الرحلة. غدًا فرصة جديدة، وأنت بخير كما أنت.'
+    :mins<45&&st.done.length<3?'خطوة صغيرة اليوم أفضل من لا شيء، وقد خطوتها. هذا بحد ذاته يستحق التقدير.'
+    :mins<180?'يوم فيه جهد حقيقي. استمرارك بهدوء هو ما يصنع الفرق.':'يوم حافل بالجهد. أحسنت، وخذ حقك من الراحة الآن.';
+  const subs=Object.keys(st.by).map(x=>({id:x,ms:st.by[x]})).sort((x,y)=>y.ms-x.ms);
+  const rem=state.tasks.filter(t=>!t.done&&t.date&&t.date<=k).length;
+  return `${pageHead(isToday?'ملخص نهاية اليوم':'ملخص يوم',F.full.format(a))}
+  <section class="card dayhero">${ds.st?stickerHTML(ds.st,110):`<div class="cele-spark" style="margin:0 auto 10px;width:70px;height:70px">${ic.sparkle}</div>`}<p class="big-msg">${msg}</p></section>
+  <div class="grid g3" style="margin-top:16px">${stat(fmtDur(st.total),'مجموع وقت الدراسة','acc')}${stat(num(st.ss.length),'جلسات مكتملة')}${stat(num(st.done.length),'مهام منجزة')}</div>
+  <div class="cols c2" style="margin-top:18px"><section class="card"><h2>ما تحقق</h2>
+    ${subs.length?subs.map(x=>{const s=subj(x.id);return `<div class="sbar"><span class="nm">${s?s.icon:'📖'} ${esc(subjName(x.id))}</span><div class="bar"><i style="--c:${s?s.color:'#8F86A8'};width:${x.ms/st.total*100}%"></i></div><span class="vl">${fmtDur(x.ms)}</span></div>`;}).join(''):''}
+    ${st.done.length?`<h3 style="margin:14px 0 4px">مهام أنجزتها</h3>${st.done.map(t=>`<p>✓ ${esc(t.title)}</p>`).join('')}`:''}
+    ${!subs.length&&!st.done.length?'<p class="mut">لا سجلات في هذا اليوم، وهذا طبيعي.</p>':''}
+    ${isToday&&rem?`<p class="hint" style="margin-top:12px">لديك ${rem} ${rem>2?'مهام':'مهمة'} مؤجلة، وستكون في انتظارك بلا استعجال.</p>`:''}</section>
+   <section class="card"><h2>دعاء</h2><p class="dua">${ds.dua?esc(ds.dua.text):'رَبِّ زِدْنِي عِلْمًا.'}</p>
+    <div class="field" style="margin-top:12px"><label for="day-note">كلمة لنفسي عن هذا اليوم (اختياري)</label><textarea id="day-note" rows="3" maxlength="800" placeholder="ما الذي تعلمته؟ ما الذي تفخر به؟">${esc(cl.note||'')}</textarea></div>
+    <button class="btn primary block" data-act="day-save" data-key="${k}">${ic.check}<span>${cl.closedAt?'تحديث الملخص':'حفظ الملخص وإنهاء اليوم'}</span></button>
+    ${cl.closedAt?`<p class="hint" style="margin-top:8px">حُفظ ${F.dtm.format(cl.closedAt)}</p>`:''}</section></div>`;
+};
+
+
+/* ================= الاختبارات والأهداف ================= */
+const daysLeft=k=>Math.round((parseKey(k).getTime()-sod(Date.now()))/DAY);
+const leftText=n=>n===0?'اليوم':n===1?'غدًا':n===2?'بعد يومين':n<=10?`باقي ${n} أيام`:`باقي ${n} يومًا`;
+function examRow(x){
+  const s=subj(x.sub),n=daysLeft(x.date);
+  return `<button class="srow" data-act="exam-edit" data-id="${x.id}"><span class="sbadge sm" style="--c:${s?s.color:'#8F86A8'}">${s?s.icon:'📝'}</span><div class="mid"><div class="t">${esc(x.title)}</div><div class="m">${F.full.format(parseKey(x.date))}${s?' — '+esc(s.name):''}</div></div><span class="dur">${n<0?'انتهى':leftText(n)}</span></button>`;
+}
+const upcomingExams=()=>state.exams.filter(x=>x.date>=dkey(Date.now())).sort((a,b)=>a.date.localeCompare(b.date));
+function examsCardHTML(){
+  const up=upcomingExams().slice(0,3);if(!up.length)return '';
+  return `<section class="card"><div class="row" style="justify-content:space-between;margin-bottom:6px"><h2>الاختبارات القادمة</h2><button class="lnk" data-act="nav" data-go="goals">الكل</button></div>${up.map(examRow).join('')}</section>`;
+}
+function weekStudyBy(sub){const w=nowRanges().week;return sum(sessionsIn(...w).filter(s=>s.sub===sub),s=>s.dur);}
+function goalsCardHTML(){
+  const G=S().weekGoals||{},subs=liveSubjects().filter(s=>G[s.id]>0);if(!subs.length)return '';
+  return `<section class="card"><div class="row" style="justify-content:space-between;margin-bottom:6px"><h2>أهداف هذا الأسبوع</h2><button class="lnk" data-act="nav" data-go="goals">تعديل</button></div>${subs.map(s=>{const d=weekStudyBy(s.id),g=G[s.id]*60000;return `<div class="sbar"><span class="nm">${s.icon} ${esc(s.name)}</span><div class="bar"><i style="--c:${s.color};width:${clamp(d/g*100,0,100)}%"></i></div><span class="vl">${d>=g?'✓ ':''}${fmtDur(d)}</span></div>`;}).join('')}</section>`;
+}
+function examSheet(id){
+  const x=id?state.exams.find(e=>e.id===id):null;
+  openSheet({title:x?'تعديل الاختبار':'اختبار جديد',body:`
+    <div class="field"><label for="x-t">اسم الاختبار</label><input id="x-t" type="text" maxlength="100" value="${esc(x?x.title:'')}" placeholder="مثال: اختبار منتصف الفصل"></div>
+    <div class="two"><div class="field"><label for="x-s">المادة</label><select id="x-s">${subjOptions(x?x.sub:'')}</select></div><div class="field"><label for="x-d">التاريخ</label><input id="x-d" type="date" value="${esc(x?x.date:'')}"></div></div>`,
+    buttons:[...(x?[{label:'حذف',cls:'danger',onClick:()=>{sheetDismiss=null;closeSheet();deleteExam(id);return false;}}]:[]),{label:'إلغاء',cls:'ghost'},{label:'حفظ',cls:'primary',onClick:()=>{
+      const title=$('#x-t').value.trim(),date=$('#x-d').value;
+      if(!title){sheetErr('اكتب اسم الاختبار.');return false;}
+      if(!isKey(date)){sheetErr('اختر تاريخ الاختبار.');return false;}
+      const o={title,sub:$('#x-s').value,date};
+      if(x)Object.assign(x,o);else state.exams.push(Object.assign({id:uid()},o));
+      save(true);renderAll();toast(x?'تم تعديل الاختبار':'تمت إضافة الاختبار','ok');}}]});
+}
+async function deleteExam(id){
+  const x=state.exams.find(e=>e.id===id);if(!x)return;
+  const ok=await confirmDlg({title:'حذف الاختبار؟',msg:`سيُحذف «<b>${esc(x.title)}</b>» من القائمة.`,ok:'حذف',danger:true});
+  if(!ok)return;state.exams=state.exams.filter(e=>e.id!==id);save(true);renderAll();toast('تم حذف الاختبار');
+}
+P.goals=function(){
+  const up=upcomingExams(),td=dkey(Date.now()),past=state.exams.filter(x=>x.date<td).sort((a,b)=>b.date.localeCompare(a.date)).slice(0,5);
+  const subs=liveSubjects(),G=S().weekGoals||{};
+  return `${pageHead('الاختبارات والأهداف','موعد الاختبار يعطي دراستك وجهة، والهدف الأسبوعي يبقى إرشادًا هادئًا لا واجبًا.')}
+  <div class="cols c2">
+   <section class="card"><div class="row" style="justify-content:space-between;margin-bottom:6px"><h2>الاختبارات</h2><button class="btn primary" data-act="exam-add">${ic.plus}<span>اختبار</span></button></div>
+    ${up.length?up.map(examRow).join(''):'<div class="empty"><b>لا اختبارات قادمة</b>أضف موعد اختبارك ليظهر في الرئيسية والتقويم.</div>'}
+    ${past.length?`<h3 style="margin:18px 0 4px" class="mut">اختبارات سابقة</h3>${past.map(examRow).join('')}`:''}</section>
+   <section class="card"><h2>أهداف الأسبوع بالساعات</h2>
+    <p class="hint" style="margin-bottom:8px">اكتب عدد الساعات التي تتمنى دراستها لكل مادة هذا الأسبوع، أو اتركه فارغًا.</p>
+    ${subs.length?subs.map(s=>{const d=weekStudyBy(s.id),g=(G[s.id]||0)*60000;return `<div class="srow"><span class="sbadge sm" style="--c:${s.color}">${s.icon}</span><div class="mid"><div class="t">${esc(s.name)}</div>${g?`<div class="bar" style="margin:6px 0 2px"><i style="width:${clamp(d/g*100,0,100)}%;background:${s.color}"></i></div><div class="m">${d>=g?'✓ بلغت هدف الأسبوع':fmtDur(d)+' من '+fmtDur(g)}</div>`:''}</div><input type="number" inputmode="decimal" min="0" max="100" step="0.5" style="width:92px" data-goal="${s.id}" value="${g?g/3600000:''}" placeholder="0" aria-label="هدف ${esc(s.name)} بالساعات"></div>`;}).join(''):'<div class="empty"><b>أضف موادك أولًا</b><button class="btn primary" data-act="sub-add">إضافة مادة</button></div>'}</section>
+  </div>`;
+};
+
+/* ================= المراجعة المتباعدة ================= */
+const GR=['أعدها','صعبة','جيدة','سهلة'];
+const ivlText=d=>d<=0?'الآن':d===1?'يوم':d===2?'يومان':d<=10?d+' أيام':d<30?d+' يومًا':d<365?'نحو '+Math.round(d/30)+' شهر':'نحو سنة';
+function schedule(c,g){
+  let ease=c.ease||2.5,reps=c.reps||0,ivl=c.ivl||0,lapses=c.lapses||0;
+  if(g===0){lapses++;ease=Math.max(1.3,ease-.2);reps=0;ivl=0;}
+  else if(g===1){ease=Math.max(1.3,ease-.15);ivl=reps===0?1:Math.max(ivl+1,Math.round(ivl*1.2));reps++;}
+  else if(g===2){ivl=reps===0?1:reps===1?3:Math.max(ivl+1,Math.round(ivl*ease));reps++;}
+  else{ease+=.15;ivl=reps===0?3:Math.max(ivl+2,Math.round(ivl*ease*1.3));reps++;}
+  return {ivl:Math.min(ivl,365),ease,reps,lapses};
+}
+const dueCards=()=>{const td=sod(Date.now());return state.cards.filter(c=>c.due<=td);};
+function nextDueText(){
+  const td=sod(Date.now()),f=state.cards.filter(c=>c.due>td).sort((a,b)=>a.due-b.due)[0];
+  if(!f)return '';const n=Math.round((f.due-td)/DAY);
+  return 'أقرب مراجعة '+(n===1?'غدًا':n===2?'بعد يومين':'بعد '+n+' أيام')+'.';
+}
+function nextReviewText(){
+  const td=sod(Date.now()),c=state.cards.filter(x=>x.due>td).map(x=>x.due),l=lectureItems().filter(x=>x.due>td).map(x=>x.due),all=[...c,...l];
+  if(!all.length)return '';const n=Math.round((Math.min(...all)-td)/DAY);
+  return 'أقرب مراجعة '+(n===1?'غدًا':n===2?'بعد يومين':'بعد '+n+' أيام')+'.';
+}
+function reviewCardHTML(){
+  if(!state.cards.length&&!state.lectures.length)return '';
+  const due=dueCards().length,dl=dueLectureItems();
+  return `<section class="card"><div class="row" style="justify-content:space-between;margin-bottom:6px"><h2>مراجعة اليوم</h2><button class="lnk" data-act="nav" data-go="review">كل المراجعات</button></div>
+   ${dl.slice(0,4).map(x=>lecRow(x)).join('')}${dl.length>4?`<p class="hint">و${num(dl.length-4)} مراجعات أخرى في صفحة المراجعة.</p>`:''}
+   ${due?`<p class="mut" style="margin:10px 0 12px">لديك <b class="num" style="color:var(--v3)">${num(due)}</b> ${due>2?'بطاقات':'بطاقة'} تنتظر مراجعتك، ودقائق قليلة تكفي.</p><button class="btn primary block" data-act="review-start">${ic.refresh}<span>ابدأ مراجعة البطاقات</span></button>`:''}
+   ${!dl.length&&!due?`<p class="mut">لا مراجعات مستحقة الآن، أحسنت. ${nextReviewText()}</p>`:''}</section>`;
+}
+/* ---- مراجعة المحاضرات ---- */
+const LSTEPS=[1,2,3,7,14,30];
+const stepText=n=>n===1?'بعد يوم':n===2?'بعد يومين':n===7?'بعد أسبوع':n===14?'بعد أسبوعين':n===30?'بعد شهر':'بعد '+n+' أيام';
+const lecDue=(l,st)=>addDays(parseKey(l.date).getTime(),st);
+function lectureItems(){
+  const out=[];
+  state.lectures.forEach(l=>{const steps=l.steps.slice().sort((a,b)=>a-b);steps.forEach((st,i)=>{if(!(l.done&&l.done[st]))out.push({l,st,n:i+1,total:steps.length,due:lecDue(l,st)});});});
+  return out.sort((a,b)=>a.due-b.due);
+}
+const dueLectureItems=()=>{const td=sod(Date.now());return lectureItems().filter(x=>x.due<=td);};
+function lecRow(x){
+  const td=sod(Date.now()),late=Math.round((td-x.due)/DAY),s=subj(x.l.sub);
+  const when=late>0?`مستحقة منذ ${late} ${late===1?'يوم':'أيام'}`:late===0?'اليوم':F.dm.format(x.due);
+  return `<div class="trow"><button class="chk" role="checkbox" aria-checked="false" aria-label="تمت مراجعتها" data-act="lec-done" data-id="${x.l.id}" data-step="${x.st}"></button>
+   <button class="tmain" data-act="lec-edit" data-id="${x.l.id}"><span class="ttl">${esc(x.l.title)}</span><span class="tmeta">${s?`<span class="mchip" style="--c:${s.color}">${s.icon} ${esc(s.name)}</span>`:''}<span class="mchip">المراجعة ${x.n} من ${x.total}</span><span class="mchip ${late>0?'late':''}">${when}</span></span></button></div>`;
+}
+function lecturesSectionHTML(){
+  const items=lectureItems(),td=sod(Date.now()),due=items.filter(x=>x.due<=td),up=items.filter(x=>x.due>td).slice(0,6),has=state.lectures.length;
+  return `<section class="card" style="margin-bottom:18px"><div class="row" style="justify-content:space-between;margin-bottom:6px"><h2>مراجعة المحاضرات</h2><button class="btn primary" data-act="lec-add">${ic.plus}<span>محاضرة</span></button></div>
+   <p class="hint" style="margin-bottom:8px">أضف ما درسته اليوم، وسنذكّرك بمراجعته بعد يوم، ثم 3 أيام، ثم أسبوع، ثم أسبوعين (تقدر تعدّل المواعيد).</p>
+   ${due.length?`<h3 style="margin:10px 0 2px">تنتظر مراجعتك</h3>${due.map(lecRow).join('')}`:has?'<p class="mut" style="margin:8px 0">لا مراجعات مستحقة اليوم، أحسنت.</p>':''}
+   ${up.length?`<h3 style="margin:14px 0 2px">القادمة</h3>${up.map(lecRow).join('')}`:''}
+   ${has?`<div class="row" style="margin-top:12px"><button class="btn soft" data-act="lec-ics-all">${ic.calendar}<span>إضافة المراجعات القادمة إلى التقويم</span></button></div>`:''}</section>`;
+}
+function lecturesICS(items){
+  const [h,m]=(S().reminderTime||'17:00').split(':').map(Number),now=new Date();
+  const f=t=>{const x=new Date(t);return x.getFullYear()+pad(x.getMonth()+1)+pad(x.getDate())+'T'+pad(x.getHours())+pad(x.getMinutes())+'00';};
+  const ev=items.filter(x=>x.due>=sod(Date.now())).map(x=>{const d=new Date(x.due);d.setHours(h,m,0,0);return ['BEGIN:VEVENT','UID:'+uid()+'@rehlati','DTSTAMP:'+now.toISOString().replace(/[-:]/g,'').split('.')[0]+'Z','DTSTART:'+f(d),'DTEND:'+f(d.getTime()+20*60000),'SUMMARY:'+('راجع: '+x.l.title+' (المراجعة '+x.n+' من '+x.total+')').replace(/[\r\n,;]/g,' '),'BEGIN:VALARM','TRIGGER:PT0S','ACTION:DISPLAY','DESCRIPTION:وقت المراجعة','END:VALARM','END:VEVENT'].join('\r\n');});
+  if(!ev.length){toast('لا مراجعات قادمة لإضافتها');return false;}
+  download('rehlati-reviews.ics',['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Rehlati//AR',...ev,'END:VCALENDAR'].join('\r\n'),'text/calendar');
+  toast('افتح الملف ليُضاف إلى تقويم هاتفك','ok');return true;
+}
+function lectureSheet(id){
+  const l=id?state.lectures.find(x=>x.id===id):null,steps=new Set(l?l.steps:[1,3,7,14]);
+  openSheet({title:l?'تعديل المحاضرة':'محاضرة جديدة',body:`
+    <div class="field"><label for="l-t">اسم المحاضرة أو الدرس</label><input id="l-t" type="text" maxlength="120" value="${esc(l?l.title:'')}" placeholder="مثال: المحاضرة 5: الاشتقاق"></div>
+    <div class="two"><div class="field"><label for="l-s">المادة</label><select id="l-s">${subjOptions(l?l.sub:ui.pick.sub)}</select></div>
+    <div class="field"><label for="l-d">تاريخ دراستها</label><input id="l-d" type="date" value="${esc(l?l.date:dkey(Date.now()))}"></div></div>
+    <div class="lbl" style="margin-bottom:8px">ذكّرني بمراجعتها</div>
+    <div class="chips">${LSTEPS.map(n=>`<button class="chip sel ${steps.has(n)?'on':''}" data-st="${n}" aria-pressed="${steps.has(n)}">${stepText(n)}</button>`).join('')}</div>
+    <p class="hint" style="margin-top:10px">المواعيد تُحسب من يوم دراستك للمحاضرة. يمكنك تسجيل محاضرة درستها قبل أيام.</p>`,
+    buttons:[...(l?[{label:'حذف',cls:'danger',onClick:()=>{sheetDismiss=null;closeSheet();deleteLecture(id);return false;}}]:[]),{label:'إلغاء',cls:'ghost'},{label:'حفظ',cls:'primary',onClick:async()=>{
+      const title=$('#l-t').value.trim(),date=$('#l-d').value;
+      if(!title){sheetErr('اكتب اسم المحاضرة.');return false;}
+      if(!isKey(date)){sheetErr('اختر تاريخ دراستها.');return false;}
+      if(!steps.size){sheetErr('اختر موعد مراجعة واحدًا على الأقل.');return false;}
+      const st=[...steps].sort((a,b)=>a-b),sub=$('#l-s').value;
+      if(l){Object.assign(l,{title,date,sub,steps:st});for(const k of Object.keys(l.done||{}))if(!st.includes(+k))delete l.done[k];}
+      else state.lectures.push({id:uid(),title,sub,date,steps:st,done:{},created:Date.now()});
+      ui.pick.sub=sub||ui.pick.sub;
+      let note='';if(!S().reminderOn){S().reminderOn=true;note=' وفعّلنا التذكير اليومي ليصلك وقت المراجعة (تغيّره من الإعدادات).';}
+      save(true);sheetDismiss=null;closeSheet();renderAll();
+      if(l){toast('تم تعديل المحاضرة','ok');return false;}
+      const ok=await confirmDlg({title:'تمت الجدولة',msg:`ستجد مراجعاتك في الرئيسية في موعدها.${esc(note)}<br>هل تريد إضافتها إلى تقويم هاتفك؟ تنبيه التقويم يصلك حتى لو كان التطبيق مغلقًا.`,ok:'إضافة إلى التقويم',cancel:'لاحقًا'});
+      if(ok){const it=lectureItems().filter(x=>x.l.title===title&&x.l.date===date);lecturesICS(it);}
+      return false;}}],
+    onOpen:()=>sheetOn(e=>{const c=e.target.closest('[data-st]');if(!c)return;const n=+c.dataset.st;steps.has(n)?steps.delete(n):steps.add(n);c.classList.toggle('on',steps.has(n));c.setAttribute('aria-pressed',steps.has(n));})});
+}
+async function deleteLecture(id){
+  const l=state.lectures.find(x=>x.id===id);if(!l)return;
+  const ok=await confirmDlg({title:'حذف المحاضرة؟',msg:`ستُحذف «<b>${esc(l.title)}</b>» وجدول مراجعاتها.`,ok:'حذف',danger:true});
+  if(!ok)return;state.lectures=state.lectures.filter(x=>x.id!==id);save(true);renderAll();toast('تم حذف المحاضرة');
+}
+function cardSheet(id){
+  const c=id?state.cards.find(x=>x.id===id):null;
+  const commit=()=>{
+    const f=$('#c-f').value.trim().slice(0,600),b=$('#c-b').value.trim().slice(0,1200);
+    if(!f||!b){sheetErr('اكتب السؤال والجواب.');return false;}
+    const sub=$('#c-s').value;
+    if(c){c.front=f;c.back=b;c.sub=sub;}
+    else state.cards.push({id:uid(),sub,front:f,back:b,created:Date.now(),due:sod(Date.now()),ivl:0,ease:2.5,reps:0,lapses:0,last:0});
+    ui.pick.sub=sub||ui.pick.sub;save(true);return true;
+  };
+  openSheet({title:c?'تعديل البطاقة':'بطاقة جديدة',body:`
+    <div class="field"><label for="c-s">المادة</label><select id="c-s">${subjOptions(c?c.sub:ui.pick.sub)}</select></div>
+    <div class="field"><label for="c-f">السؤال أو المفهوم</label><textarea id="c-f" rows="3" maxlength="600" placeholder="مثال: ما قانون نيوتن الثاني؟">${esc(c?c.front:'')}</textarea></div>
+    <div class="field"><label for="c-b">الجواب</label><textarea id="c-b" rows="3" maxlength="1200" placeholder="مثال: القوة = الكتلة × التسارع">${esc(c?c.back:'')}</textarea></div>`,
+    buttons:[...(c?[{label:'حذف',cls:'danger',onClick:()=>{sheetDismiss=null;closeSheet();deleteCard(id);return false;}}]:[{label:'حفظ وإضافة أخرى',cls:'soft',onClick:()=>{if(!commit())return false;$('#c-f').value='';$('#c-b').value='';$('#c-f').focus();toast('تمت الإضافة','ok');renderAll();return false;}}]),{label:'إلغاء',cls:'ghost'},{label:'حفظ',cls:'primary',onClick:()=>{if(!commit())return false;renderAll();toast(c?'تم تعديل البطاقة':'تمت إضافة البطاقة','ok');}}]});
+}
+async function deleteCard(id){
+  const c=state.cards.find(x=>x.id===id);if(!c)return;
+  const ok=await confirmDlg({title:'حذف البطاقة؟',msg:'ستُحذف هذه البطاقة وجدول مراجعتها نهائيًا.',ok:'حذف',danger:true});
+  if(!ok)return;state.cards=state.cards.filter(x=>x.id!==id);save(true);renderAll();toast('تم حذف البطاقة');
+}
+const parseLine=l=>{const m=l.match(/^(.*?)\s*(?:\||::|\t)\s*(.+)$/);return m&&m[1].trim()&&m[2].trim()?[m[1].trim().slice(0,600),m[2].trim().slice(0,1200)]:null;};
+function bulkSheet(){
+  openSheet({title:'إضافة عدة بطاقات',wide:true,body:`
+    <p class="msg">اكتب كل بطاقة في سطر: السؤال ثم علامة <b>|</b> ثم الجواب.</p>
+    <div class="field" style="margin-top:12px"><label for="b-s">المادة</label><select id="b-s">${subjOptions(ui.pick.sub)}</select></div>
+    <div class="field"><label for="b-t">البطاقات</label><textarea id="b-t" rows="8" placeholder="ما عاصمة ليبيا؟ | طرابلس&#10;ما وحدة القوة؟ | نيوتن"></textarea></div>`,
+    buttons:[{label:'إلغاء',cls:'ghost'},{label:'إضافة',cls:'primary',onClick:()=>{
+      const rows=$('#b-t').value.split(/\n+/).map(l=>l.trim()).filter(Boolean),ok=rows.map(parseLine).filter(Boolean);
+      if(!ok.length){sheetErr('لم أجد أسطرًا بصيغة «سؤال | جواب».');return false;}
+      if(ok.length>300){sheetErr('الحد الأقصى 300 بطاقة في المرة.');return false;}
+      const sub=$('#b-s').value,td=sod(Date.now());
+      ok.forEach(([f,b])=>state.cards.push({id:uid(),sub,front:f,back:b,created:Date.now(),due:td,ivl:0,ease:2.5,reps:0,lapses:0,last:0}));
+      save(true);renderAll();toast(`تمت إضافة ${num(ok.length)} بطاقة`+(rows.length>ok.length?` (تجاهلنا ${rows.length-ok.length} سطرًا بلا فاصل)`:''),'ok');}}]});
+}
+function startReview(early){
+  const td=sod(Date.now());
+  const pool=(early?state.cards.filter(c=>c.due>td):state.cards.filter(c=>c.due<=td)).sort((a,b)=>a.due-b.due);
+  const q=pool.slice(0,early?10:(S().reviewLimit||30)).map(c=>c.id);
+  if(!q.length){toast(early?'لا بطاقات للمراجعة المبكرة':'لا بطاقات مستحقة الآن');return;}
+  let i=0,shown=false,done=0,fin=false;const total=q.length;
+  const cur=()=>state.cards.find(c=>c.id===q[i]);
+  const body=()=>{
+    if(fin){
+      const st=pickSticker(),tom=state.cards.filter(c=>c.due>sod(Date.now())&&c.due<=addDays(sod(Date.now()),1)).length;
+      return `<div style="text-align:center;padding:10px 0">${st?`<div style="margin:0 auto 14px;width:fit-content">${stickerHTML(st,96)}</div>`:''}<p class="big-msg">أحسنت! راجعت ${num(done)} ${done>2?'بطاقات':'بطاقة'}.</p><p class="mut" style="margin-top:8px">${tom?`غدًا ${num(tom)} ${tom>2?'بطاقات':'بطاقة'} بانتظارك، بلا استعجال.`:nextDueText()}</p></div>`;
+    }
+    const c=cur(),s=subj(c.sub);
+    return `<div class="bar" style="margin-bottom:14px"><i style="width:${done/total*100}%"></i></div>
+     ${s?`<div style="text-align:center;margin-bottom:8px"><span class="mchip" style="--c:${s.color}">${s.icon} ${esc(s.name)}</span></div>`:''}
+     <div class="rvcard">${esc(c.front)}</div>
+     ${shown?`<div class="rvcard" style="margin-top:12px;color:var(--v3);background:var(--vg)">${esc(c.back)}</div>
+       <div class="gradegrid">${GR.map((l,g)=>`<button class="btn ${g===2?'primary':''}" data-rv="g${g}"><span style="line-height:1.4">${l}<br><small style="opacity:.75">${g===0?'بعد قليل':ivlText(schedule(c,g).ivl)}</small></span></button>`).join('')}</div>`
+       :`<button class="btn primary block" style="margin-top:14px" data-rv="show">أظهر الإجابة</button>`}`;
+  };
+  const draw=()=>{const b=$('#sheet-b'),h=$('.sheet-h h2');if(!b)return;b.innerHTML=body()+'<p class="err" id="sheet-err" role="alert"></p>';if(h)h.textContent=fin?'انتهت المراجعة':`مراجعة ${num(Math.min(done+1,total))} من ${num(total)}`;};
+  const grade=g=>{
+    const c=cur(),r=schedule(c,g),k=dkey(Date.now());
+    Object.assign(c,{ease:r.ease,reps:r.reps,lapses:r.lapses,ivl:r.ivl,last:Date.now(),due:addDays(sod(Date.now()),r.ivl)});
+    state.revLog[k]=(state.revLog[k]||0)+1;
+    if(g===0)q.push(q[i]);else done++;
+    i++;shown=false;if(i>=q.length)fin=true;save();draw();
+  };
+  openSheet({title:'مراجعة',wide:true,body:body(),buttons:[{label:'إنهاء',cls:'ghost'}],onOpen:()=>{
+    sheetOn(e=>{const t=e.target.closest('[data-rv]');if(!t)return;const a=t.dataset.rv;if(a==='show'){shown=true;draw();}else if(a[0]==='g')grade(+a[1]);});
+    draw();
+  }});
+  sheetDismiss=()=>{renderAll();};
+}
+P.review=function(){
+  const R=ui.rev,td=sod(Date.now()),all=state.cards,due=dueCards().length;
+  const newc=all.filter(c=>!c.last).length,mature=all.filter(c=>c.ivl>=21).length,doneToday=(state.revLog&&state.revLog[dkey(td)])||0;
+  const withCards=[...new Set(all.map(c=>c.sub))];
+  const list=all.filter(c=>!R.sub||c.sub===R.sub).sort((a,b)=>a.due-b.due||a.created-b.created),shown=list.slice(0,R.limit);
+  const dl=c=>{const n=Math.round((c.due-td)/DAY);return n<=0?'مستحقة':'بعد '+ivlText(n);};
+  return `${pageHead('المراجعة المتباعدة','تظهر لك المعلومة قبل أن تنساها، فتثبت بأقل جهد. السؤال الأصعب يعود أسرع، والأسهل يتباعد.',`<button class="btn" data-act="card-bulk">${ic.tasks}<span>عدة بطاقات</span></button><button class="btn" data-act="card-add">${ic.plus}<span>بطاقة</span></button>`)}
+  ${lecturesSectionHTML()}
+  <h2 style="margin:6px 0 12px">بطاقات السؤال والجواب</h2>
+  ${all.length?`<div class="grid g4">${stat(num(due),'مستحقة الآن','acc')}${stat(num(all.length),'كل البطاقات')}${stat(num(newc),'جديدة')}${stat(num(mature),'راسخة (21 يومًا فأكثر)')}</div>
+   <div class="row" style="margin:16px 0">${due?`<button class="btn primary lg" data-act="review-start">${ic.refresh}<span>ابدأ مراجعة اليوم</span></button>`:`<button class="btn soft" data-act="review-early">مراجعة مبكرة (10 بطاقات)</button><span class="mut">${nextDueText()}</span>`}${doneToday?`<span class="mut">راجعت اليوم ${num(doneToday)}</span>`:''}</div>
+   ${withCards.length>1?`<div class="chips" style="margin-bottom:12px"><button class="chip sel ${!R.sub?'on':''}" data-act="rev-sub" data-id="">الكل</button>${withCards.map(id=>{const s=subj(id);return `<button class="chip sel ${R.sub===id?'on':''}" style="--c:${s?s.color:'#8F86A8'}" data-act="rev-sub" data-id="${id}">${s?s.icon:'📖'} ${esc(subjName(id))}</button>`;}).join('')}</div>`:''}
+   <div class="card tight">${shown.map(c=>{const s=subj(c.sub);return `<button class="srow" data-act="card-edit" data-id="${c.id}"><span class="sbadge sm" style="--c:${s?s.color:'#8F86A8'}">${s?s.icon:'📖'}</span><div class="mid"><div class="t">${esc(c.front.replace(/\s+/g,' '))}</div><div class="m">${esc(c.back.replace(/\s+/g,' ').slice(0,70))}</div></div><span class="dur" style="font-size:.85rem">${dl(c)}</span></button>`;}).join('')}
+    ${list.length>R.limit?`<div class="row" style="justify-content:center;margin:12px"><button class="btn" data-act="rev-more">عرض المزيد (${num(list.length-R.limit)})</button></div>`:''}</div>`
+  :`<div class="empty"><b>ابدأ ببطاقتك الأولى</b>اكتب سؤالًا وجوابه، وسنعرضه لك بعد يوم، ثم 3 أيام، ثم أسبوع... حسب سهولته عليك.<br><div class="row" style="justify-content:center;margin-top:12px"><button class="btn primary" data-act="card-add">${ic.plus}<span>بطاقة</span></button><button class="btn" data-act="card-bulk">عدة بطاقات</button></div></div>`}`;
+};
+
+/* ================= النسخ الاحتياطي ================= */
+function download(name,text,type){
+  const url=URL.createObjectURL(new Blob([text],{type:type||'application/json'}));
+  const a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();
+  setTimeout(()=>{a.remove();URL.revokeObjectURL(url);},3000);
+}
+async function exportBackup(encrypted,share){
+  try{
+    const snap=JSON.parse(JSON.stringify(state));snap.timer=null;
+    const meta={app:'rehlati-study',version:1,createdAt:Date.now(),encrypted:!!encrypted};
+    const out=encrypted?Object.assign(meta,{salt:vaultMeta.salt,iter:vaultMeta.iter,wrapPw:vaultMeta.wrapPw},await encJSON(snap,key)):Object.assign(meta,{data:snap});
+    const name=`rehlati-backup-${dkey(Date.now())}${encrypted?'-enc':''}.json`,text=JSON.stringify(out);
+    let shared=false;
+    if(share&&navigator.share){
+      try{const f=new File([text],name,{type:'application/json'});if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:'نسخة رحلتي الدراسية الاحتياطية'});shared=true;}}
+      catch(e){if(e&&e.name==='AbortError')return false;}
+    }
+    if(!shared)download(name,text);
+    state.settings.lastBackup=Date.now();save(true);if(ui.page==='backup'||ui.page==='home')renderMain();
+    toast(shared?'تمت المشاركة. احفظ الملف في مكان تثق به':'تم تجهيز النسخة الاحتياطية، تحقق من ملف التنزيلات','ok');return true;
+  }catch(e){toast('تعذّر إنشاء النسخة الاحتياطية','bad');return false;}
+}
+async function parseBackup(text){
+  let o;try{o=JSON.parse(text);}catch(e){throw new Error('الملف ليس بصيغة صحيحة، تأكد أنه نسخة احتياطية من التطبيق.');}
+  if(!o||o.app!=='rehlati-study')throw new Error('هذا الملف ليس نسخة احتياطية من «رحلتي الدراسية».');
+  if(typeof o.version!=='number'||o.version>1)throw new Error('إصدار هذه النسخة أحدث من التطبيق الحالي ولا يمكن استيراده.');
+  let data;
+  if(o.encrypted){
+    if(typeof o.salt!=='string'||typeof o.iv!=='string'||typeof o.ct!=='string'||!(o.iter>=1000&&o.iter<=5e6))throw new Error('ملف النسخة المشفرة تالف.');
+    const pw=await askText({title:'نسخة مشفّرة',msg:'أدخل كلمة المرور التي كانت مستخدمة وقت إنشاء هذه النسخة.',label:'كلمة المرور'});
+    if(pw===null)return null;
+    try{const pk=await deriveKey(pw,unb64(o.salt),o.iter);data=await decJSON(o,o.wrapPw?await unwrapDek(o.wrapPw,pk):pk);}catch(e){throw new Error('كلمة المرور غير صحيحة أو أن الملف تالف.');}
+  }else data=o.data;
+  const v=validateState(data);if(!v.ok)throw new Error(v.err);
+  return {state:v.state,createdAt:o.createdAt};
+}
+async function readBackupFile(file){
+  if(file.size>40*1024*1024)throw new Error('حجم الملف كبير جدًا.');
+  return parseBackup(await file.text());
+}
+async function importFlow(file){
+  try{
+    const r=await readBackupFile(file);if(!r)return;
+    const s=r.state,c=state;
+    const ok=await confirmDlg({title:'استبدال البيانات الحالية؟',
+      msg:`تحتوي النسخة على <b>${num(s.sessions.length)}</b> جلسة و<b>${num(s.tasks.length)}</b> مهمة و<b>${num(s.subjects.length)}</b> مادة${r.createdAt?`، أُنشئت في ${F.dtm.format(r.createdAt)}`:''}.<br>بياناتك الحالية (${num(c.sessions.length)} جلسة و${num(c.tasks.length)} مهمة) <b>ستُستبدل بالكامل</b>.`,
+      extra:`<label class="opt" style="margin-top:10px"><div>حفظ نسخة من بياناتي الحالية قبل الاستبدال</div><input type="checkbox" id="cf-bk" checked style="width:26px;height:26px"></label>`,ok:'استبدال البيانات',danger:true});
+    if(!ok)return;
+    if(confirmDlg.chk)await exportBackup(true);
+    const lb=state.settings.lastBackup;state=s;state.settings.lastBackup=Math.max(lb||0,state.settings.lastBackup||0)||null;
+    ui.quote=null;ui.daySticker={};save(true);renderAll();toast('تمت استعادة البيانات بنجاح','ok');
+  }catch(e){toast(e.message||'تعذّر استيراد الملف','bad');}
+}
+P.backup=function(){
+  const lb=S().lastBackup;
+  return `${pageHead('النسخ الاحتياطي والاستعادة','بياناتك محفوظة على هذا الجهاز فقط، والنسخة الاحتياطية هي ضمانك.')}
+  <div class="banner info">${ic.info}<span>البيانات غير متزامنة تلقائيًا بين الأجهزة، وحذف بيانات المتصفح أو الموقع قد يفقدها إن لم تكن لديك نسخة احتياطية.</span></div>
+  <div class="cols c2">
+   <section class="card"><h2>تصدير نسخة احتياطية</h2>
+    <div class="kv"><span>آخر نسخة احتياطية</span><b>${lb?F.dtm.format(lb)+' ('+dateLabel(dkey(lb))+')':'لم تُحفظ بعد'}</b></div>
+    <div class="kv"><span>المحتوى الحالي</span><span>${num(state.sessions.length)} جلسة، ${num(state.tasks.length)} مهمة، ${num(state.subjects.length)} مادة</span></div>
+    <div class="grid" style="margin-top:16px">
+     ${navigator.share?`<button class="btn primary block" data-act="bk-share">${ic.upload}<span>مشاركة نسخة مشفّرة (تيليجرام، درايف…)</span></button><p class="hint">تفتح قائمة المشاركة في جهازك، فتحفظ النسخة في «الرسائل المحفوظة» أو درايف وتفتحها من أي جهاز آخر.</p>`:''}
+     <button class="btn block" data-act="bk-export" data-enc="1">${ic.download||ic.backup}<span>تصدير نسخة مشفّرة (موصى بها)</span></button>
+     <p class="hint">تُفتح بنفس كلمة المرور الحالية فقط، وهي آمنة إن وقع الملف بيد غيرك.</p>
+     <button class="btn block" data-act="bk-export" data-enc="0">${ic.backup}<span>تصدير نسخة غير مشفّرة</span></button>
+     <p class="hint">يمكن قراءتها واستعادتها دون كلمة المرور، لذا احفظها في مكان آمن.</p></div></section>
+   <section class="card"><h2>استيراد نسخة سابقة</h2>
+    <p class="mut" style="margin-bottom:14px">يُتحقق من الملف قبل الاستيراد، وتُعرض لك ملخصاته وتؤكد قبل استبدال بياناتك الحالية.</p>
+    <button class="btn block" data-act="bk-import">${ic.upload}<span>اختيار ملف نسخة احتياطية</span></button>
+    <input id="imp-file" type="file" accept=".json,application/json" hidden>
+    <hr class="rule"><button class="lnk" data-act="set-info">نسيت كلمة المرور؟ كيف أستعيد بياناتي</button></section>
+  </div>`;
+};
+
+/* ================= الخصوصية ================= */
+function privacySheet(){
+  openSheet({title:'الخصوصية وحدود الحماية',wide:true,body:`
+   <p class="msg"><b>ما الذي يحميه التطبيق؟</b> تُحفظ بياناتك مشفّرة داخل متصفح هذا الجهاز بخوارزمية AES-GCM، ويُشتق مفتاح التشفير من كلمة مرورك عبر PBKDF2 بـ ${num(ITER)} تكرار. لا تُخزَّن كلمة المرور نفسها، ولا تُرسل بياناتك إلى أي خادم.</p>
+   <p class="msg" style="margin-top:12px"><b>حدود هذه الحماية:</b></p>
+   <ul class="pl"><li>لا تحميك إن ترك الجهاز مفتوحًا والتطبيق غير مقفل.</li><li>لا تحميك من برمجيات خبيثة أو تسجيل لوحة المفاتيح، ولا ممّن يعرف كلمة مرورك.</li><li>كلمة المرور القصيرة أو المتوقعة يمكن تخمينها، فاختر عبارة طويلة.</li><li>شاشة القفل جزء من صفحة التطبيق وليست قفل النظام، ويظل قفل iPad نفسه خط دفاعك الأول.</li><li>حذف بيانات Safari أو الموقع يحذف دفترك إن لم تحتفظ بنسخة احتياطية.</li></ul>
+   <p class="msg"><b>إن نسيت كلمة المرور:</b> لا يوجد خادم يعيد تعيينها عبر البريد. عند الإعداد ينشئ التطبيق <b>مفتاح استرداد</b> تحفظه أنت (ملف أو بريدك). به تفتح الدفتر وتضع كلمة مرور جديدة. بدون المفتاح ولا نسخة احتياطية غير مشفّرة، لا يمكن استرداد البيانات.</p>`,
+   buttons:[{label:'فهمت',cls:'primary'}]});
+}
+
+/* ================= الإعدادات ================= */
+const tog=(k,l,d)=>`<div class="opt"><div><div>${l}</div>${d?`<div class="d">${d}</div>`:''}</div><button class="switch ${S()[k]?'on':''}" role="switch" aria-checked="${!!S()[k]}" aria-label="${l}" data-act="set-toggle" data-k="${k}"></button></div>`;
+const sel=(k,l,opts,d)=>`<div class="opt"><div><div>${l}</div>${d?`<div class="d">${d}</div>`:''}</div><select data-set="${k}" data-t="n" aria-label="${l}">${opts.map(([v,t])=>`<option value="${v}" ${String(S()[k])===String(v)?'selected':''}>${t}</option>`).join('')}</select></div>`;
+const seg=(k,opts)=>`<div class="seg">${opts.map(([v,t])=>`<button class="${S()[k]===v?'on':''}" data-act="set-seg" data-k="${k}" data-v="${v}">${t}</button>`).join('')}</div>`;
+P.settings=function(){
+  const on=a=>a.filter(x=>x.on!==false).length;
+  return `${pageHead('الإعدادات والخصوصية','اجعل التطبيق على مقاسك، وكل خيار واضح وسهل.')}
+  <div class="cols c2">
+  <div class="grid" style="align-content:start">
+   <section class="card"><h2>كلمة المرور والقفل</h2>
+    <div class="row" style="margin-bottom:8px"><button class="btn soft" data-act="lock">${ic.lock}<span>قفل الآن</span></button><button class="btn" data-act="set-pw">تغيير كلمة المرور</button></div>
+    ${sel('autoLockMin','القفل التلقائي عند عدم النشاط',[[0,'إيقاف'],[1,'دقيقة'],[5,'5 دقائق'],[10,'10 دقائق'],[30,'30 دقيقة'],[60,'ساعة']])}
+    ${tog('lockKeepSession','عدم القفل أثناء جلسة جارية','حتى لا يقفل التطبيق وأنت تراقب المؤقت')}
+    ${tog('lockOnHide','القفل عند مغادرة التطبيق','يقفل عند الانتقال إلى تطبيق آخر')}
+    <div class="row" style="margin-top:10px"><button class="lnk" data-act="set-info">الخصوصية وحدود الحماية</button></div></section>
+   <section class="card"><h2>استرداد كلمة المرور</h2>
+    <p class="mut" style="margin-bottom:12px">${S().recoveryAt?'مفتاح الاسترداد مفعّل منذ '+F.dmy.format(S().recoveryAt)+'.':'لم تؤكد حفظ مفتاح الاسترداد بعد. أنشئ مفتاحًا واحفظه لتتمكن من فتح دفترك إن نسيت كلمة المرور.'}</p>
+    <div class="field"><label for="st-mail">بريدك الإلكتروني (اختياري)</label><input id="st-mail" type="email" dir="ltr" inputmode="email" data-set="email" value="${esc(S().email||'')}" placeholder="name@example.com"><span class="hint">يُستخدم فقط لتجهيز رسالة المفتاح في تطبيق البريد عندك، ويُحفظ مشفّرًا.</span></div>
+    <button class="btn primary" data-act="rk-new">${ic.shield}<span>إنشاء مفتاح استرداد جديد</span></button></section>
+   <section class="card"><h2>التركيز والترحيب</h2>
+    <div class="lbl" style="margin-bottom:8px">النمط الافتراضي للجلسات</div>${seg('focusMode',[['free','حر'],['p50','50 + 10'],['p120','120 + 15']])}
+    ${sel('reviewLimit','بطاقات المراجعة في الجلسة الواحدة',[[10,'10'],[20,'20'],[30,'30'],[50,'50']],'حتى لا تتراكم عليك دفعة واحدة')}
+    ${tog('focusSound','صوت لطيف عند تبدّل الفترات','مع اهتزاز وإشعار إن كان مفعّلًا')}
+    ${tog('welcomeSticker','ملصق ترحيبي عند فتح التطبيق','ملصق وعبارة تشجيعية كلما فتحت دفترك')}</section>
+   <section class="card"><h2>التذكيرات</h2>
+    ${tog('reminderOn','تذكير لطيف داخل التطبيق','يظهر في وقتك المحدد إن كان التطبيق مفتوحًا ولم تدرس بعد')}
+    <div class="opt"><div><div>وقت التذكير</div></div><input type="time" data-set="reminderTime" value="${esc(S().reminderTime||'17:00')}" aria-label="وقت التذكير"></div>
+    <div class="opt"><div><div>إشعارات النظام</div><div class="d">${!('Notification' in window)?'غير مدعومة في هذا المتصفح.':Notification.permission==='denied'?'مرفوضة. فعّلها من إعدادات الموقع في Chrome.':S().notifyOn&&Notification.permission==='granted'?'مفعّلة. تصلك حين يكون التطبيق مفتوحًا أو في الخلفية، لا بعد إغلاقه من التطبيقات الأخيرة.':'تظهر في شريط الإشعارات.'}</div></div><button class="btn soft" data-act="notif-on">${S().notifyOn?'تجربة':'تفعيل'}</button></div>
+    <div style="margin-top:12px"><button class="btn soft" data-act="rem-ics">${ic.calendar}<span>إضافة تذكير يومي إلى تقويم الهاتف</span></button><p class="hint" style="margin-top:8px">تنبيه التقويم يعمل حتى والتطبيق مغلق، وتقدر تحذفه متى شئت من التقويم.</p></div></section>
+   <section class="card"><h2>الشاشة الرئيسية</h2>
+    <p class="hint" style="margin-bottom:10px">${navigator.serviceWorker&&navigator.serviceWorker.controller?'✓ جاهز للعمل بدون إنترنت.':'العمل بدون إنترنت يتفعّل بعد فتح التطبيق مرة من رابط https.'}</p>
+    <p class="mut" style="margin-bottom:12px">${isStandalone()?'التطبيق مثبّت ويعمل بملء الشاشة.':'ثبّت رحلتي الدراسية كأيقونة على شاشتك الرئيسية لتفتحه بنقرة، بملء الشاشة.'}</p>
+    ${isStandalone()?'':`<button class="btn soft" data-act="install">${ic.plus}<span>تثبيت على الشاشة الرئيسية</span></button>`}</section>
+   <section class="card"><h2>الجلسات والأهداف</h2>
+    ${tog('wakeLock','إبقاء الشاشة مضاءة أثناء الجلسة','قد لا يدعمه كل جهاز')}
+    <div class="opt"><div><div>هدف يومي اختياري (بالدقائق)</div><div class="d">اتركه 0 إن كنت لا تريد هدفًا زمنيًا. يظهر فقط كشريط لطيف.</div></div><input type="number" inputmode="numeric" min="0" max="720" step="5" data-set="dailyGoalMin" data-t="n" value="${S().dailyGoalMin}" aria-label="الهدف اليومي"></div></section>
+   <section class="card"><h2>المظهر</h2>
+    <div class="lbl" style="margin-bottom:8px">درجة البنفسجي</div>${seg('accent',[['violet','بنفسجي'],['indigo','نيلي'],['orchid','أوركيد'],['lilac','ليلكي']])}
+    <div class="lbl" style="margin:14px 0 8px">حجم النص</div>${seg('size',[['s','صغير'],['m','متوسط'],['l','كبير']])}
+    ${tog('calm','تقليل الحركة','يوقف الحركات الانتقالية والنبض')}</section>
+  </div>
+  <div class="grid" style="align-content:start">
+   <section class="card"><h2>المحتوى التحفيزي</h2>
+    <div class="opt"><div><div>العبارات التحفيزية</div><div class="d">${on(state.quotes)} مفعّلة من ${state.quotes.length}</div></div><button class="btn soft" data-act="mgr" data-k="quotes">إدارة</button></div>
+    <div class="opt"><div><div>الأدعية والأذكار</div><div class="d">${on(state.duas)} مفعّلة من ${state.duas.length}</div></div><button class="btn soft" data-act="mgr" data-k="duas">إدارة</button></div>
+    <div class="opt"><div><div>الملصقات التحفيزية</div><div class="d">${on(state.stickers)} مفعّلة من ${state.stickers.length}</div></div><button class="btn soft" data-act="mgr" data-k="stickers">إدارة</button></div>
+    ${tog('stickersOn','إظهار الملصقات','عند الإيقاف تظهر رسالة تحفيزية فقط')}
+    <div class="opt"><div><div>المواد الدراسية</div><div class="d">${liveSubjects().length} مادة</div></div><button class="btn soft" data-act="nav" data-go="subjects">إدارة</button></div></section>
+   <section class="card"><h2>التقارير</h2>
+    ${sel('defaultRange','الفترة الافتراضية',[['day','اليوم'],['week','الأسبوع'],['month','الشهر'],['year','السنة']])}
+    ${sel('weekStart','بداية الأسبوع',[[6,'السبت'],[0,'الأحد'],[1,'الاثنين']])}
+    <div class="opt"><div><div>عرض المدة</div></div>${seg('durFmt',[['hm','ساعات ودقائق'],['dec','ساعات عشرية']])}</div>
+    ${tog('showCompare','مقارنة مع الفترة السابقة')}${tog('showCalAvg','عرض المتوسط اليومي على كل أيام الفترة')}</section>
+   <section class="card"><h2>النسخ الاحتياطي</h2>
+    ${sel('backupRemindDays','تذكيري بالنسخ الاحتياطي',[[0,'لا تذكّرني'],[3,'كل 3 أيام'],[7,'كل أسبوع'],[14,'كل أسبوعين'],[30,'كل شهر']])}
+    <div class="row" style="margin-top:10px"><button class="btn soft" data-act="nav" data-go="backup">${ic.backup}<span>صفحة النسخ الاحتياطي</span></button></div></section>
+   <section class="card"><h2>منطقة الحذف</h2><p class="mut" style="margin-bottom:12px">يحذف كل بياناتك وكلمة المرور من هذا الجهاز نهائيًا.</p><button class="btn danger" data-act="set-wipe">${ic.trash}<span>حذف كل البيانات</span></button></section>
+  </div></div>`;
+};
+async function changePassword(){
+  openSheet({title:'تغيير كلمة المرور',body:`
+    <div class="field"><label for="p0">كلمة المرور الحالية</label><input id="p0" type="password" autocomplete="current-password"></div>
+    <div class="field"><label for="p1">كلمة المرور الجديدة</label><input id="p1" type="password" autocomplete="new-password"></div>
+    <div class="field"><label for="p2">تأكيد كلمة المرور الجديدة</label><input id="p2" type="password" autocomplete="new-password"></div>
+    <p class="hint">استخدم عبارة طويلة يسهل عليك تذكرها. لا يمكن استعادتها إن نسيتها.</p>`,
+    buttons:[{label:'إلغاء',cls:'ghost'},{label:'تغيير',cls:'primary',onClick:async()=>{
+      const a=$('#p0').value,b=$('#p1').value,c=$('#p2').value;
+      if(b.length<6){sheetErr('كلمة المرور الجديدة قصيرة، استخدم 6 أحرف على الأقل.');return false;}
+      if(b!==c){sheetErr('كلمتا المرور الجديدتان غير متطابقتين.');return false;}
+      try{const rec=JSON.parse(store.get(VKEY));await unwrapDek(rec.wrapPw,await deriveKey(a,unb64(rec.salt),rec.iter));}catch(e){sheetErr('كلمة المرور الحالية غير صحيحة.');return false;}
+      const salt=crypto.getRandomValues(new Uint8Array(16)),nk=await deriveKey(b,salt,ITER);
+      vaultMeta=Object.assign({},vaultMeta,{salt:b64(salt),iter:ITER,wrapPw:await wrapDek(key,nk)});dirty=true;await flush();toast('تم تغيير كلمة المرور','ok');}}]});
+}
+
+/* مدراء المحتوى */
+function mgrBody(kind,st){
+  if(kind==='stickers'){
+    return `<div class="stkgrid">${state.stickers.map(s=>`<div class="stkcell ${s.on===false?'off':''}">${stickerHTML(s,56)}<div class="acts"><button class="icon-btn sm" data-m="tog" data-id="${s.id}" aria-label="${s.on===false?'تفعيل':'إيقاف'}">${s.on===false?ic.plus:ic.eye}</button><button class="icon-btn sm" data-m="del" data-id="${s.id}" aria-label="حذف" style="${st.arm===s.id?'color:var(--bad)':''}">${st.arm===s.id?ic.check:ic.trash}</button></div></div>`).join('')||'<p class="mut">لا ملصقات، وسيستمر التطبيق برسائل تحفيزية فقط.</p>'}</div>
+     <hr class="rule"><div class="lbl" style="margin-bottom:8px">إضافة ملصق</div>
+     <div class="row" style="flex-wrap:nowrap"><input id="m-emo" type="text" maxlength="4" placeholder="رمز تعبيري مثل 🎉" style="flex:1"><button class="btn soft" data-m="add-emo">إضافة</button></div>
+     <div class="row" style="margin-top:10px"><button class="btn" data-m="add-img">${ic.upload}<span>رفع صورة من الجهاز</span></button><input id="m-img" type="file" accept="image/png,image/jpeg,image/webp" hidden></div>
+     <p class="hint" style="margin-top:8px">تُصغَّر الصورة تلقائيًا وتُحفظ مشفّرة. الصور بخلفية شفافة (PNG) تبدو أجمل.</p>
+     <div class="row" style="margin-top:10px"><button class="lnk" data-m="restore">استعادة الملصقات الافتراضية المحذوفة</button></div>`;
+  }
+  const list=state[kind];
+  return `<div class="field"><label for="m-new">${kind==='quotes'?'عبارة جديدة':'دعاء أو ذكر جديد'}</label><textarea id="m-new" rows="2" maxlength="300"></textarea></div><button class="btn primary block" data-m="add">${ic.plus}<span>إضافة</span></button>
+   <hr class="rule">${list.map(x=>st.edit===x.id?`<div class="lm-item" style="flex-wrap:wrap"><textarea id="m-edit" rows="3" maxlength="300" style="flex:1 1 100%">${esc(x.text)}</textarea><button class="btn primary" data-m="save" data-id="${x.id}">حفظ</button><button class="btn ghost" data-m="cancel">إلغاء</button></div>`
+     :`<div class="lm-item ${x.on===false?'off':''}"><button class="switch ${x.on===false?'':'on'}" role="switch" aria-checked="${x.on!==false}" aria-label="تفعيل" data-m="tog" data-id="${x.id}"></button><span class="tx ${kind==='duas'?'serif':''}" style="${kind==='duas'?'font-size:1.2rem':''}">${esc(x.text)}</span><button class="icon-btn sm" data-m="edit" data-id="${x.id}" aria-label="تعديل">${ic.edit}</button><button class="icon-btn sm" data-m="del" data-id="${x.id}" aria-label="حذف" style="${st.arm===x.id?'color:var(--bad)':''}">${st.arm===x.id?ic.check:ic.trash}</button></div>`).join('')||'<p class="mut">القائمة فارغة.</p>'}
+   <div class="row" style="margin-top:10px"><button class="lnk" data-m="restore">استعادة العناصر الافتراضية المحذوفة</button></div>`;
+}
+function openMgr(kind){
+  const st={arm:null,edit:null,kind};
+  const title={quotes:'العبارات التحفيزية',duas:'الأدعية والأذكار',stickers:'الملصقات'}[kind];
+  const draw=()=>{const b=$('#sheet-b');if(!b)return;const y=b.scrollTop;b.innerHTML=mgrBody(kind,st)+'<p class="err" id="sheet-err" role="alert"></p>';b.scrollTop=y;};
+  openSheet({title,wide:true,body:mgrBody(kind,st),buttons:[{label:'تم',cls:'primary'}],onOpen:()=>{
+    sheetOn(async e=>{
+      const t=e.target.closest('[data-m]');if(!t)return;const a=t.dataset.m,id=t.dataset.id,list=state[kind];
+      if(a!=='del')st.arm=null;
+      if(a==='add'){const v=$('#m-new').value.trim();if(!v){sheetErr('اكتب النص أولًا.');return;}list.unshift({id:uid(),text:v,on:true});save();draw();}
+      else if(a==='tog'){const x=list.find(z=>z.id===id);x.on=x.on===false;save();draw();}
+      else if(a==='edit'){st.edit=id;draw();}
+      else if(a==='cancel'){st.edit=null;draw();}
+      else if(a==='save'){const v=$('#m-edit').value.trim();if(!v){sheetErr('النص فارغ.');return;}list.find(z=>z.id===id).text=v;st.edit=null;save();draw();}
+      else if(a==='del'){if(st.arm===id){state[kind]=list.filter(z=>z.id!==id);st.arm=null;save();draw();}else{st.arm=id;draw();toast('اضغط مرة أخرى للتأكيد');}}
+      else if(a==='restore'){const base=kind==='quotes'?B_QUOTES.map((x,i)=>({id:'q'+i,text:x})):kind==='duas'?B_DUAS.map((x,i)=>({id:'d'+i,text:x})):B_STK.map((x,i)=>({id:'s'+i,type:'emoji',content:x}));
+        let n=0;base.forEach(x=>{if(!list.some(z=>z.id===x.id)){list.push(Object.assign(x,{on:true}));n++;}});save();draw();toast(n?`أُعيد ${n} عنصر`:'لا عناصر محذوفة لاستعادتها');}
+      else if(a==='add-emo'){const v=$('#m-emo').value.trim();if(!v){sheetErr('اكتب رمزًا تعبيريًا.');return;}list.push({id:uid(),type:'emoji',content:v,on:true});save();draw();}
+      else if(a==='add-img'){$('#m-img').click();$('#m-img').onchange=async ev=>{const f=ev.target.files[0];if(!f)return;try{const d=await readImage(f);list.push({id:uid(),type:'image',content:d,on:true});save(true);draw();toast('تمت إضافة الملصق','ok');}catch(x){sheetErr('تعذّر قراءة الصورة، جرّب ملفًا آخر.');}};}
+    });}});
+}
+function readImage(file,max=200){
+  return new Promise((res,rej)=>{
+    if(!/^image\/(png|jpeg|webp)$/.test(file.type))return rej(new Error('type'));
+    const fr=new FileReader();fr.onerror=rej;
+    fr.onload=()=>{const img=new Image();img.onerror=rej;img.onload=()=>{const r=Math.min(1,max/Math.max(img.width,img.height)),c=document.createElement('canvas');c.width=Math.max(1,Math.round(img.width*r));c.height=Math.max(1,Math.round(img.height*r));c.getContext('2d').drawImage(img,0,0,c.width,c.height);res(c.toDataURL('image/png'));};img.src=fr.result;};
+    fr.readAsDataURL(file);
+  });
+}
+
+/* ================= شاشات الدخول ================= */
+function showGate(html){const g=$('#gate');g.innerHTML=html;g.hidden=false;$('#app').hidden=true;}
+const eyeBtn=`<button type="button" data-act="g-eye" aria-label="إظهار أو إخفاء كلمة المرور">${ic.eye}</button>`;
+let pendingImport=null,newRk=null;
+function gateSetup(){
+  showGate(`<div class="gate-box"><div class="logo">${LOGO}</div><h1>رحلتي الدراسية</h1>
+   <p class="sub">دفترك الدراسي الخاص. اختر كلمة مرور تحمي بياناتك وتشفّرها على هذا الجهاز.${pendingImport?`<br><b style="color:var(--v3)">جاهزة لاستعادة ${num(pendingImport.sessions.length)} جلسة و${num(pendingImport.tasks.length)} مهمة. اختر كلمة مرور جديدة لإكمال الاستعادة.</b>`:''}</p>
+   <div class="field"><label for="g-pw">كلمة المرور</label><div class="pwrap"><input id="g-pw" type="password" autocomplete="new-password" data-in="g-str">${eyeBtn}</div><div class="strength"><i id="g-str"></i></div><p class="hint" id="g-strt">استخدم 8 أحرف على الأقل، والأفضل عبارة طويلة.</p></div>
+   <div class="field"><label for="g-pw2">تأكيد كلمة المرور</label><input id="g-pw2" type="password" autocomplete="new-password"></div>
+   <p class="hint" style="margin:-4px 0 10px">لا يمكن استعادة كلمة المرور إن نسيتها، فاحتفظ بنسخة احتياطية.</p>
+   <p class="err" id="g-err" role="alert"></p>
+   <button class="btn primary lg block" id="g-go" data-act="g-setup">${pendingImport?'استعادة وبدء الاستخدام':'إنشاء دفتري'}</button>
+   <div class="gate-links">${pendingImport?'':'<button class="lnk" data-act="g-import">لدي نسخة احتياطية</button>'}<button class="lnk" data-act="set-info">حدود الحماية</button></div>
+   <input id="g-file" type="file" accept=".json,application/json" hidden></div>`);
+}
+function gateLock(msg){
+  showGate(`<div class="gate-box"><div class="logo">${LOGO}</div><h1>رحلتي الدراسية</h1><p class="sub">${msg||'دفترك مقفل. أدخل كلمة المرور لفتحه.'}</p>
+   <div class="field"><label for="g-pw">كلمة المرور</label><div class="pwrap"><input id="g-pw" type="password" autocomplete="current-password">${eyeBtn}</div></div>
+   <p class="err" id="g-err" role="alert"></p>
+   <button class="btn primary lg block" id="g-go" data-act="g-unlock">فتح الدفتر</button>
+   <div class="gate-links"><button class="lnk" data-act="g-forgot">نسيت كلمة المرور؟</button><button class="lnk" data-act="set-info">حدود الحماية</button></div></div>`);
+  const i=$('#g-pw');i.addEventListener('keydown',e=>{if(e.key==='Enter')doUnlock();});
+}
+function strengthOf(p){let s=0;if(p.length>=6)s++;if(p.length>=8)s++;if(p.length>=12)s++;if(/[a-z\u0600-\u06FF]/.test(p)&&/[A-Z0-9\W]/.test(p))s++;if(/\d/.test(p)&&/\D/.test(p)&&p.length>=8)s++;return s;}
+function busy(on,label){const b=$('#g-go');if(!b)return;b.disabled=on;if(on){b.dataset.t=b.innerHTML;b.innerHTML='<span class="spin"></span><span>'+label+'</span>';}else if(b.dataset.t)b.innerHTML=b.dataset.t;}
+async function doSetup(){
+  const a=$('#g-pw').value,b=$('#g-pw2').value,e=$('#g-err');
+  if(a.length<6){e.textContent='كلمة المرور قصيرة، استخدم 6 أحرف على الأقل.';return;}
+  if(a!==b){e.textContent='كلمتا المرور غير متطابقتين.';return;}
+  e.textContent='';busy(true,'جارٍ تجهيز التشفير…');
+  try{
+    const salt=crypto.getRandomValues(new Uint8Array(16)),pk=await deriveKey(a,salt,ITER),dek=await newDek(),rc=await makeRecoveryWrap(dek);
+    key=dek;vaultMeta={salt:b64(salt),iter:ITER,wrapPw:await wrapDek(dek,pk),rsalt:rc.rsalt,riter:rc.riter,wrapRec:rc.wrapRec};newRk=rc.rk;
+    state=normalizeState(pendingImport||defaultState());pendingImport=null;dirty=true;await flush();
+    if(ui.saveError){throw new Error('save');}
+    try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist();}catch(x){}
+    enter();
+  }catch(x){busy(false);state=null;key=null;e.textContent='تعذّر إنشاء الدفتر على هذا الجهاز. تأكد من تفعيل التخزين وفتح الملف في Safari.';}
+}
+let fails=0,lockUntil=0;
+async function doUnlock(){
+  const pw=$('#g-pw').value,e=$('#g-err');if(!pw)return;
+  const wait=lockUntil-Date.now();if(wait>0){e.textContent=`انتظر ${Math.ceil(wait/1000)} ثانية قبل المحاولة التالية.`;return;}
+  let rec;try{rec=JSON.parse(store.get(VKEY));if(!rec||!rec.ct)throw 0;}catch(x){e.textContent='بيانات الدفتر غير موجودة أو تالفة على هذا الجهاز. يمكنك استعادة نسخة احتياطية من «نسيت كلمة المرور».';return;}
+  e.textContent='';busy(true,'جارٍ فتح الدفتر…');
+  try{
+    const k=await deriveKey(pw,unb64(rec.salt),rec.iter);let s;
+    if(rec.v===2){key=await unwrapDek(rec.wrapPw,k);s=await decJSON(rec,key);vaultMeta={salt:rec.salt,iter:rec.iter,wrapPw:rec.wrapPw,rsalt:rec.rsalt,riter:rec.riter,wrapRec:rec.wrapRec};}
+    else{s=await decJSON(rec,k);const dek=await newDek(),rc=await makeRecoveryWrap(dek);key=dek;vaultMeta={salt:rec.salt,iter:rec.iter,wrapPw:await wrapDek(dek,k),rsalt:rc.rsalt,riter:rc.riter,wrapRec:rc.wrapRec};newRk=rc.rk;dirty=true;}
+    state=normalizeState(s);fails=0;if(dirty)await flush();enter();
+  }catch(x){
+    busy(false);fails++;if(fails>=5)lockUntil=Date.now()+Math.min(60,(fails-4)*10)*1000;
+    e.textContent='كلمة المرور غير صحيحة.'+(fails>=5?' تمّ تأخير المحاولات قليلًا.':'');$('#g-pw').select();
+  }
+}
+function forgotSheet(){
+  openSheet({title:'نسيت كلمة المرور',body:`<p class="msg">بياناتك مشفّرة، ولا يوجد خادم يعرف كلمة مرورك أو يستطيع إرسال رابط إعادة تعيين. لكن يمكنك فتح الدفتر وتعيين كلمة مرور جديدة بـ<b>مفتاح الاسترداد</b> الذي أنشأه التطبيق عند الإعداد (قد تجده في ملف حفظته أو في بريدك إن أرسلته لنفسك).</p>
+   <ul class="pl"><li>لديك المفتاح: اضغط «لدي مفتاح الاسترداد».</li><li>ليس لديك المفتاح لكن لديك نسخة احتياطية <b>غير مشفّرة</b>: احذف الدفتر ثم اختر «لدي نسخة احتياطية».</li><li>غير ذلك: لا يمكن الاسترداد، وهذا ثمن الخصوصية الحقيقية.</li></ul>`,
+   buttons:[{label:'رجوع',cls:'ghost'},{label:'حذف الدفتر',cls:'danger',onClick:async()=>{sheetDismiss=null;closeSheet();await wipeFlow();return false;}},{label:'لدي مفتاح الاسترداد',cls:'primary',onClick:()=>{sheetDismiss=null;closeSheet();recoverSheet();return false;}}]});
+}
+function recoverSheet(){
+  openSheet({title:'الاسترداد بمفتاح الاسترداد',body:`
+   <div class="field"><label for="rr-k">مفتاح الاسترداد</label><input id="rr-k" type="text" dir="ltr" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="XXXX-XXXX-XXXX-…"></div>
+   <div class="field"><label for="rr-1">كلمة المرور الجديدة</label><input id="rr-1" type="password" autocomplete="new-password"></div>
+   <div class="field"><label for="rr-2">تأكيد كلمة المرور الجديدة</label><input id="rr-2" type="password" autocomplete="new-password"></div>`,
+   buttons:[{label:'إلغاء',cls:'ghost'},{label:'استرداد وفتح الدفتر',cls:'primary',onClick:async()=>{
+     let rec;try{rec=JSON.parse(store.get(VKEY));}catch(e){}
+     if(!rec||rec.v!==2||!rec.wrapRec){sheetErr('هذا الدفتر أُنشئ بنسخة قديمة بلا مفتاح استرداد. افتحه بكلمة المرور أولًا.');return false;}
+     const rk=normRec($('#rr-k').value),n=$('#rr-1').value;
+     if(rk.length!==26){sheetErr('المفتاح غير مكتمل، تأكد من نسخه كاملًا.');return false;}
+     if(n.length<6){sheetErr('كلمة المرور الجديدة قصيرة (6 أحرف على الأقل).');return false;}
+     if(n!==$('#rr-2').value){sheetErr('كلمتا المرور غير متطابقتين.');return false;}
+     let dek,s;try{dek=await unwrapDek(rec.wrapRec,await deriveKey(rk,unb64(rec.rsalt),rec.riter));s=await decJSON(rec,dek);}catch(e){sheetErr('مفتاح الاسترداد غير صحيح.');return false;}
+     const salt=crypto.getRandomValues(new Uint8Array(16)),pk=await deriveKey(n,salt,ITER);
+     key=dek;vaultMeta={salt:b64(salt),iter:ITER,wrapPw:await wrapDek(dek,pk),rsalt:rec.rsalt,riter:rec.riter,wrapRec:rec.wrapRec};
+     state=normalizeState(s);dirty=true;await flush();fails=0;lockUntil=0;sheetDismiss=null;closeSheet();enter();toast('تم الاسترداد، وكلمة مرورك الجديدة فعّالة','ok');return false;}}]});
+}
+function showRecoverySheet(rk,first){
+  const pretty=prettyRec(rk);
+  openSheet({title:first?'احفظ مفتاح الاسترداد':'مفتاح الاسترداد الجديد',wide:true,body:`
+   <p class="msg">هذا المفتاح هو طريقتك لفتح دفترك إن نسيت كلمة المرور. <b>لن يظهر مرة أخرى</b>، فاحفظه الآن في مكان آمن.${first?'':' وقد أُبطل المفتاح السابق.'}</p>
+   <div class="num serif" style="display:block;user-select:all;-webkit-user-select:all;text-align:center;font-family:ui-monospace,Menlo,monospace;font-size:1.15rem;letter-spacing:.06em;background:var(--s2);border-radius:16px;padding:16px 8px;margin:12px 0;color:var(--v3);overflow-wrap:anywhere">${pretty}</div>
+   <div class="row"><button class="btn soft" data-rk="copy">نسخ</button><button class="btn" data-rk="file">تنزيل كملف</button><button class="btn" data-rk="mail">${ic.upload}<span>إرسال إلى بريدي</span></button></div>
+   <div class="field" style="margin-top:14px"><label for="rk-mail">بريدك الإلكتروني (اختياري)</label><input id="rk-mail" type="email" dir="ltr" inputmode="email" autocomplete="email" value="${esc(S().email||'')}" placeholder="name@example.com"></div>
+   <p class="hint">التطبيق يعمل بلا خادم، فلا يرسل أي شيء بنفسه. زر البريد يفتح تطبيق البريد في جهازك برسالة جاهزة لك فيها المفتاح. من يصل إلى صندوق بريدك يستطيع فتح دفترك، فاحمِ بريدك بالتحقق بخطوتين.</p>
+   <label class="opt"><div>حفظت المفتاح في مكان آمن</div><input type="checkbox" id="rk-ok" style="width:26px;height:26px"></label>`,
+   buttons:[{label:'متابعة',cls:'primary',onClick:()=>{if(!$('#rk-ok').checked){sheetErr('أكّد أنك حفظت المفتاح أولًا.');return false;}const m=$('#rk-mail').value.trim();if(m)state.settings.email=m;state.settings.recoveryAt=Date.now();save(true);if(ui.page==='settings')renderMain();}}]});
+  sheetOn(async e=>{
+    const t=e.target.closest('[data-rk]');if(!t)return;const a=t.dataset.rk,m=$('#rk-mail').value.trim();if(m)state.settings.email=m;
+    const text='مفتاح استرداد «رحلتي الدراسية»\n'+pretty+'\n\nيفتح دفترك الدراسي إن نسيت كلمة المرور. لا تشاركه مع أحد.';
+    if(a==='copy'){try{await navigator.clipboard.writeText(pretty);toast('تم النسخ','ok');}catch(x){toast('تعذّر النسخ، حدّد المفتاح وانسخه يدويًا','bad');}}
+    else if(a==='file'){download('rehlati-recovery-key.txt',text,'text/plain');toast('تم تجهيز الملف','ok');}
+    else if(a==='mail'){location.href='mailto:'+encodeURIComponent(m).replace('%40','@')+'?subject='+encodeURIComponent('مفتاح استرداد رحلتي الدراسية')+'&body='+encodeURIComponent(text);}
+  });
+}
+async function newRecoveryKey(){
+  const ok=await confirmDlg({title:'إنشاء مفتاح استرداد جديد؟',msg:'سيُبطل هذا المفتاح القديم، ويصبح المفتاح الجديد وحده صالحًا.',ok:'إنشاء مفتاح جديد'});
+  if(!ok)return;
+  const rc=await makeRecoveryWrap(key);vaultMeta=Object.assign({},vaultMeta,{rsalt:rc.rsalt,riter:rc.riter,wrapRec:rc.wrapRec});
+  state.settings.recoveryAt=null;dirty=true;await flush();showRecoverySheet(rc.rk,false);
+}
+async function wipeFlow(){
+  const ok=await confirmDlg({title:'حذف كل البيانات؟',msg:'سيُحذف الدفتر المشفّر وكلمة المرور من هذا الجهاز <b>نهائيًا</b> ولا يمكن التراجع.',typed:'حذف',ok:'حذف نهائي',danger:true});
+  if(!ok)return;
+  store.del(VKEY);state=null;key=null;vaultMeta=null;fails=0;lockUntil=0;pendingImport=null;ui.arch.tab='sessions';location.hash='';gateSetup();
+}
+
+/* ================= الدخول والقفل ================= */
+function purgeTrash(){const n=Date.now();const l=state.trash.length;state.trash=state.trash.filter(x=>n-x.at<30*DAY);if(state.trash.length!==l)save();}
+function recoverTimer(){
+  const t=state.timer;if(!t||!t.running||(t.mode&&t.mode!=='free'))return;const n=Date.now(),gap=n-(t.lastSeen||n);
+  if(gap<30*60000)return;
+  openSheet({title:'جلسة لا تزال جارية',body:`<p class="msg">كانت هناك جلسة دراسة جارية، وآخر نشاط مسجّل في التطبيق كان ${F.dtm.format(t.lastSeen)} (قبل <b>${fmtDur(gap)}</b>).<br>هل كنت تدرس طوال هذه المدة؟</p>`,
+    buttons:[{label:'أوقفها عند آخر نشاط',cls:'soft',onClick:()=>{t.acc+=Math.max(0,t.lastSeen-t.resumedAt);t.running=false;save(true);renderAll();wake();}},{label:'نعم، كنت أدرس',cls:'primary',onClick:()=>{t.lastSeen=Date.now();save(true);}}]});
+}
+let ticking=null,idleT=null;
+const BASE=document.title;
+function tick(){
+  if(!state)return;const t=state.timer,n=Date.now();
+  if(t){
+    phaseStep(t,n);
+    if(state.timer){
+      const el=timerElapsed(t,n),txt=fmtClock(el),v=timerView(t,n);
+      $$('[data-live="clock"]').forEach(x=>{x.textContent=txt;});
+      $$('[data-live="ring"]').forEach(x=>{x.textContent=v.text;});
+      const ts=$('#tstate');if(ts)ts.textContent=v.label;
+      const rb=$('#ringbox');if(rb)rb.className='ringbox '+v.cls;
+      const r=$('#ringfg');if(r){r.style.transition=(v.sweep&&v.frac<.02)?'none':'';r.setAttribute('stroke-dashoffset',2*Math.PI*128*(1-clamp(v.frac,0,1)));}
+      document.title=(t.running?'⏱ ':'⏸ ')+v.text+' — رحلتي الدراسية';
+      if(t.running&&n-t.lastSeen>30000){t.lastSeen=n;save();}
+    }
+  }else if(document.title!==BASE)document.title=BASE;
+  checkReminder(n);
+  if(ui.page==='home'&&n-ui.quoteAt>15*60000){ui.quote=pick('quotes');ui.quoteAt=n;const q=$('#quote');if(q&&ui.quote)q.textContent=ui.quote.text;}
+}
+const canAutoLock=()=>!(S().lockKeepSession&&state.timer&&state.timer.running);
+function enter(){
+  $('#gate').hidden=true;$('#gate').innerHTML='';$('#app').hidden=false;
+  purgeTrash();applySettings();ui.quote=null;ui.lastActive=Date.now();
+  if(!ui.report.touched){ui.report.range=S().defaultRange||'week';}
+  clearInterval(ticking);ticking=setInterval(tick,1000);
+  clearInterval(idleT);idleT=setInterval(()=>{if(state&&S().autoLockMin>0&&canAutoLock()&&Date.now()-ui.lastActive>S().autoLockMin*60000)lock();},15000);
+  route();recoverTimer();wake();
+  const after=()=>{if(newRk){const k=newRk;newRk=null;showRecoverySheet(k,true);}};
+  setTimeout(()=>{if(!S().onboarded&&!$('#modal-root').classList.contains('open'))showOnboarding(after);else after();},400);
+  setTimeout(()=>{if(state&&!state.timer&&!$('#modal-root').classList.contains('open'))welcomeCard();},900);
+  setTimeout(checkUpdate,3000);
+}
+async function lock(){
+  if(!state)return;
+  if(state.timer)state.timer.lastSeen=Date.now();
+  dirty=true;await flush();
+  closeSheet();closeMenu(true);$('#cele-root').innerHTML='';
+  try{if(wakeSentinel){await wakeSentinel.release();wakeSentinel=null;}}catch(e){}
+  clearInterval(ticking);clearInterval(idleT);
+  state=null;key=null;vaultMeta=null;document.title=BASE;
+  gateLock();
+}
+['pointerdown','keydown','touchstart'].forEach(ev=>addEventListener(ev,()=>{ui.lastActive=Date.now();},{passive:true}));
+document.addEventListener('visibilitychange',()=>{
+  if(!state)return;
+  if(document.hidden){ui.hiddenAt=Date.now();flush();if(S().lockOnHide&&canAutoLock())lock();}
+  else{wake();tick();checkUpdate();if(ui.hiddenAt&&Date.now()-ui.hiddenAt>30*60000&&!state.timer)welcomeCard();ui.hiddenAt=0;}
+});
+addEventListener('storage',e=>{if(e.key===VKEY&&state){state=null;key=null;location.reload();}});
+addEventListener('pagehide',()=>{if(state)flush();});
+
+/* ================= الأوامر ================= */
+const A={
+  nav:el=>go(el.dataset.go),
+  'nav-day':el=>go('day',el.dataset.key),
+  menu:()=>ui.menu?closeMenu():openMenu(),
+  'menu-x':()=>closeMenu(),
+  lock:()=>lock(),
+  'cele-x':()=>{$('#cele-root').innerHTML='';},
+  'quote-new':()=>{ui.quote=pick('quotes');ui.quoteAt=Date.now();const q=$('#quote');if(q&&ui.quote)q.textContent=ui.quote.text;save();},
+  't-start':tStart,'t-next':tNextCycle,'t-mode':el=>{S().focusMode=el.dataset.v;save();renderMain();},'t-pause':tPause,'t-resume':tResume,'t-finish':tFinish,
+  't-sub':el=>{const f=timerFields();f.sub=f.sub===el.dataset.id?'':el.dataset.id;if(state.timer)save();renderMain();},
+  's-add':()=>sessionSheet(null),'s-edit':el=>sessionSheet(el.dataset.id),'s-del':el=>deleteSession(el.dataset.id),
+  'sub-add':()=>subjectSheet(null),'sub-edit':el=>subjectSheet(el.dataset.id),'sub-del':el=>deleteSubject(el.dataset.id),
+  'sub-log':el=>{ui.arch=Object.assign(ui.arch,{tab:'sessions',sub:el.dataset.id,q:'',from:'',to:'',limit:60});go('archive');},
+  'task-add':()=>taskSheet(null),'task-add-date':el=>taskSheet(null,{date:el.dataset.key}),'task-edit':el=>taskSheet(el.dataset.id),
+  'task-del':el=>deleteTask(el.dataset.id),'task-toggle':el=>toggleTask(el.dataset.id),
+  'task-filter':el=>{ui.taskFilter=el.dataset.v;renderMain();},
+  'cal-prev':()=>{ui.cal.m--;if(ui.cal.m<0){ui.cal.m=11;ui.cal.y--;}ui.cal.sel=null;renderMain();},
+  'cal-next':()=>{ui.cal.m++;if(ui.cal.m>11){ui.cal.m=0;ui.cal.y++;}ui.cal.sel=null;renderMain();},
+  'cal-today':()=>{const d=new Date();ui.cal={y:d.getFullYear(),m:d.getMonth(),sel:dkey(d)};renderMain();},
+  'cal-day':el=>{ui.cal.sel=el.dataset.key;renderMain();},
+  'rep-range':el=>{const R=ui.report;R.range=el.dataset.v;R.off=0;R.sel=-1;R.touched=true;if(R.range==='custom'&&!R.from){const d=new Date();R.from=dkey(new Date(d.getFullYear(),d.getMonth(),1));R.to=dkey(d);}renderMain();},
+  'rep-prev':()=>{ui.report.off--;ui.report.sel=-1;renderMain();},
+  'rep-next':()=>{if(ui.report.off<0){ui.report.off++;ui.report.sel=-1;renderMain();}},
+  bar:el=>{const c=ui.report.cache,i=+el.dataset.i;if(!c)return;ui.report.sel=i;$$('.chart rect.b').forEach((r,j)=>r.classList.toggle('sel',j===i));const ro=$('#readout');if(ro)ro.textContent=`${bucketName(c.p,c.bk[i])}: ${c.v[i]>0?fmtDur(c.v[i]):'لا دراسة'}`;},
+  'arch-tab':el=>{ui.arch.tab=el.dataset.v;ui.arch.limit=60;renderMain();},
+  'arch-more':()=>{ui.arch.limit+=60;archList();},
+  'tr-restore':el=>{const i=state.trash.findIndex(x=>x.id===el.dataset.id);if(i<0)return;const x=state.trash[i];(x.type==='session'?state.sessions:state.tasks).push(x.item);state.trash.splice(i,1);save(true);renderAll();toast('تمت الاستعادة','ok');},
+  'tr-purge':async el=>{const ok=await confirmDlg({title:'حذف نهائي؟',msg:'سيُحذف هذا العنصر نهائيًا ولا يمكن استعادته.',ok:'حذف نهائي',danger:true});if(!ok)return;state.trash=state.trash.filter(x=>x.id!==el.dataset.id);save(true);renderAll();},
+  'day-save':el=>{const k=el.dataset.key;if(!isKey(k))return;const st=dayStats(parseKey(k).getTime());state.closures[k]={closedAt:Date.now(),note:$('#day-note').value.trim(),total:st.total,sessions:st.ss.length,tasks:st.done.length};save(true);toast('تم حفظ ملخص اليوم، تقبّل الله جهدك','ok');renderMain();},
+  'bk-export':el=>exportBackup(el.dataset.enc==='1'),
+  'bk-import':()=>{const f=$('#imp-file');f.value='';f.onchange=()=>{if(f.files[0])importFlow(f.files[0]);};f.click();},
+  'set-toggle':el=>{const k=el.dataset.k;S()[k]=!S()[k];save();renderMain();if(k==='wakeLock')wake();},
+  'set-seg':el=>{S()[el.dataset.k]=el.dataset.v;save();renderMain();},
+  'set-pw':changePassword,'set-info':privacySheet,
+  'set-wipe':wipeFlow,
+  mgr:el=>openMgr(el.dataset.k),
+  'rk-new':newRecoveryKey,'rem-ics':addReminderToCalendar,'exam-add':()=>examSheet(null),'lec-add':()=>lectureSheet(null),'lec-edit':el=>lectureSheet(el.dataset.id),'lec-ics-all':()=>lecturesICS(lectureItems()),'lec-done':el=>{const l=state.lectures.find(x=>x.id===el.dataset.id);if(!l)return;l.done=l.done||{};l.done[el.dataset.step]=Date.now();save(true);renderAll();celebrate('أحسنت، راجعتها','المراجعة في موعدها تثبّت المعلومة في ذاكرتك.');},'card-add':()=>cardSheet(null),'card-edit':el=>cardSheet(el.dataset.id),'card-bulk':bulkSheet,'review-start':()=>startReview(false),'review-early':()=>startReview(true),'rev-sub':el=>{ui.rev.sub=el.dataset.id;ui.rev.limit=50;renderMain();},'rev-more':()=>{ui.rev.limit+=50;renderMain();},'exam-edit':el=>examSheet(el.dataset.id),'bk-share':()=>exportBackup(true,true),'app-reload':async()=>{await flush();location.reload();},'notif-on':enableNotify,install:()=>installSheet(),'install-hide':()=>{S().installHide=true;save();renderMain();},
+  'g-eye':el=>{const i=el.parentElement.querySelector('input');i.type=i.type==='password'?'text':'password';},
+  'g-setup':doSetup,'g-unlock':doUnlock,'g-forgot':forgotSheet,
+  'g-import':()=>{const f=$('#g-file');f.value='';f.onchange=async()=>{if(!f.files[0])return;try{const r=await readBackupFile(f.files[0]);if(r){pendingImport=r.state;gateSetup();}}catch(e){toast(e.message,'bad');}};f.click();}
+};
+document.addEventListener('click',e=>{
+  const el=e.target.closest('[data-act]');if(!el)return;
+  const f=A[el.dataset.act];if(f){e.preventDefault();f(el,e);}
+});
+function onField(e){
+  const t=e.target;if(!t.dataset)return;
+  const k=t.dataset.in;
+  if(k){
+    if(k==='t-title'){timerFields().title=t.value;if(state.timer)save();}
+    else if(k==='t-note'){timerFields().note=t.value;if(state.timer)save();}
+    else if(k==='arch-q'){ui.arch.q=t.value;ui.arch.limit=60;archList();}
+    else if(k==='arch-from'){ui.arch.from=t.value;ui.arch.limit=60;archList();}
+    else if(k==='arch-to'){ui.arch.to=t.value;ui.arch.limit=60;archList();}
+    else if(k==='arch-sub'){ui.arch.sub=t.value;ui.arch.limit=60;archList();}
+    else if(k==='g-str'){const s=strengthOf(t.value),b=$('#g-str');if(b){b.style.width=Math.min(100,s*20)+'%';b.style.background=s<=2?'var(--bad)':s<4?'var(--warm)':'var(--ok)';$('#g-strt').textContent=t.value?['ضعيفة جدًا','ضعيفة','مقبولة','جيدة','قوية','قوية جدًا'][s]:'استخدم 8 أحرف على الأقل، والأفضل عبارة طويلة.';}}
+    return;
+  }
+  if(e.type!=='change')return;
+  if(t.dataset.setRep){ui.report[t.dataset.setRep]=t.value;ui.report.touched=true;renderMain();return;}
+  if(t.dataset.goal){const h=parseFloat(String(t.value).replace(',','.')),m=isFinite(h)&&h>0?Math.round(clamp(h,0,100)*60):0;if(!S().weekGoals)S().weekGoals={};if(m)S().weekGoals[t.dataset.goal]=m;else delete S().weekGoals[t.dataset.goal];save();renderMain();return;}
+  if(t.dataset.set){
+    const key=t.dataset.set;let v=t.dataset.t==='n'?Number(t.value):t.value;if(t.dataset.t==='n'&&!isFinite(v))v=0;
+    if(key==='dailyGoalMin')v=clamp(Math.round(v),0,720);
+    S()[key]=v;save();renderMain();
+  }
+}
+document.addEventListener('input',onField);document.addEventListener('change',onField);
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.id==='g-pw2')doSetup();if(e.key==='Enter'&&e.target.id==='g-pw'&&$('#g-go')&&$('#g-go').dataset.act==='g-setup')$('#g-pw2').focus();});
+
+/* ================= ملصق الترحيب والتحديث ================= */
+function welcomeCard(){
+  if(!state||!S().welcomeSticker)return;
+  const h=new Date().getHours(),g=h<5?'ليلة هادئة':h<12?'صباح الخير':h<17?'نهارك سعيد':h<21?'مساء الخير':'مساء هادئ';
+  const q=pick('quotes'),st=pickSticker();
+  $('#cele-root').innerHTML=`<div class="cele" role="status"><div>${st?stickerHTML(st,64):`<span class="cele-spark">${ic.sparkle}</span>`}</div><div class="cele-t"><b>${g}</b><span>${esc(q?q.text:'ابدأ بما تستطيع، والباقي خطوة بخطوة.')}</span></div><button class="icon-btn sm" data-act="cele-x" aria-label="إغلاق">${ic.x}</button></div>`;
+  clearTimeout(celeT);celeT=setTimeout(()=>{$('#cele-root').innerHTML='';},9000);
+}
+let lastUpd=0;
+async function checkUpdate(){
+  try{
+    if(!/^https?:$/.test(location.protocol)||!navigator.onLine||Date.now()-lastUpd<10*60000)return;lastUpd=Date.now();
+    const r=await fetch(location.href.split('#')[0],{cache:'no-store'});if(!r.ok)return;
+    const m=(await r.text()).match(new RegExp("APP_VER='([0-9.]+)'"));
+    if(m&&m[1]!==APP_VER&&!ui.updAvail){ui.updAvail=true;if(state)renderMain();toast('يتوفر تحديث جديد للتطبيق، تجده في الصفحة الرئيسية','ok');}
+  }catch(e){}
+}
+
+/* ================= الترحيب والتذكيرات ================= */
+const OB=[['📖','دفترك الدراسي الخاص','ابدأ جلسة من الرئيسية، وسيحسب المؤقت وقتك الفعلي حتى لو انتقلت بين الصفحات. لا أرقام تلاحقك: المهم ما أنجزته واستمراريتك.'],
+ ['🗂️','مواد ومهام وتقارير','أضف موادك من القائمة ⋮ واربط بها الجلسات والمهام. التقارير تُحسب من بياناتك الفعلية فقط، ولا تعرض شيئًا مضللًا.'],
+ ['🔐','بياناتك عندك وحدك','مشفّرة على هذا الجهاز بكلمة مرورك. احفظ مفتاح الاسترداد الذي سيظهر لك الآن، وصدّر نسخة احتياطية بين حين وآخر.']];
+function showOnboarding(done){
+  let i=0;
+  const body=()=>`<div style="text-align:center;padding:8px 0"><div class="stk" style="--sz:96px;margin:0 auto 16px"><span class="e">${OB[i][0]}</span></div><h2 class="serif" style="font-size:1.7rem;font-weight:700;margin-bottom:8px">${OB[i][1]}</h2><p class="msg">${OB[i][2]}</p><div class="row" style="justify-content:center;margin-top:16px">${OB.map((_,j)=>`<i style="width:9px;height:9px;border-radius:50%;background:${j===i?'var(--v2)':'var(--s3)'}"></i>`).join('')}</div></div>`;
+  openSheet({title:'مرحبًا بك في رحلتك',body:body(),buttons:[{label:'تخطي',cls:'ghost'},{label:'التالي',cls:'primary',onClick:()=>{
+    if(i<OB.length-1){i++;$('#sheet-b').innerHTML=body()+'<p class="err" id="sheet-err" role="alert"></p>';$('[data-sbtn="1"]').textContent=i===OB.length-1?'ابدأ':'التالي';return false;}}}]});
+  sheetDismiss=()=>{S().onboarded=true;save(true);setTimeout(done,250);};
+}
+let iconURL='';
+async function sysNotify(title,body){
+  try{
+    if(!('Notification' in window)||Notification.permission!=='granted')return false;
+    const o={body,icon:iconURL||undefined,badge:iconURL||undefined,lang:'ar',dir:'rtl',tag:'rehlati-remind'};
+    if('serviceWorker' in navigator&&navigator.serviceWorker.controller){const r=await navigator.serviceWorker.ready;await r.showNotification(title,o);return true;}
+    new Notification(title,o);return true;
+  }catch(e){return false;}
+}
+async function enableNotify(){
+  if(!('Notification' in window)){toast('هذا المتصفح لا يدعم الإشعارات','bad');return;}
+  let p=Notification.permission;if(p==='default')p=await Notification.requestPermission();
+  if(p!=='granted'){S().notifyOn=false;save();renderMain();toast('الإذن مرفوض. فعّله من إعدادات الموقع في Chrome (أيقونة القفل بجانب العنوان)','bad');return;}
+  S().notifyOn=true;S().reminderOn=true;save();renderMain();
+  const ok=await sysNotify('رحلتي الدراسية','هكذا سيظهر تذكيرك. ابدأ بما تستطيع.');
+  toast(ok?'تم التفعيل، وأرسلنا لك إشعارًا تجريبيًا':'تم التفعيل، لكن الإشعار التجريبي لم يظهر. افتح التطبيق من الرابط المثبّت (https).',ok?'ok':'bad');
+}
+function remindCard(title,msg,go,btn){
+  const m=msg||(pick('quotes')||{text:'ابدأ بما تستطيع.'}).text;
+  $('#cele-root').innerHTML=`<div class="cele" role="status"><div class="cele-spark">${ic.moon}</div><div class="cele-t"><b>${esc(title||'حان وقت رحلتك')}</b><span>${esc(m)}</span></div><button class="btn primary" data-act="nav" data-go="${go||'sessions'}">${esc(btn||'ابدأ')}</button><button class="icon-btn sm" data-act="cele-x" aria-label="إغلاق">${ic.x}</button></div>`;
+  clearTimeout(celeT);celeT=setTimeout(()=>{$('#cele-root').innerHTML='';},20000);
+}
+function checkReminder(n){
+  const s=S();if(!s.reminderOn||!/^\d\d:\d\d$/.test(s.reminderTime||''))return;
+  const k=dkey(n);if(s.lastRemind===k)return;
+  const [h,m]=s.reminderTime.split(':').map(Number),d=new Date(n),diff=d.getHours()*60+d.getMinutes()-(h*60+m);
+  if(diff<0||diff>120)return;
+  s.lastRemind=k;save();
+  const lp=dueLectureItems().length,cp=dueCards().length;
+  if(lp||cp){
+    const parts=[];if(lp)parts.push(`${lp} ${lp>2?'محاضرات':'محاضرة'}`);if(cp)parts.push(`${cp} ${cp>2?'بطاقات':'بطاقة'}`);
+    const msg='لديك للمراجعة اليوم: '+parts.join(' و');
+    if(document.hidden&&S().notifyOn)sysNotify('وقت المراجعة',msg);else remindCard('وقت المراجعة',msg,'review','افتح');
+    return;
+  }
+  if(state.timer||totalIn(sod(n),addDays(sod(n),1))>0)return;
+  if(S().notifyOn&&document.hidden){sysNotify('حان وقت رحلتك',(pick('quotes')||{text:'ابدأ بما تستطيع.'}).text);return;}
+  remindCard();
+}
+function addReminderToCalendar(){
+  const [h,m]=(S().reminderTime||'17:00').split(':').map(Number),d=new Date();d.setHours(h,m,0,0);if(d<new Date())d.setDate(d.getDate()+1);
+  const f=t=>{const x=new Date(t);return x.getFullYear()+pad(x.getMonth()+1)+pad(x.getDate())+'T'+pad(x.getHours())+pad(x.getMinutes())+'00';};
+  const ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Rehlati//AR','BEGIN:VEVENT','UID:'+uid()+'@rehlati','DTSTAMP:'+new Date().toISOString().replace(/[-:]/g,'').split('.')[0]+'Z','DTSTART:'+f(d),'DTEND:'+f(d.getTime()+30*60000),'RRULE:FREQ=DAILY','SUMMARY:رحلتي الدراسية: وقت الدراسة','DESCRIPTION:ابدأ بما تستطيع، والباقي خطوة بخطوة.','BEGIN:VALARM','TRIGGER:PT0S','ACTION:DISPLAY','DESCRIPTION:وقت الدراسة','END:VALARM','END:VEVENT','END:VCALENDAR'].join('\r\n');
+  download('rehlati-reminder.ics',ics,'text/calendar');toast('افتح الملف ليُضاف التذكير إلى تقويم هاتفك','ok');
+}
+
+/* ================= التثبيت على الشاشة الرئيسية ================= */
+let deferredInstall=null;
+const isStandalone=()=>{try{return matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;}catch(e){return false;}};
+const isIOS=()=>/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredInstall=e;});
+addEventListener('appinstalled',()=>{deferredInstall=null;toast('تم تثبيت التطبيق','ok');});
+function makeIcon(size){
+  const c=document.createElement('canvas');c.width=c.height=size;const x=c.getContext('2d'),g=x.createLinearGradient(0,0,size,size);
+  g.addColorStop(0,'#A78BFA');g.addColorStop(1,'#5B33C9');x.fillStyle=g;x.fillRect(0,0,size,size);
+  x.save();x.scale(size/64,size/64);x.strokeStyle='#fff';x.lineWidth=3;x.lineJoin='round';
+  x.stroke(new Path2D('M14 22c6-3 13-3 18 1 5-4 12-4 18-1v22c-6-3-13-3-18 1-5-4-12-4-18-1z'));x.stroke(new Path2D('M32 23v22'));
+  x.fillStyle='#fff';x.fill(new Path2D('M46 10l1.4 3.6L51 15l-3.6 1.4L46 20l-1.4-3.6L41 15l3.6-1.4z'));x.restore();
+  return c.toDataURL('image/png');
+}
+function setupPWA(){
+  try{if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol))navigator.serviceWorker.register('sw.js').catch(()=>{});}catch(e){}
+  try{
+    const add=(rel,href,sz)=>{const l=document.createElement('link');l.rel=rel;if(sz)l.sizes=sz;l.href=href;document.head.appendChild(l);};
+    const i180=makeIcon(180),i192=makeIcon(192),i512=makeIcon(512);
+    add('apple-touch-icon',i180,'180x180');iconURL=i192;add('icon',i192,'192x192');
+    if(/^https?:$/.test(location.protocol)){
+      const m={name:'رحلتي الدراسية',short_name:'رحلتي',lang:'ar',dir:'rtl',display:'standalone',orientation:'any',background_color:'#08060F',theme_color:'#08060F',start_url:location.pathname+location.search,scope:location.pathname.replace(/[^/]*$/,''),icons:[{src:i192,sizes:'192x192',type:'image/png',purpose:'any'},{src:i512,sizes:'512x512',type:'image/png',purpose:'any'}]};
+      add('manifest',URL.createObjectURL(new Blob([JSON.stringify(m)],{type:'application/manifest+json'})));
+    }
+  }catch(e){}
+}
+function installSheet(){
+  const file=location.protocol==='file:',ios=isIOS();
+  const steps=ios?'<li>افتح التطبيق في <b>Safari</b> (لا في متصفح آخر).</li><li>اضغط زر <b>المشاركة</b> (المربع الذي يخرج منه سهم).</li><li>اختر <b>«إضافة إلى الشاشة الرئيسية»</b> ثم <b>إضافة</b>.</li>'
+    :'<li>من قائمة المتصفح اختر <b>«تثبيت التطبيق»</b> أو <b>«إضافة إلى الشاشة الرئيسية»</b>.</li>';
+  openSheet({title:'تثبيت على الشاشة الرئيسية',body:`<ol class="pl">${steps}</ol>
+   <div class="note-box" style="margin-top:10px"><b>مهم:</b> التطبيق المثبّت على iPad له تخزين منفصل عن Safari. إن أنشأت دفترك في Safari أولًا، فصدّر نسخة احتياطية ثم استوردها داخل التطبيق المثبّت، أو أنشئ دفترك مباشرة من الأيقونة.</div>
+   ${file?`<div class="banner" style="margin-top:12px">${ic.info}<span>أنت تفتح التطبيق كملف محلي، وiPad لا يثبّت الملفات المحلية كأيقونة. ارفع الملف إلى استضافة مجانية بعنوان https (مثل GitHub Pages أو Netlify) ثم ثبّت ذلك العنوان.</span></div>`:''}`,
+   buttons:[{label:'إغلاق',cls:'ghost'},...(deferredInstall?[{label:'تثبيت الآن',cls:'primary',onClick:async()=>{try{deferredInstall.prompt();await deferredInstall.userChoice;}catch(e){}deferredInstall=null;}}]:[])]});
+}
+
+/* ================= الإقلاع ================= */
+(function boot(){
+  setupPWA();
+  document.documentElement.style.setProperty('--vvh',(window.visualViewport?visualViewport.height:innerHeight)+'px');
+  if(!hasCrypto){
+    showGate(`<div class="gate-box"><div class="logo">${LOGO}</div><h1>رحلتي الدراسية</h1><p class="sub">لا يدعم هذا المتصفح أو هذه البيئة التشفير الآمن (Web Crypto)، ويحتاج التطبيق إلى فتحه من ملف محلي أو عبر رابط https داخل Safari.</p></div>`);
+    return;
+  }
+  const rec=store.get(VKEY);
+  if(rec)gateLock();else gateSetup();
+})();
+})();
+</script>
+</body>
+</html>
