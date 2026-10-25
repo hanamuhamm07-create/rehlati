@@ -469,7 +469,7 @@ const S=()=>state?state.settings:{durFmt:'hm'};
 
 function defaultState(){
   return {v:1,createdAt:Date.now(),
-    settings:{accent:'violet',size:'m',calm:false,autoLockMin:10,lockKeepSession:true,lockOnHide:false,durFmt:'hm',weekStart:6,defaultRange:'week',showCompare:true,showCalAvg:true,dailyGoalMin:0,stickersOn:true,wakeLock:false,backupRemindDays:7,lastBackup:null,email:'',recoveryAt:null,installHide:false},
+    settings:{accent:'violet',size:'m',calm:false,autoLockMin:10,lockKeepSession:true,lockOnHide:false,durFmt:'hm',weekStart:6,defaultRange:'week',showCompare:true,showCalAvg:true,dailyGoalMin:0,stickersOn:true,wakeLock:false,backupRemindDays:7,lastBackup:null,email:'',recoveryAt:null,installHide:false,onboarded:false,reminderOn:false,reminderTime:'17:00',lastRemind:''},
     subjects:[],sessions:[],tasks:[],trash:[],closures:{},timer:null,recent:{},
     quotes:B_QUOTES.map((t,i)=>({id:'q'+i,text:t,on:true})),
     duas:B_DUAS.map((t,i)=>({id:'d'+i,text:t,on:true})),
@@ -1212,7 +1212,12 @@ P.settings=function(){
     <p class="mut" style="margin-bottom:12px">${S().recoveryAt?'مفتاح الاسترداد مفعّل منذ '+F.dmy.format(S().recoveryAt)+'.':'لم تؤكد حفظ مفتاح الاسترداد بعد. أنشئ مفتاحًا واحفظه لتتمكن من فتح دفترك إن نسيت كلمة المرور.'}</p>
     <div class="field"><label for="st-mail">بريدك الإلكتروني (اختياري)</label><input id="st-mail" type="email" dir="ltr" inputmode="email" data-set="email" value="${esc(S().email||'')}" placeholder="name@example.com"><span class="hint">يُستخدم فقط لتجهيز رسالة المفتاح في تطبيق البريد عندك، ويُحفظ مشفّرًا.</span></div>
     <button class="btn primary" data-act="rk-new">${ic.shield}<span>إنشاء مفتاح استرداد جديد</span></button></section>
+   <section class="card"><h2>التذكيرات</h2>
+    ${tog('reminderOn','تذكير لطيف داخل التطبيق','يظهر في وقتك المحدد إن كان التطبيق مفتوحًا ولم تدرس بعد')}
+    <div class="opt"><div><div>وقت التذكير</div></div><input type="time" data-set="reminderTime" value="${esc(S().reminderTime||'17:00')}" aria-label="وقت التذكير"></div>
+    <div style="margin-top:12px"><button class="btn soft" data-act="rem-ics">${ic.calendar}<span>إضافة تذكير يومي إلى تقويم الهاتف</span></button><p class="hint" style="margin-top:8px">تنبيه التقويم يعمل حتى والتطبيق مغلق، وتقدر تحذفه متى شئت من التقويم.</p></div></section>
    <section class="card"><h2>الشاشة الرئيسية</h2>
+    <p class="hint" style="margin-bottom:10px">${navigator.serviceWorker&&navigator.serviceWorker.controller?'✓ جاهز للعمل بدون إنترنت.':'العمل بدون إنترنت يتفعّل بعد فتح التطبيق مرة من رابط https.'}</p>
     <p class="mut" style="margin-bottom:12px">${isStandalone()?'التطبيق مثبّت ويعمل بملء الشاشة.':'ثبّت رحلتي الدراسية كأيقونة على شاشتك الرئيسية لتفتحه بنقرة، بملء الشاشة.'}</p>
     ${isStandalone()?'':`<button class="btn soft" data-act="install">${ic.plus}<span>تثبيت على الشاشة الرئيسية</span></button>`}</section>
    <section class="card"><h2>الجلسات والأهداف</h2>
@@ -1427,6 +1432,7 @@ function tick(){
     document.title=(t.running?'⏱ ':'⏸ ')+txt+' — رحلتي الدراسية';
     if(t.running&&n-t.lastSeen>30000){t.lastSeen=n;save();}
   }else if(document.title!==BASE)document.title=BASE;
+  checkReminder(n);
   if(ui.page==='home'&&n-ui.quoteAt>15*60000){ui.quote=pick('quotes');ui.quoteAt=n;const q=$('#quote');if(q&&ui.quote)q.textContent=ui.quote.text;}
 }
 const canAutoLock=()=>!(S().lockKeepSession&&state.timer&&state.timer.running);
@@ -1437,7 +1443,8 @@ function enter(){
   clearInterval(ticking);ticking=setInterval(tick,1000);
   clearInterval(idleT);idleT=setInterval(()=>{if(state&&S().autoLockMin>0&&canAutoLock()&&Date.now()-ui.lastActive>S().autoLockMin*60000)lock();},15000);
   route();recoverTimer();wake();
-  if(newRk){const k=newRk;newRk=null;setTimeout(()=>showRecoverySheet(k,true),400);}
+  const after=()=>{if(newRk){const k=newRk;newRk=null;showRecoverySheet(k,true);}};
+  setTimeout(()=>{if(!S().onboarded&&!$('#modal-root').classList.contains('open'))showOnboarding(after);else after();},400);
 }
 async function lock(){
   if(!state)return;
@@ -1494,7 +1501,7 @@ const A={
   'set-pw':changePassword,'set-info':privacySheet,
   'set-wipe':wipeFlow,
   mgr:el=>openMgr(el.dataset.k),
-  'rk-new':newRecoveryKey,install:()=>installSheet(),'install-hide':()=>{S().installHide=true;save();renderMain();},
+  'rk-new':newRecoveryKey,'rem-ics':addReminderToCalendar,install:()=>installSheet(),'install-hide':()=>{S().installHide=true;save();renderMain();},
   'g-eye':el=>{const i=el.parentElement.querySelector('input');i.type=i.type==='password'?'text':'password';},
   'g-setup':doSetup,'g-unlock':doUnlock,'g-forgot':forgotSheet,
   'g-import':()=>{const f=$('#g-file');f.value='';f.onchange=async()=>{if(!f.files[0])return;try{const r=await readBackupFile(f.files[0]);if(r){pendingImport=r.state;gateSetup();}}catch(e){toast(e.message,'bad');}};f.click();}
@@ -1527,6 +1534,37 @@ function onField(e){
 document.addEventListener('input',onField);document.addEventListener('change',onField);
 document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.id==='g-pw2')doSetup();if(e.key==='Enter'&&e.target.id==='g-pw'&&$('#g-go')&&$('#g-go').dataset.act==='g-setup')$('#g-pw2').focus();});
 
+/* ================= الترحيب والتذكيرات ================= */
+const OB=[['📖','دفترك الدراسي الخاص','ابدأ جلسة من الرئيسية، وسيحسب المؤقت وقتك الفعلي حتى لو انتقلت بين الصفحات. لا أرقام تلاحقك: المهم ما أنجزته واستمراريتك.'],
+ ['🗂️','مواد ومهام وتقارير','أضف موادك من القائمة ⋮ واربط بها الجلسات والمهام. التقارير تُحسب من بياناتك الفعلية فقط، ولا تعرض شيئًا مضللًا.'],
+ ['🔐','بياناتك عندك وحدك','مشفّرة على هذا الجهاز بكلمة مرورك. احفظ مفتاح الاسترداد الذي سيظهر لك الآن، وصدّر نسخة احتياطية بين حين وآخر.']];
+function showOnboarding(done){
+  let i=0;
+  const body=()=>`<div style="text-align:center;padding:8px 0"><div class="stk" style="--sz:96px;margin:0 auto 16px"><span class="e">${OB[i][0]}</span></div><h2 class="serif" style="font-size:1.7rem;font-weight:700;margin-bottom:8px">${OB[i][1]}</h2><p class="msg">${OB[i][2]}</p><div class="row" style="justify-content:center;margin-top:16px">${OB.map((_,j)=>`<i style="width:9px;height:9px;border-radius:50%;background:${j===i?'var(--v2)':'var(--s3)'}"></i>`).join('')}</div></div>`;
+  openSheet({title:'مرحبًا بك في رحلتك',body:body(),buttons:[{label:'تخطي',cls:'ghost'},{label:'التالي',cls:'primary',onClick:()=>{
+    if(i<OB.length-1){i++;$('#sheet-b').innerHTML=body()+'<p class="err" id="sheet-err" role="alert"></p>';$('[data-sbtn="1"]').textContent=i===OB.length-1?'ابدأ':'التالي';return false;}}}]});
+  sheetDismiss=()=>{S().onboarded=true;save(true);setTimeout(done,250);};
+}
+function remindCard(){
+  $('#cele-root').innerHTML=`<div class="cele" role="status"><div class="cele-spark">${ic.moon}</div><div class="cele-t"><b>حان وقت رحلتك</b><span>${esc((pick('quotes')||{text:'ابدأ بما تستطيع.'}).text)}</span></div><button class="btn primary" data-act="nav" data-go="sessions">ابدأ</button><button class="icon-btn sm" data-act="cele-x" aria-label="إغلاق">${ic.x}</button></div>`;
+  clearTimeout(celeT);celeT=setTimeout(()=>{$('#cele-root').innerHTML='';},20000);
+}
+function checkReminder(n){
+  const s=S();if(!s.reminderOn||!/^\d\d:\d\d$/.test(s.reminderTime||''))return;
+  const k=dkey(n);if(s.lastRemind===k)return;
+  const [h,m]=s.reminderTime.split(':').map(Number),d=new Date(n),diff=d.getHours()*60+d.getMinutes()-(h*60+m);
+  if(diff<0||diff>120)return;
+  s.lastRemind=k;save();
+  if(state.timer||totalIn(sod(n),addDays(sod(n),1))>0)return;
+  remindCard();
+}
+function addReminderToCalendar(){
+  const [h,m]=(S().reminderTime||'17:00').split(':').map(Number),d=new Date();d.setHours(h,m,0,0);if(d<new Date())d.setDate(d.getDate()+1);
+  const f=t=>{const x=new Date(t);return x.getFullYear()+pad(x.getMonth()+1)+pad(x.getDate())+'T'+pad(x.getHours())+pad(x.getMinutes())+'00';};
+  const ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Rehlati//AR','BEGIN:VEVENT','UID:'+uid()+'@rehlati','DTSTAMP:'+new Date().toISOString().replace(/[-:]/g,'').split('.')[0]+'Z','DTSTART:'+f(d),'DTEND:'+f(d.getTime()+30*60000),'RRULE:FREQ=DAILY','SUMMARY:رحلتي الدراسية: وقت الدراسة','DESCRIPTION:ابدأ بما تستطيع، والباقي خطوة بخطوة.','BEGIN:VALARM','TRIGGER:PT0S','ACTION:DISPLAY','DESCRIPTION:وقت الدراسة','END:VALARM','END:VEVENT','END:VCALENDAR'].join('\r\n');
+  download('rehlati-reminder.ics',ics,'text/calendar');toast('افتح الملف ليُضاف التذكير إلى تقويم هاتفك','ok');
+}
+
 /* ================= التثبيت على الشاشة الرئيسية ================= */
 let deferredInstall=null;
 const isStandalone=()=>{try{return matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;}catch(e){return false;}};
@@ -1542,6 +1580,7 @@ function makeIcon(size){
   return c.toDataURL('image/png');
 }
 function setupPWA(){
+  try{if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol))navigator.serviceWorker.register('sw.js').catch(()=>{});}catch(e){}
   try{
     const add=(rel,href,sz)=>{const l=document.createElement('link');l.rel=rel;if(sz)l.sizes=sz;l.href=href;document.head.appendChild(l);};
     const i180=makeIcon(180),i192=makeIcon(192),i512=makeIcon(512);
