@@ -1065,9 +1065,11 @@ function calDetailHTML(){
    <div class="grid g3" style="margin:12px 0"><div class="tile acc"><b>${fmtDur(st.total)}</b><span>وقت الدراسة</span></div><div class="tile"><b class="num">${st.ss.length}</b><span>جلسات</span></div><div class="tile"><b class="num">${st.done.length}</b><span>مهام منجزة</span></div></div>
    ${st.ss.length?st.ss.map(s=>sessionRow(s,{noDel:true})).join(''):'<p class="mut">لا جلسات في هذا اليوم.</p>'}
    ${state.exams.filter(x=>x.date===k).map(x=>`<div class="note-box" style="margin-top:12px">★ اختبار: <b>${esc(x.title)}</b>${x.sub&&subj(x.sub)?' — '+esc(subjName(x.sub)):''}</div>`).join('')}
+   ${state.lectures.filter(l=>l.date===k).map(l=>`<div class="note-box" style="margin-top:10px"><b>📚 محاضرة: ${esc(l.title)}</b><div class="mut">${esc(subjName(l.sub)||'بدون مادة')} · ${l.studied?'تمت الدراسة':'لم تُدرس بعد'}</div><button class="btn soft" style="margin-top:8px" data-act="lec-edit" data-id="${l.id}">فتح المحاضرة</button> <button class="btn ${l.studied?'soft':'primary'}" data-act="lec-study-toggle" data-id="${l.id}">${l.studied?'إعادة فتح':'أنهيت الدراسة'}</button></div>`).join('')}
+   ${lectureItems().filter(x=>dkey(x.due)===k).map(x=>`<div class="note-box" style="margin-top:10px"><b>🔁 مراجعة: ${esc(x.l.title)}</b><div class="mut">${esc(subjName(x.l.sub)||'بدون مادة')} · ${x.n} من ${x.total}</div><button class="btn soft" style="margin-top:8px" data-act="lec-edit" data-id="${x.l.id}">فتح المحاضرة</button></div>`).join('')}
    <h3 style="margin:16px 0 4px">مهام هذا اليوم</h3>${due.length?due.map(t=>taskRow(t,{noDel:true})).join(''):'<p class="mut">لا مهام مجدولة.</p>'}
    ${cl&&cl.note?`<div class="note-box" style="margin-top:14px">كلمتك لنفسك: ${esc(cl.note)}</div>`:''}
-   <div class="row" style="margin-top:14px"><button class="btn soft" data-act="task-add-date" data-key="${k}">${ic.plus}<span>مهمة لهذا اليوم</span></button><button class="btn" data-act="nav-day" data-key="${k}">ملخص اليوم</button></div>`;
+   <div class="row" style="margin-top:14px"><button class="btn soft" data-act="task-add-date" data-key="${k}">${ic.plus}<span>مهمة لهذا اليوم</span></button><button class="btn soft" data-act="lec-add-date" data-key="${k}">${ic.plus}<span>محاضرة لهذا اليوم</span></button><button class="btn" data-act="nav-day" data-key="${k}">ملخص اليوم</button></div>`;
 }
 function calDetail(){const d=$('#cal-detail');if(d)d.innerHTML=calDetailHTML();}
 
@@ -1304,12 +1306,13 @@ function lecRow(x){
   const td=sod(Date.now()),late=Math.round((td-x.due)/DAY),s=subj(x.l.sub);
   const when=late>0?`مستحقة منذ ${late} ${late===1?'يوم':'أيام'}`:late===0?'اليوم':F.dm.format(x.due);
   return `<div class="trow"><button class="chk" role="checkbox" aria-checked="false" aria-label="تمت مراجعتها" data-act="lec-done" data-id="${x.l.id}" data-step="${x.st}"></button>
-   <button class="tmain" data-act="lec-edit" data-id="${x.l.id}"><span class="ttl">${esc(x.l.title)}</span><span class="tmeta">${s?`<span class="mchip" style="--c:${s.color}">${s.icon} ${esc(s.name)}</span>`:''}<span class="mchip">المراجعة ${x.n} من ${x.total}</span><span class="mchip ${late>0?'late':''}">${when}</span></span></button></div>`;
+   <button class="tmain" data-act="lec-edit" data-id="${x.l.id}"><span class="ttl">${esc(x.l.title)}${x.l.attachment?' 📎':''}</span><span class="tmeta">${s?`<span class="mchip" style="--c:${s.color}">${s.icon} ${esc(s.name)}</span>`:''}<span class="mchip">المراجعة ${x.n} من ${x.total}</span><span class="mchip ${late>0?'late':''}">${when}</span></span></button></div>`;
 }
 function lecturesSectionHTML(){
   const items=lectureItems(),td=sod(Date.now()),due=items.filter(x=>x.due<=td),up=items.filter(x=>x.due>td).slice(0,6),has=state.lectures.length;
   return `<section class="card" style="margin-bottom:18px"><div class="row" style="justify-content:space-between;margin-bottom:6px"><h2>مراجعة المحاضرات</h2><button class="btn primary" data-act="lec-add">${ic.plus}<span>محاضرة</span></button></div>
-   <p class="hint" style="margin-bottom:8px">أضف ما درسته اليوم، وسنذكّرك بمراجعته بعد يوم، ثم 3 أيام، ثم أسبوع، ثم أسبوعين (تقدر تعدّل المواعيد).</p>
+   <p class="hint" style="margin-bottom:8px">أضيفي المحاضرة عند استلامها، وأرفقي PDF أو صورًا أو اكتبي الملاحظات. حددي «أنهيت الدراسة» بعد مذاكرتها، وستظهر مراجعاتها المتباعدة في مواعيدها.</p>
+   ${has?state.lectures.slice().sort((a,b)=>String(b.date).localeCompare(String(a.date))).map(l=>`<div class="trow"><button class="tmain" data-act="lec-edit" data-id="${l.id}"><span class="ttl">${esc(l.title)}${l.attachment?' 📎':''}</span><span class="tmeta"><span class="mchip">${esc(subjName(l.sub)||'بدون مادة')}</span><span class="mchip">${l.studied?'تمت الدراسة':'لم تُدرس بعد'}</span></span></button><button class="btn ${l.studied?'soft':'primary'}" data-act="lec-study-toggle" data-id="${l.id}">${l.studied?'إعادة فتح':'أنهيت الدراسة'}</button></div>`).join(''):''}
    ${due.length?`<h3 style="margin:10px 0 2px">تنتظر مراجعتك</h3>${due.map(lecRow).join('')}`:has?'<p class="mut" style="margin:8px 0">لا مراجعات مستحقة اليوم، أحسنت.</p>':''}
    ${up.length?`<h3 style="margin:14px 0 2px">القادمة</h3>${up.map(lecRow).join('')}`:''}
    ${has?`<div class="row" style="margin-top:12px"><button class="btn soft" data-act="lec-ics-all">${ic.calendar}<span>إضافة المراجعات القادمة إلى التقويم</span></button></div>`:''}</section>`;
@@ -1327,7 +1330,9 @@ function lectureSheet(id,preset){
   openSheet({title:l?'تعديل المحاضرة':'محاضرة جديدة',body:`
     <div class="field"><label for="l-t">اسم المحاضرة أو الدرس</label><input id="l-t" type="text" maxlength="120" value="${esc(l?l.title:(preset.title||''))}" placeholder="مثال: المحاضرة 5: الاشتقاق"></div>
     <div class="two"><div class="field"><label for="l-s">المادة</label><select id="l-s">${subjOptions(l?l.sub:(preset.sub||ui.pick.sub))}</select></div>
-    <div class="field"><label for="l-d">تاريخ دراستها</label><input id="l-d" type="date" value="${esc(l?l.date:dkey(Date.now()))}"></div></div>
+    <div class="field"><label for="l-d">تاريخ الدراسة / المحاضرة</label><input id="l-d" type="date" value="${esc(l?l.date:(preset.date||dkey(Date.now())))}"></div></div>
+    <div class="field"><label for="l-content">محتوى أو ملاحظات المحاضرة (اختياري)</label><textarea id="l-content" rows="3" maxlength="12000" placeholder="اكتبي النقاط المهمة أو الصقي محتوى المحاضرة…">${esc(l?(l.content||''):'')}</textarea></div>
+    <div class="field"><label for="l-file">إرفاق ملف المحاضرة (PDF أو صور)</label><input id="l-file" type="file" accept="application/pdf,image/*"><p class="hint">ملف واحد لكل محاضرة، بحد أقصى 4 ميغابايت لتقليل مشاكل التخزين على الهاتف.${l&&l.attachment?` الملف الحالي: <a href="${l.attachment.data}" target="_blank" rel="noopener">فتح ${esc(l.attachment.name)}</a>`:''}</p>${l&&l.attachment?`<label class="row" style="gap:8px"><input id="l-remove-file" type="checkbox"> حذف المرفق الحالي</label>`:''}</div>
     <div class="lbl" style="margin-bottom:8px">ذكّرني بمراجعتها</div>
     <div class="chips">${LSTEPS.map(n=>`<button class="chip sel ${steps.has(n)?'on':''}" data-st="${n}" aria-pressed="${steps.has(n)}">${stepText(n)}</button>`).join('')}</div>
     <p class="hint" style="margin-top:10px">المواعيد تُحسب من يوم دراستك للمحاضرة. يمكنك تسجيل محاضرة درستها قبل أيام.</p>`,
@@ -1336,9 +1341,13 @@ function lectureSheet(id,preset){
       if(!title){sheetErr('اكتب اسم المحاضرة.');return false;}
       if(!isKey(date)){sheetErr('اختر تاريخ دراستها.');return false;}
       if(!steps.size){sheetErr('اختر موعد مراجعة واحدًا على الأقل.');return false;}
-      const st=[...steps].sort((a,b)=>a-b),sub=$('#l-s').value;
-      if(l){Object.assign(l,{title,date,sub,steps:st});for(const k of Object.keys(l.done||{}))if(!st.includes(+k))delete l.done[k];}
-      else state.lectures.push({id:uid(),title,sub,date,steps:st,done:{},created:Date.now()});
+      const st=[...steps].sort((a,b)=>a-b),sub=$('#l-s').value,content=$('#l-content').value.trim();
+      const file=$('#l-file').files&&$('#l-file').files[0];
+      if(file&&file.size>4*1024*1024){sheetErr('حجم الملف أكبر من 4 ميغابايت. اختاري ملفًا أصغر.');return false;}
+      let attachment=l&&l.attachment&&!($('#l-remove-file')&&$('#l-remove-file').checked)?l.attachment:null;
+      if(file){try{attachment=await new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve({name:file.name,type:file.type||'application/octet-stream',size:file.size,data:r.result});r.onerror=()=>reject(new Error('read'));r.readAsDataURL(file);});}catch(e){sheetErr('تعذّر قراءة الملف. جرّبي ملفًا آخر.');return false;}}
+      if(l){Object.assign(l,{title,date,sub,steps:st,content,attachment,studied:!!l.studied});for(const k of Object.keys(l.done||{}))if(!st.includes(+k))delete l.done[k];}
+      else state.lectures.push({id:uid(),title,sub,date,steps:st,done:{},content,attachment,studied:false,created:Date.now()});
       ui.pick.sub=sub||ui.pick.sub;
       let note='';if(!S().reminderOn){S().reminderOn=true;note=' وفعّلنا التذكير اليومي ليصلك وقت المراجعة (تغيّره من الإعدادات).';}
       save(true);sheetDismiss=null;closeSheet();renderAll();
@@ -2082,7 +2091,7 @@ const A={
   'set-pw':changePassword,'set-info':privacySheet,
   'set-wipe':wipeFlow,
   mgr:el=>openMgr(el.dataset.k),'admin-open':adminSheet,'act-go':actGo,'owner-open':()=>gateLock(),'dev-copy':()=>copyText(prettyDev(devId()),'تم نسخ رمز الجهاز'),'dev-share':async()=>{try{await navigator.share({text:`رمز جهازي لـ ${APP_NAME}: ${prettyDev(devId())}`});}catch(e){}},
-  'rk-new':newRecoveryKey,'rem-ics':addReminderToCalendar,'exam-add':()=>examSheet(null),'search':searchSheet,'week-open':()=>weekSummarySheet(-1),'week-hide':()=>{const p=periodFor('week',-1);S().weekSeen=dkey(p.a);save();renderMain();},'rep-img':()=>{const R=ui.report,p=periodFor(R.range,R.off);if(p)reportImage(p,metrics(p.a,p.b),reviewsIn(p.a,p.b));},'lec-from-session':()=>{$('#cele-root').innerHTML='';lectureSheet(null,ui.lastSess||{});},'lec-add':()=>lectureSheet(null),'lec-edit':el=>lectureSheet(el.dataset.id),'lec-ics-all':()=>lecturesICS(lectureItems()),'lec-done':el=>{const l=state.lectures.find(x=>x.id===el.dataset.id);if(!l)return;l.done=l.done||{};l.done[el.dataset.step]=Date.now();save(true);renderAll();celebrate('أحسنت، راجعتها','المراجعة في موعدها تثبّت المعلومة في ذاكرتك.');},'card-add':()=>cardSheet(null),'card-edit':el=>cardSheet(el.dataset.id),'card-bulk':bulkSheet,'review-start':()=>startReview(false),'review-early':()=>startReview(true),'rev-sub':el=>{ui.rev.sub=el.dataset.id;ui.rev.limit=50;renderMain();},'rev-more':()=>{ui.rev.limit+=50;renderMain();},'exam-edit':el=>examSheet(el.dataset.id),'bk-share':()=>exportBackup(true,true),'app-reload':async()=>{await flush();location.reload();},'notif-on':enableNotify,install:()=>installSheet(),'install-hide':()=>{S().installHide=true;save();renderMain();},
+  'rk-new':newRecoveryKey,'rem-ics':addReminderToCalendar,'exam-add':()=>examSheet(null),'search':searchSheet,'week-open':()=>weekSummarySheet(-1),'week-hide':()=>{const p=periodFor('week',-1);S().weekSeen=dkey(p.a);save();renderMain();},'rep-img':()=>{const R=ui.report,p=periodFor(R.range,R.off);if(p)reportImage(p,metrics(p.a,p.b),reviewsIn(p.a,p.b));},'lec-from-session':()=>{$('#cele-root').innerHTML='';lectureSheet(null,ui.lastSess||{});},'lec-add':()=>lectureSheet(null),'lec-add-date':el=>{ui.pick.sub=ui.pick.sub||'';lectureSheet(null,{date:el.dataset.key});},'lec-edit':el=>lectureSheet(el.dataset.id),'lec-study-toggle':el=>{const l=state.lectures.find(x=>x.id===el.dataset.id);if(!l)return;l.studied=!l.studied;l.studiedAt=l.studied?Date.now():null;if(l.studied&&!l.studyDate){l.studyDate=dkey(Date.now());}save(true);renderAll();toast(l.studied?'تم تسجيل إنهاء الدراسة':'أُعيد فتح المحاضرة للمراجعة','ok');},'lec-ics-all':()=>lecturesICS(lectureItems()),'lec-done':el=>{const l=state.lectures.find(x=>x.id===el.dataset.id);if(!l)return;l.done=l.done||{};l.done[el.dataset.step]=Date.now();save(true);renderAll();celebrate('أحسنت، راجعتها','المراجعة في موعدها تثبّت المعلومة في ذاكرتك.');},'card-add':()=>cardSheet(null),'card-edit':el=>cardSheet(el.dataset.id),'card-bulk':bulkSheet,'review-start':()=>startReview(false),'review-early':()=>startReview(true),'rev-sub':el=>{ui.rev.sub=el.dataset.id;ui.rev.limit=50;renderMain();},'rev-more':()=>{ui.rev.limit+=50;renderMain();},'exam-edit':el=>examSheet(el.dataset.id),'bk-share':()=>exportBackup(true,true),'app-reload':async()=>{await flush();location.reload();},'notif-on':enableNotify,install:()=>installSheet(),'install-hide':()=>{S().installHide=true;save();renderMain();},
   'g-eye':el=>{const i=el.parentElement.querySelector('input');i.type=i.type==='password'?'text':'password';},
   'g-setup':doSetup,'g-unlock':doUnlock,'g-forgot':forgotSheet,
   'g-import':()=>{const f=$('#g-file');f.value='';f.onchange=async()=>{if(!f.files[0])return;try{const r=await readBackupFile(f.files[0]);if(r){pendingImport=r.state;gateSetup();}}catch(e){toast(e.message,'bad');}};f.click();}
