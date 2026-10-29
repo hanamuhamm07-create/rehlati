@@ -482,7 +482,7 @@ const S=()=>state?state.settings:{durFmt:'hm'};
 function defaultState(){
   return {v:1,createdAt:Date.now(),
     settings:{accent:'violet',size:'m',calm:false,autoLockMin:10,lockKeepSession:true,lockOnHide:false,durFmt:'hm',weekStart:6,defaultRange:'week',showCompare:true,showCalAvg:true,dailyGoalMin:0,stickersOn:true,wakeLock:false,backupRemindDays:7,lastBackup:null,email:'',recoveryAt:null,installHide:false,onboarded:false,focusMode:'free',focusSound:true,welcomeSticker:true,weekGoals:{},reviewLimit:30,weekSeen:'',adminKey:'',adminPub:'',grants:[],reminderOn:false,notifyOn:false,reminderTime:'17:00',lastRemind:''},
-    subjects:[],sessions:[],tasks:[],exams:[],cards:[],lectures:[],revLog:{},trash:[],closures:{},timer:null,recent:{},
+    subjects:[],sessions:[],tasks:[],exams:[],cards:[],lectures:[],topics:[],studyNotes:[],quizQuestions:[],quizHistory:[],revLog:{},trash:[],closures:{},timer:null,recent:{},
     quotes:B_QUOTES.map((t,i)=>({id:'q'+i,text:t,on:true})),
     duas:B_DUAS.map((t,i)=>({id:'d'+i,text:t,on:true})),
     stickers:B_STK.map((t,i)=>({id:'s'+i,type:'emoji',content:t,on:true}))
@@ -491,7 +491,7 @@ function defaultState(){
 function normalizeState(s){
   const d=defaultState();const o=Object.assign({},d,s||{});
   o.settings=Object.assign({},d.settings,(s&&s.settings)||{});
-  ['subjects','sessions','tasks','exams','cards','lectures','trash','quotes','duas','stickers'].forEach(k=>{if(!Array.isArray(o[k]))o[k]=d[k];});
+  ['subjects','sessions','tasks','exams','cards','lectures','topics','studyNotes','quizQuestions','quizHistory','trash','quotes','duas','stickers'].forEach(k=>{if(!Array.isArray(o[k]))o[k]=d[k];});
   if(!o.revLog||typeof o.revLog!=='object'||Array.isArray(o.revLog))o.revLog={};
   if(!o.settings.weekGoals||typeof o.settings.weekGoals!=='object'||Array.isArray(o.settings.weekGoals))o.settings.weekGoals={};
   if(!o.closures||typeof o.closures!=='object'||Array.isArray(o.closures))o.closures={};
@@ -502,7 +502,7 @@ function validateState(d){
   const bad=m=>({ok:false,err:m});
   if(!d||typeof d!=='object'||Array.isArray(d))return bad('محتوى النسخة غير صالح.');
   const arr=(k)=>d[k]===undefined||Array.isArray(d[k]);
-  for(const k of ['subjects','sessions','tasks','exams','cards','lectures','trash','quotes','duas','stickers'])if(!arr(k))return bad('بنية النسخة غير سليمة (القسم «'+k+'» تالف).');
+  for(const k of ['subjects','sessions','tasks','exams','cards','lectures','topics','studyNotes','quizQuestions','quizHistory','trash','quotes','duas','stickers'])if(!arr(k))return bad('بنية النسخة غير سليمة (القسم «'+k+'» تالف).');
   const isObj=x=>x&&typeof x==='object'&&!Array.isArray(x);
   const nn=x=>typeof x==='number'&&isFinite(x);
   for(const s of d.subjects||[])if(!isObj(s)||typeof s.id!=='string'||typeof s.name!=='string')return bad('وُجدت مادة دراسية غير صالحة داخل النسخة.');
@@ -732,7 +732,7 @@ function tFinish(){
 function subjOptions(sel){return `<option value="">بدون مادة</option>`+liveSubjects().map(s=>`<option value="${s.id}" ${s.id===sel?'selected':''}>${s.icon} ${esc(s.name)}</option>`).join('')+(sel&&subj(sel)&&subj(sel).deleted?`<option value="${sel}" selected>${esc(subj(sel).name)} (محذوفة)</option>`:'');}
 
 /* ================= الموجّه ================= */
-const PAGES=['home','sessions','subjects','tasks','calendar','goals','review','reports','archive','backup','settings','day'];
+const PAGES=['home','sessions','subjects','curriculum','notes','activity','quiz','tasks','calendar','goals','review','reports','archive','backup','settings','day'];
 function route(){
   const h=location.hash.replace(/^#\/?/,'');const [p,a]=h.split('/');
   ui.page=PAGES.includes(p)?p:'home';ui.arg=a||null;
@@ -743,7 +743,7 @@ function go(p,a){const h='#/'+p+(a?'/'+a:'');if(location.hash===h)route();else l
 window.addEventListener('hashchange',()=>{if(state)route();});
 
 /* ================= القائمة العلوية ================= */
-const MENU=[['home','الرئيسية','home'],['sessions','جلسات الدراسة','timer'],['subjects','المواد الدراسية','book'],['tasks','المهام','tasks'],['calendar','التقويم','calendar'],['goals','الاختبارات والأهداف','flag'],['review','المراجعة المتباعدة','restore'],null,['reports','الإحصائيات والتقارير','chart'],['archive','الأرشيف','archive'],null,['backup','النسخ الاحتياطي والاستعادة','backup'],['settings','الإعدادات والخصوصية','settings']];
+const MENU=[['home','الرئيسية','home'],['sessions','جلسات الدراسة','timer'],['subjects','المواد الدراسية','book'],['curriculum','متتبع المنهج','book'],['notes','مكتبة الملاحظات','edit'],['activity','خريطة النشاط','chart'],['quiz','اختبارات المراجعة','flag'],['tasks','المهام','tasks'],['calendar','التقويم','calendar'],['goals','الاختبارات والأهداف','flag'],['review','المراجعة المتباعدة','restore'],null,['reports','الإحصائيات والتقارير','chart'],['archive','الأرشيف','archive'],null,['backup','النسخ الاحتياطي والاستعادة','backup'],['settings','الإعدادات والخصوصية','settings']];
 function openMenu(){
   ui.menu=true;
   $('#menu-root').innerHTML=`<div class="scrim" data-act="menu-x"></div><nav class="menu" role="menu" aria-label="أقسام التطبيق">${MENU.map(m=>m?`<button role="menuitem" class="${ui.page===m[0]?'on':''}" data-act="nav" data-go="${m[0]}">${ic[m[2]]}<span>${m[1]}</span></button>`:'<hr>').join('')}</nav>`;
@@ -897,6 +897,28 @@ P.sessions=function(){
   </div>
   <section class="sec"><h2>جلسات اليوم</h2><div class="card tight">${today.length?today.map(s=>sessionRow(s)).join(''):'<div class="empty"><b>لا جلسات محفوظة اليوم</b>ابدأ المؤقت وستظهر جلستك هنا بعد الحفظ.</div>'}</div></section>`;
 };
+
+/* ================= أدوات الدراسة الجديدة ================= */
+const topicStatus={todo:'لم أبدأ',doing:'قيد الدراسة',review:'تمت المراجعة'};
+function curriculumSheet(id){
+ const x=id?state.topics.find(t=>t.id===id):null;
+ openSheet({title:x?'تعديل موضوع':'إضافة موضوع للمنهج',body:`
+ <div class="field"><label>المادة</label><select id="ct-sub">${subjOptions(x?.sub||'')}</select></div>
+ <div class="field"><label>الفصل (اختياري)</label><input id="ct-chapter" value="${esc(x?.chapter||'')}" placeholder="الفصل الأول"></div>
+ <div class="field"><label>اسم المحاضرة أو الموضوع</label><input id="ct-title" value="${esc(x?.title||'')}" placeholder="مثال: تركيب الخلية"></div>
+ <div class="field"><label>الحالة</label><select id="ct-status">${Object.entries(topicStatus).map(([k,v])=>`<option value="${k}" ${(x?.status||'todo')===k?'selected':''}>${v}</option>`).join('')}</select></div>`,buttons:[{label:'حفظ الموضوع',cls:'primary',onClick:()=>{const title=$('#ct-title').value.trim();if(!title){sheetErr('اكتبي اسم الموضوع أولًا.');return false;}const obj={id:x?.id||uid(),sub:$('#ct-sub').value,chapter:$('#ct-chapter').value.trim(),title,status:$('#ct-status').value,updatedAt:Date.now()};if(x)Object.assign(x,obj);else state.topics.push(obj);save(true);closeSheet();renderAll();}}]});
+}
+function noteSheet(id){const x=id?state.studyNotes.find(n=>n.id===id):null;openSheet({title:x?'تعديل ملاحظة':'ملاحظة جديدة',wide:true,body:`
+ <div class="field"><label>المادة</label><select id="nt-sub">${subjOptions(x?.sub||'')}</select></div>
+ <div class="field"><label>العنوان</label><input id="nt-title" value="${esc(x?.title||'')}" placeholder="تعريف، قانون، نقطة مهمة..."></div>
+ <div class="field"><label>ربط بموضوع من المنهج (اختياري)</label><select id="nt-topic"><option value="">بدون ربط</option>${state.topics.map(t=>`<option value="${t.id}" ${x?.topic===t.id?'selected':''}>${esc(t.title)}</option>`).join('')}</select></div>
+ <div class="field"><label>الملاحظات</label><textarea id="nt-body" rows="7" placeholder="اكتبي التعريف أو القانون أو ملاحظات المحاضرة...">${esc(x?.body||'')}</textarea></div>`,buttons:[{label:'حفظ الملاحظة',cls:'primary',onClick:()=>{const title=$('#nt-title').value.trim(),body=$('#nt-body').value.trim();if(!title||!body){sheetErr('أضيفي عنوانًا ومحتوى للملاحظة.');return false;}const obj={id:x?.id||uid(),sub:$('#nt-sub').value,title,body,topic:$('#nt-topic').value,updatedAt:Date.now()};if(x)Object.assign(x,obj);else state.studyNotes.unshift(obj);save(true);closeSheet();renderAll();}}]});}
+function questionSheet(){openSheet({title:'إضافة سؤال للاختبارات',wide:true,body:`<div class="field"><label>المادة</label><select id="qq-sub">${subjOptions('')}</select></div><div class="field"><label>السؤال</label><textarea id="qq-q" rows="3" placeholder="اكتبي السؤال هنا"></textarea></div><div class="field"><label>الإجابة النموذجية</label><textarea id="qq-a" rows="3" placeholder="اكتبي الإجابة هنا"></textarea></div>`,buttons:[{label:'حفظ السؤال',cls:'primary',onClick:()=>{const q=$('#qq-q').value.trim(),a=$('#qq-a').value.trim();if(!q||!a){sheetErr('أضيفي السؤال والإجابة.');return false;}state.quizQuestions.push({id:uid(),sub:$('#qq-sub').value,q,a,wrong:0,createdAt:Date.now()});save(true);closeSheet();renderAll();}}]});}
+P.curriculum=function(){const subs=liveSubjects();return `${pageHead('متتبع المنهج','قسّمي كل مادة إلى فصول ومحاضرات وموضوعات، وتابعي التقدم الفعلي.',`<button class="btn primary" data-act="topic-add">${ic.plus}<span>إضافة موضوع</span></button>`)}${subs.length?subs.map(s=>{const arr=state.topics.filter(t=>t.sub===s.id),done=arr.filter(t=>t.status==='review').length,pct=arr.length?Math.round(done/arr.length*100):0;return `<section class="card" style="margin-bottom:14px"><div class="row"><span class="sbadge" style="--c:${s.color}">${s.icon}</span><div class="mid"><h2>${esc(s.name)}</h2><div class="mut">${done} من ${arr.length} موضوع تمت مراجعته</div></div><b class="num">${pct}%</b></div><div class="bar" style="margin:12px 0"><i style="width:${pct}%"></i></div>${arr.length?arr.map(t=>`<div class="srow"><div class="mid"><div class="t">${esc(t.title)}</div><div class="m">${esc(t.chapter||'بدون فصل')} · ${topicStatus[t.status]||topicStatus.todo}</div></div><button class="btn soft" data-act="topic-status" data-id="${t.id}">تغيير الحالة</button><button class="icon-btn sm" data-act="topic-edit" data-id="${t.id}" aria-label="تعديل">${ic.edit}</button><button class="icon-btn sm" data-act="topic-del" data-id="${t.id}" aria-label="حذف">${ic.trash}</button></div>`).join(''):'<p class="mut" style="margin-top:12px">أضيفي أول محاضرة أو موضوع لهذه المادة.</p>'}</section>`}).join(''):`<div class="empty"><b>ابدئي بإضافة مادة</b>أضيفي المواد أولًا، ثم قسّمي كل مادة إلى موضوعات.</div>`}`;};
+P.notes=function(){const q=(ui.notesQ||'').toLowerCase();const items=state.studyNotes.filter(n=>(n.title+' '+n.body+' '+subjName(n.sub)).toLowerCase().includes(q));return `${pageHead('مكتبة الملاحظات','دفتر لكل مادة، مع بحث وربط الملاحظات بموضوعات المنهج.',`<button class="btn primary" data-act="note-add">${ic.plus}<span>ملاحظة جديدة</span></button>`)}<div class="field" style="margin-bottom:14px"><label>البحث في الملاحظات</label><input data-in="notes-q" value="${esc(ui.notesQ||'')}" placeholder="ابحثي عن تعريف أو قانون أو كلمة..."></div>${items.length?items.map(n=>`<article class="card" style="margin-bottom:10px"><div class="row"><div class="mid"><h2>${esc(n.title)}</h2><div class="m">${esc(subjName(n.sub))}${n.topic?' · '+esc(state.topics.find(t=>t.id===n.topic)?.title||'موضوع'):''}</div></div><button class="icon-btn" data-act="note-edit" data-id="${n.id}" aria-label="تعديل">${ic.edit}</button><button class="icon-btn" data-act="note-del" data-id="${n.id}" aria-label="حذف">${ic.trash}</button></div><p style="white-space:pre-wrap;margin-top:12px">${esc(n.body)}</p></article>`).join(''):'<div class="empty"><b>لا توجد ملاحظات مطابقة</b>أضيفي ملاحظاتك المهمة واحفظيها هنا.</div>'}`;};
+P.activity=function(){const now=new Date(),start=new Date(now);start.setDate(now.getDate()-27);const cells=[];let days=0,total=0;for(let i=0;i<28;i++){const d=new Date(start);d.setDate(start.getDate()+i);const k=dkey(d),ms=state.sessions.filter(x=>dkey(x.start)===k).reduce((a,x)=>a+x.dur,0);if(ms){days++;total+=ms;}cells.push(`<div title="${k}: ${fmtDur(ms)}" style="min-height:34px;border-radius:7px;background:${ms?`color-mix(in srgb,var(--v) ${Math.min(90,20+Math.round(ms/3600000*20))}%,var(--s2))`:'var(--s2)'};display:grid;place-items:center;font-size:.72rem" aria-label="${k} ${fmtDur(ms)}">${d.getDate()}</div>`);}const wk=state.sessions.filter(x=>x.start>=Date.now()-7*DAY).reduce((a,x)=>a+x.dur,0);return `${pageHead('خريطة النشاط الدراسي','نظرة هادئة على انتظامك خلال آخر 4 أسابيع، بدون مقارنة أو ضغط.') }<section class="card"><h2>آخر 28 يومًا</h2><p class="mut" style="margin:6px 0 14px">كل مربع يمثل يومًا؛ اللون الأقوى يعني وقت دراسة أكثر.</p><div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px">${cells.join('')}</div><div class="cols c2b" style="margin-top:18px"><div class="note-box"><div class="mut">أيام الدراسة</div><strong class="num">${days} / 28</strong></div><div class="note-box"><div class="mut">وقت الدراسة آخر 7 أيام</div><strong class="num">${fmtDur(wk)}</strong></div></div></section><section class="card" style="margin-top:14px"><h2>ملخص أسبوعي</h2><p style="margin-top:8px">${days===0?'هذه بداية جديدة؛ سجّلي جلسة واحدة عندما تكونين مستعدة.':`درستِ في ${days} أيام خلال آخر 4 أسابيع، بإجمالي ${fmtDur(total)}. اختاري عادة صغيرة تحبين الاستمرار عليها الأسبوع القادم.`}</p></section>`;};
+P.quiz=function(){const qs=state.quizQuestions;const subs=liveSubjects();return `${pageHead('اختبارات المراجعة','اجمعي أسئلتك وإجاباتك النموذجية، ثم اختبري نفسك واحفظي ما يحتاج مراجعة.',`<button class="btn primary" data-act="quiz-add">${ic.plus}<span>إضافة سؤال</span></button>`)}<section class="card" style="margin-bottom:14px"><h2>بنك الأسئلة</h2><p class="mut" style="margin:6px 0 12px">${qs.length} سؤال محفوظ · الاختبار يعرض السؤال أولًا ثم يتيح لك كشف الإجابة وتقييم نفسك.</p>${qs.length?`<div class="field"><label>اختيار المادة</label><select id="quiz-filter" data-in="quiz-filter"><option value="">كل المواد</option>${subs.map(s=>`<option value="${s.id}" ${ui.quizSub===s.id?'selected':''}>${esc(s.name)}</option>`).join('')}</select></div><button class="btn primary lg block" data-act="quiz-start">ابدئي الاختبار</button>`:'<p class="mut">أضيفي أسئلتك مع الإجابات النموذجية للبدء.</p>'}</section>${qs.filter(q=>!ui.quizSub||q.sub===ui.quizSub).map(q=>`<div class="srow"><div class="mid"><div class="t">${esc(q.q)}</div><div class="m">${esc(subjName(q.sub))} · يحتاج مراجعة ${q.wrong||0} مرة</div></div><button class="icon-btn sm" data-act="quiz-edit" data-id="${q.id}" aria-label="تعديل">${ic.edit}</button><button class="icon-btn sm" data-act="quiz-del" data-id="${q.id}" aria-label="حذف">${ic.trash}</button></div>`).join('')}`;};
+function runQuiz(){const pool=state.quizQuestions.filter(q=>!ui.quizSub||q.sub===ui.quizSub);if(!pool.length){toast('أضيفي سؤالًا لهذه المادة أولًا.','bad');return;}let i=0,correct=0;const show=()=>{const q=pool[i];openSheet({title:`سؤال ${i+1} من ${pool.length}`,wide:true,body:`<div class="note-box">${esc(subjName(q.sub))}</div><h2 style="margin:16px 0">${esc(q.q)}</h2><div id="quiz-answer" hidden class="note-box" style="white-space:pre-wrap">${esc(q.a)}</div><button class="btn block" id="quiz-reveal" type="button">كشف الإجابة النموذجية</button>`,buttons:[{label:'عرفتها',cls:'primary',onClick:()=>{correct++;next();}},{label:'أحتاج مراجعتها',cls:'soft',onClick:()=>{q.wrong=(q.wrong||0)+1;next();}}]});const reveal=$('#quiz-reveal');if(reveal)reveal.onclick=()=>{const a=$('#quiz-answer');a.hidden=false;reveal.hidden=true;};};const next=()=>{closeSheet();i++;if(i<pool.length)show();else{state.quizHistory.push({at:Date.now(),total:pool.length,correct});save(true);renderAll();openSheet({title:'نتيجة المراجعة',body:`<h2 style="text-align:center;margin:16px">${correct} من ${pool.length}</h2><p class="mut">الأسئلة التي احتجتِ مراجعتها محفوظة في بنك الأسئلة.</p>`,buttons:[{label:'إنهاء',cls:'primary'}]});}};show();}
 
 /* ================= المواد ================= */
 const COLORS=['#8B5CF6','#6D7CFF','#38BDF8','#2DD4BF','#6FD3B0','#A3E635','#F0B866','#FB923C','#F472B6','#F58A9A'];
@@ -2022,6 +2044,9 @@ addEventListener('pagehide',()=>{if(state)flush();});
 
 /* ================= الأوامر ================= */
 const A={
+  'topic-add':()=>curriculumSheet(null),'topic-edit':el=>curriculumSheet(el.dataset.id),'topic-del':el=>{state.topics=state.topics.filter(t=>t.id!==el.dataset.id);save(true);renderAll();},'topic-status':el=>{const t=state.topics.find(t=>t.id===el.dataset.id);if(!t)return;t.status=t.status==='todo'?'doing':t.status==='doing'?'review':'todo';t.updatedAt=Date.now();save(true);renderMain();},
+  'note-add':()=>noteSheet(null),'note-edit':el=>noteSheet(el.dataset.id),'note-del':el=>{state.studyNotes=state.studyNotes.filter(n=>n.id!==el.dataset.id);save(true);renderAll();},
+  'quiz-add':questionSheet,'quiz-start':runQuiz,'quiz-edit':el=>{const q=state.quizQuestions.find(q=>q.id===el.dataset.id);if(!q)return;openSheet({title:'تعديل السؤال',wide:true,body:`<div class="field"><label>السؤال</label><textarea id="qe-q" rows="3">${esc(q.q)}</textarea></div><div class="field"><label>الإجابة</label><textarea id="qe-a" rows="3">${esc(q.a)}</textarea></div>`,buttons:[{label:'حفظ',cls:'primary',onClick:()=>{if(!$('#qe-q').value.trim()||!$('#qe-a').value.trim()){sheetErr('أكملي السؤال والإجابة.');return false;}q.q=$('#qe-q').value.trim();q.a=$('#qe-a').value.trim();save(true);closeSheet();renderAll();}}]});},'quiz-del':el=>{state.quizQuestions=state.quizQuestions.filter(q=>q.id!==el.dataset.id);save(true);renderAll();},
   nav:el=>go(el.dataset.go),
   'nav-day':el=>go('day',el.dataset.key),
   menu:()=>ui.menu?closeMenu():openMenu(),
@@ -2073,6 +2098,8 @@ function onField(e){
     if(k==='t-title'){timerFields().title=t.value;if(state.timer)save();}
     else if(k==='t-note'){timerFields().note=t.value;if(state.timer)save();}
     else if(k==='arch-q'){ui.arch.q=t.value;ui.arch.limit=60;archList();}
+    else if(k==='notes-q'){ui.notesQ=t.value;renderMain();const f=$('[data-in=notes-q]');if(f){f.focus();f.setSelectionRange(t.value.length,t.value.length);}}
+    else if(k==='quiz-filter'){ui.quizSub=t.value;renderMain();}
     else if(k==='arch-from'){ui.arch.from=t.value;ui.arch.limit=60;archList();}
     else if(k==='arch-to'){ui.arch.to=t.value;ui.arch.limit=60;archList();}
     else if(k==='arch-sub'){ui.arch.sub=t.value;ui.arch.limit=60;archList();}
