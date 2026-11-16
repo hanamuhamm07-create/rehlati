@@ -1,4 +1,4 @@
-const C='rehlati-v5';
+const C='rehlati-v6';
 const FONT_CSS='https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Readex+Pro:wght@300;400;500;600&display=swap';
 async function precache(){
   const c=await caches.open(C),scope=self.registration.scope;
@@ -47,3 +47,4 @@ async function remindIfDue(){
   }catch(e){}
 }
 self.addEventListener('periodicsync',e=>{if(e.tag==='rehlati-remind')e.waitUntil(remindIfDue());});
+      
