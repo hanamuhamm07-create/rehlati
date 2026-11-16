@@ -366,7 +366,7 @@ details.fold[open]>summary{margin-bottom:12px}
 <script>
 (()=>{'use strict';
 /* ================= أدوات عامة ================= */
-const APP_VER='2026.11.03.1';
+const APP_VER='2026.11.16.1';
 const VKEY='rehlati.vault.v1';
 const ITER=600000;
 const $=(s,r=document)=>r.querySelector(s);
@@ -505,7 +505,7 @@ const S=()=>state?state.settings:{durFmt:'hm'};
 function defaultState(){
   return {v:1,createdAt:Date.now(),
     settings:{accent:'violet',size:'m',calm:false,autoLockMin:10,lockKeepSession:true,lockOnHide:false,durFmt:'hm',weekStart:6,defaultRange:'week',showCompare:true,showCalAvg:true,dailyGoalMin:0,stickersOn:true,wakeLock:false,backupRemindDays:7,lastBackup:null,email:'',recoveryAt:null,installHide:false,onboarded:false,focusMode:'free',focusSound:true,welcomeSticker:true,weekGoals:{},reviewLimit:30,weekSeen:'',simpleMode:true,guideDone:false,sound:'off',soundVol:.5,badgesInit:false,adminKey:'',adminPub:'',grants:[],reminderOn:false,notifyOn:false,reminderTime:'17:00',lastRemind:''},
-    subjects:[],sessions:[],tasks:[],exams:[],cards:[],lectures:[],mistakes:[],grades:[],timetable:[],badges:{},revLog:{},trash:[],closures:{},timer:null,recent:{},
+    subjects:[],sessions:[],tasks:[],exams:[],cards:[],lectures:[],mistakes:[],grades:[],timetable:[],badges:{},revLog:{},trash:[],closures:{},routineLog:{},timer:null,recent:{},
     quotes:B_QUOTES.map((t,i)=>({id:'q'+i,text:t,on:true})),
     duas:B_DUAS.map((t,i)=>({id:'d'+i,text:t,on:true})),
     stickers:B_STK.map((t,i)=>({id:'s'+i,type:'emoji',content:t,on:true}))
@@ -519,7 +519,19 @@ function normalizeState(s){
   if(!o.revLog||typeof o.revLog!=='object'||Array.isArray(o.revLog))o.revLog={};
   if(!o.settings.weekGoals||typeof o.settings.weekGoals!=='object'||Array.isArray(o.settings.weekGoals))o.settings.weekGoals={};
   if(!o.closures||typeof o.closures!=='object'||Array.isArray(o.closures))o.closures={};
+  if(!o.routineLog||typeof o.routineLog!=='object'||Array.isArray(o.routineLog))o.routineLog={};
   if(!o.recent||typeof o.recent!=='object')o.recent={};
+  if(!o.settings.starterSubjectsAdded){
+    if(!o.subjects.length)o.subjects=[
+      {id:'starter-zoology',name:'علم الحيوان',color:'#6FD3B0',icon:'🧬',teacher:'د. عبد الرحمن',course:'كورس خارجي',method:'فهم المحاضرة، المصطلحات، الرسومات والمقارنات، ثم الاسترجاع من الذاكرة.'},
+      {id:'starter-physics',name:'الفيزياء',color:'#6D7CFF',icon:'⚛️',teacher:'أ. محمد بيكة',course:'كورس خارجي',method:'فهم الفكرة والقانون والوحدات، متابعة الأمثلة، ثم حل مسائل الدكتور والمرجع.'},
+      {id:'starter-statistics',name:'الإحصاء',color:'#F0B866',icon:'📊',teacher:'أ. ياسين القماطي',course:'كورس خارجي',method:'فهم القاعدة ومتى تُستخدم، تطبيق خطوات الحل، ثم التدريب على مسائل متنوعة.'},
+      {id:'starter-chemistry',name:'الكيمياء العامة والعضوية',color:'#B565F0',icon:'🧪',teacher:'دراسة ذاتية',course:'محاضرات الكلية ومصادر ذاتية',method:'تأسيس المفاهيم، فهم القوانين والتفاعلات، حل المسائل وربط المحاضرات.'},
+      {id:'starter-premed',name:'Pre-Med العربي',color:'#A78BFA',icon:'🩺',teacher:'دراسة ذاتية',course:'محاضرات الكلية ومصادر ذاتية',method:'فهم المفاهيم والمصطلحات، تلخيص العلاقات المهمة، ثم الإجابة عن الأسئلة.'},
+      {id:'starter-english',name:'الإنجليزي الطبي',color:'#8EB8FF',icon:'🔤',teacher:'دراسة ذاتية',course:'الكتاب ومحاضرات الكلية',method:'ترجمة المصطلحات، النطق والقراءة، القواعد، وتكرار المفردات الطبية.'}
+    ];
+    o.settings.starterSubjectsAdded=true;
+  }
   return o;
 }
 function validateState(d){
@@ -762,8 +774,39 @@ function tFinish(){
 }
 function subjOptions(sel){return `<option value="">بدون مادة</option>`+liveSubjects().map(s=>`<option value="${s.id}" ${s.id===sel?'selected':''}>${s.icon} ${esc(s.name)}</option>`).join('')+(sel&&subj(sel)&&subj(sel).deleted?`<option value="${sel}" selected>${esc(subj(sel).name)} (محذوفة)</option>`:'');}
 
+/* ================= خطة الالتزام الشخصية ================= */
+const ROUTINE_DAYS={0:{kind:'early',label:'الأحد',back:'3:00 م'},1:{kind:'late',label:'الاثنين',back:'7:00 م'},2:{kind:'off',label:'الثلاثاء',back:'عطلة'},3:{kind:'early',label:'الأربعاء',back:'3:00 م'},4:{kind:'late',label:'الخميس',back:'7:00 م'},5:{kind:'friday',label:'الجمعة',back:'عطلة'},6:{kind:'early',label:'السبت',back:'3:00 م'}};
+function routineToday(){return ROUTINE_DAYS[new Date().getDay()];}
+function routineSteps(kind){
+  if(kind==='early')return [['attend','حضرت محاضرات الكلية'],['review','مررت على محاضرة اليوم وفهمت نقاطها'],['course','شاهدت شرح الكورس إذا كان متوفرًا'],['collegeQs','حللت أسئلة الدكتور أو الكويز'],['bookQs','حللت أسئلة من الكتاب أو المرجع'],['mistakes','سجلت الأخطاء والنقاط الصعبة']];
+  if(kind==='late')return [['attend','حضرت محاضرات الكلية'],['review','راجعت محاضرة اليوم مراجعة خفيفة'],['recall','استرجعت أهم الأفكار أو حليت 5 أسئلة'],['tomorrow','حددت ما سأكمله في أقرب يوم مناسب']];
+  if(kind==='friday')return [['weekly','راجعت أهم محاضرات الأسبوع'],['cumulative','حللت أسئلة تراكمية'],['english','درست الإنجليزي الطبي'],['plan','رتبت أولويات الأسبوع القادم'],['rest','أخذت وقتًا كافيًا للراحة']];
+  return [['catchup','استكملت أهم محاضرة متراكمة إن وجدت'],['course','درست جزءًا من كورس الفيزياء أو الكيمياء'],['problems','حللت مسائل وتحققت من أخطائي'],['animal','راجعت علم الحيوان أو Pre-Med'],['english','خصصت وقتًا للإنجليزي الطبي'],['rest','حافظت على فترات الراحة']];
+}
+function routineLog(key){state.routineLog=state.routineLog||{};return state.routineLog[key]||(state.routineLog[key]={});}
+function routineCardHTML(){
+  const d=new Date(),key=dkey(d),profile=routineToday(),steps=routineSteps(profile.kind),log=routineLog(key),done=steps.filter(x=>log[x[0]]).length;
+  return `<section class="card"><div class="row" style="justify-content:space-between;align-items:center"><div><h2>خطة اليوم</h2><p class="mut" style="font-size:.86rem">${profile.label} · ${profile.back}</p></div><span class="mchip">${done}/${steps.length} خطوات</span></div><div class="bar" style="margin:12px 0"><i style="width:${done/steps.length*100}%"></i></div><p class="mut" style="margin-bottom:10px">${done===steps.length?'أحسنتِ، أنجزتِ خطة اليوم. خذي راحتك.':'اختاري الخطوة التالية فقط؛ مش مطلوب إنجاز كل شيء دفعة واحدة.'}</p><button class="btn soft block" data-act="nav" data-go="routine">فتح خطة الالتزام</button></section>`;
+}
+P.routine=function(){
+  const d=new Date(),key=dkey(d),p=routineToday(),steps=routineSteps(p.kind),log=routineLog(key),done=steps.filter(x=>log[x[0]]).length;
+  const timetable=p.kind==='early'?[['3:00–4:30','صلاة، أكل وراحة بعد الرجوع'],['4:30–5:15','المرور على محاضرة اليوم'],['5:30–6:30','شرح الكورس إذا توفر'],['7:00–8:00','حل أسئلة الدكتور والمرجع'],['بعد 8:00','وقت شخصي وتهدئة قبل النوم']]:p.kind==='late'?[['7:00–8:30','رجوع، صلاة، أكل وراحة'],['8:30–9:00','مراجعة خفيفة لمحاضرة اليوم'],['9:00–9:15','استرجاع سريع أو 5 أسئلة'],['بعدها','راحة وتجهيز للنوم']]:p.kind==='friday'?[['الصباح','مراجعة أسبوعية وأسئلة تراكمية'],['بعد الظهر','صلاة وغداء وراحة'],['العصر','إنجليزي طبي وترتيب الأسبوع'],['المساء','راحة']]:[['8:00–9:30','كورس تأسيس: فيزياء أو كيمياء'],['9:45–10:45','حل مسائل وتدريب'],['11:00–12:00','علم الحيوان أو Pre-Med'],['بعد الظهر','صلاة وغداء وراحة'],['4:00–4:45','إنجليزي طبي'],['المساء','استكمال خفيف عند الحاجة وراحة']];
+  const subjects=liveSubjects();
+  return `${pageHead('خطة الالتزام','روتين مرن حسب يوم الكلية، يساعدك تكملي محاضراتك من غير ضغط.',`<button class="btn soft" data-act="nav" data-go="subjects">المواد والأساتذة</button>`)}
+  <div class="cols c2"><div class="grid">
+    <section class="hero"><div class="dt">${F.full.format(d)}</div><div class="hj">${p.label} · ${p.back}</div><h2 style="margin-top:8px">${p.kind==='early'?'يوم كلية والرجوع 3:00':p.kind==='late'?'يوم كلية طويل والرجوع 7:00':p.kind==='friday'?'مراجعة أسبوعية وراحة':'يوم عطلة للتأسيس والتعويض'}</h2><p class="mut" style="margin-top:8px">${p.kind==='late'?'اليوم الخفيف يكفيه تثبيت محاضرة اليوم؛ لا تنقلي كل الكورسات إلى الليل.':p.kind==='off'?'استغلي فترات التركيز، واتركي مساحة للراحة والمهام الشخصية.':p.kind==='friday'?'نراجع المهم ونرتب القادم، من غير تحويل العطلة إلى يوم مرهق.':'راجعي محاضرة اليوم، شاهدي الكورس إن توفر، ثم حلي الأسئلة في نفس اليوم.'}</p></section>
+    <section class="card"><div class="row" style="justify-content:space-between"><h2>إنجاز خطوات اليوم</h2><b class="num">${done}/${steps.length}</b></div><div class="bar" style="margin:12px 0"><i style="width:${done/steps.length*100}%"></i></div>${steps.map(([id,label])=>`<button class="srow" style="width:100%;text-align:right" data-act="routine-toggle" data-key="${key}" data-task="${id}"><span class="chk ${log[id]?'on':''}" aria-hidden="true">${log[id]?ic.check:''}</span><span class="mid"><span class="t" style="${log[id]?'text-decoration:line-through;color:var(--dim)':''}">${label}</span></span></button>`).join('')}<p class="hint" style="margin-top:10px">لو ما توفرش شرح الكورس اليوم، اتركيه لليوم المناسب ولا تعتبريه تقصيرًا.</p></section>
+    <section class="card"><h2>توزيع الوقت المقترح</h2><p class="hint" style="margin-bottom:10px">الأوقات مرنة وتتغير حسب الصلاة والمواصلات والتعب.</p>${timetable.map(([time,label])=>`<div class="kv"><b class="num" style="min-width:105px">${time}</b><span style="text-align:left">${label}</span></div>`).join('')}</section>
+  </div><div class="grid" style="align-content:start">
+    <section class="card"><h2>موادك وطريقة دراستها</h2>${subjects.map(x=>`<div class="srow"><span class="sbadge sm" style="--c:${x.color}">${x.icon}</span><div class="mid"><div class="t">${esc(x.name)}</div><div class="m">${esc(x.teacher||'الأستاذ غير محدد')}${x.course?' · '+esc(x.course):''}</div></div><button class="icon-btn sm" data-act="sub-edit" data-id="${x.id}" aria-label="تعديل المادة">${ic.edit}</button></div>${x.method?`<p class="hint" style="margin:-3px 0 10px 44px">${esc(x.method)}</p>`:''}`).join('')||'<p class="mut">أضيفي موادك من صفحة المواد.</p>'}</section>
+    <section class="card"><h2>حماية وقتك من الإنترنت</h2><ul class="pl"><li>أبعدي الهاتف عن مكان الدراسة خلال جلسة التركيز.</li><li>استخدمي 45 دقيقة تركيز ثم 10 دقائق استراحة.</li><li>افتحي يوتيوب على رابط الكورس المطلوب فقط.</li><li>حددي فترتين قصيرتين للتصفح بدل فتح التطبيقات كل دقائق.</li></ul></section>
+    <section class="card"><h2>النوم والطاقة</h2><p class="mut">الاستيقاظ 6:00 صباحًا مع نوم الساعة 1:00 يعطيك نحو 5 ساعات فقط. نبيك تقدمي النوم تدريجيًا 20–30 دقيقة كل عدة ليالٍ حتى تقربي من 10:00 مساءً، لتحصلي على 8 ساعات تقريبًا أو أكثر. لا تعوضي يومًا متعبًا بالسهر.</p></section>
+    <section class="card"><h2>مهارة اختيارية</h2><p class="mut">أدوات الذكاء الاصطناعي تتعلميها عند الحاجة فقط، مش مادة يومية ولا أولوية على محاضرات التمهيدية.</p></section>
+  </div></div>`;
+};
+
 /* ================= الموجّه ================= */
-const PAGES=['home','sessions','subjects','tasks','calendar','timetable','goals','review','mistakes','grades','reports','archive','backup','settings','day'];
+const PAGES=['home','sessions','subjects','tasks','calendar','timetable','goals','review','mistakes','grades','reports','archive','backup','settings','day','routine'];
 function route(){
   const h=location.hash.replace(/^#\/?/,'');const [p,a]=h.split('/');
   ui.page=PAGES.includes(p)?p:'home';ui.arg=a||null;
@@ -774,7 +817,7 @@ function go(p,a){const h='#/'+p+(a?'/'+a:'');if(location.hash===h)route();else l
 window.addEventListener('hashchange',()=>{if(state)route();});
 
 /* ================= القائمة العلوية ================= */
-const MENU_CORE=[['home','الرئيسية','home'],['sessions','جلسات الدراسة','timer'],['subjects','المواد','book'],['tasks','المهام','tasks'],['review','المراجعة','restore']];
+const MENU_CORE=[['home','الرئيسية','home'],['sessions','جلسات الدراسة','timer'],['subjects','المواد','book'],['tasks','المهام','tasks'],['review','المراجعة','restore'],['routine','خطة الالتزام','calendar']];
 const MENU_MORE=[['calendar','التقويم','calendar'],['timetable','جدول الحصص','timer'],['goals','الاختبارات والأهداف','flag'],['reports','الإحصائيات والتقارير','chart'],['mistakes','دفتر الأخطاء','edit'],['grades','الدرجات','chart'],['archive','الأرشيف','archive'],['backup','النسخ الاحتياطي','backup']];
 const MENU_END=[['settings','الإعدادات والخصوصية','settings']];
 function openMenu(){
@@ -954,6 +997,8 @@ P.subjects=function(){
   return `${pageHead('المواد الدراسية','أضف موادك وعدّلها بنفسك، وستُربط بها الجلسات والمهام.',`<button class="btn primary" data-act="sub-add">${ic.plus}<span>إضافة مادة</span></button>`)}
   ${subs.length?`<div class="grid g3">${subs.map(s=>{const k=subjStats(s.id);return `<article class="card">
     <div class="row" style="flex-wrap:nowrap"><span class="sbadge" style="--c:${s.color}">${s.icon}</span><h2 style="flex:1;overflow-wrap:anywhere">${esc(s.name)}</h2></div>
+    ${s.teacher||s.course?`<p class="mut" style="margin-top:8px;font-size:.88rem">${s.teacher?`الأستاذ: ${esc(s.teacher)}`:''}${s.teacher&&s.course?' · ':''}${s.course?esc(s.course):''}</p>`:''}
+    ${s.method?`<p class="hint" style="margin-top:5px">${esc(s.method)}</p>`:''}
     <div style="margin-top:14px"><div class="kv"><span>وقت الدراسة</span><span>${fmtDur(k.total)}</span></div><div class="kv"><span>الجلسات</span><span class="num">${k.n}</span></div><div class="kv"><span>المهام المنجزة</span><span class="num">${k.done}${k.open?' (متبقٍ '+k.open+')':''}</span></div><div class="kv"><span>آخر دراسة</span><span>${k.last?dateLabel(dkey(k.last)):'—'}</span></div></div>
     <div class="row" style="margin-top:14px"><button class="btn soft" data-act="sub-log" data-id="${s.id}">السجل</button><button class="icon-btn" data-act="sub-edit" data-id="${s.id}" aria-label="تعديل المادة">${ic.edit}</button><button class="icon-btn" data-act="sub-del" data-id="${s.id}" aria-label="حذف المادة">${ic.trash}</button></div></article>`;}).join('')}</div>`
   :`<div class="empty"><b>لا توجد مواد بعد</b>أضف أول مادة لتبدأ بتنظيم رحلتك.<br><button class="btn primary" data-act="sub-add">${ic.plus}<span>إضافة مادة</span></button></div>`}`;
@@ -965,11 +1010,15 @@ function subjectSheet(id){
     <div class="field"><label for="sn">اسم المادة</label><input id="sn" type="text" maxlength="40" value="${esc(s?s.name:'')}" placeholder="مثال: الفيزياء"></div>
     ${s?'':`<div class="chips" style="margin:-4px 0 14px">${SUGGEST.map(x=>`<button class="chip" data-sug="${x}">${x}</button>`).join('')}</div>`}
     <div class="lbl" style="margin-bottom:8px">اللون</div><div class="picker" style="margin-bottom:16px">${COLORS.map(c=>`<button class="pc" style="--c:${c}" data-c="${c}" aria-label="لون"></button>`).join('')}</div>
-    <div class="lbl" style="margin-bottom:8px">الرمز</div><div class="picker">${ICONS.map(i=>`<button class="pi" data-i="${i}">${i}</button>`).join('')}</div>`,
+    <div class="lbl" style="margin-bottom:8px">الرمز</div><div class="picker">${ICONS.map(i=>`<button class="pi" data-i="${i}">${i}</button>`).join('')}</div>
+    <div class="field" style="margin-top:16px"><label for="s-teacher">الأستاذ / مصدر الدراسة</label><input id="s-teacher" maxlength=80 value="${esc(s?s.teacher||'':'')}" placeholder="مثال: د. عبد الرحمن أو دراسة ذاتية"></div>
+    <div class="field"><label for="s-course">الكورس أو المرجع المساعد</label><input id="s-course" maxlength=120 value="${esc(s?s.course||'':'')}" placeholder="اسم الكورس أو الكتاب أو المصدر"></div>
+    <div class="field" style="margin:0"><label for="s-method">كيف أدرس هذه المادة؟</label><textarea id="s-method" rows=3 maxlength=500 placeholder="اكتبي خطوات مذاكرتك لهذه المادة">${esc(s?s.method||'':'')}</textarea></div>`,
     buttons:[{label:'إلغاء',cls:'ghost'},{label:'حفظ',cls:'primary',onClick:()=>{
       const name=$('#sn').value.trim();if(!name){sheetErr('اكتب اسم المادة.');return false;}
       if(liveSubjects().some(x=>x.name===name&&x.id!==id)){sheetErr('توجد مادة بهذا الاسم بالفعل.');return false;}
-      if(s){s.name=name;s.color=color;s.icon=icon;}else state.subjects.push({id:uid(),name,color,icon});
+      const teacher=$('#s-teacher').value.trim(),course=$('#s-course').value.trim(),method=$('#s-method').value.trim();
+      if(s){s.name=name;s.color=color;s.icon=icon;s.teacher=teacher;s.course=course;s.method=method;}else state.subjects.push({id:uid(),name,color,icon,teacher,course,method});
       save(true);renderAll();toast(s?'تم تعديل المادة':'تمت إضافة المادة','ok');}}],
     onOpen:r=>{paint();sheetOn(e=>{const c=e.target.closest('[data-c]'),i=e.target.closest('[data-i]'),g=e.target.closest('[data-sug]');if(c){color=c.dataset.c;paint();}if(i){icon=i.dataset.i;paint();}if(g)$('#sn').value=g.dataset.sug;});}});
 }
@@ -1986,7 +2035,7 @@ P.home=function(){
   const n=(typeof dueCards==='function'?dueCards().length:0)+(typeof dueLectureItems==='function'?dueLectureItems().length:0);
   const quick=`<button class="btn" data-act="task-add">${ic.plus}<span>مهمة جديدة</span></button>${n?`<button class="btn soft" data-act="nav" data-go="review">${ic.refresh}<span>راجع (${num(n)})</span></button>`:''}`;
   h=h.replace('</section>\n    <div class="grid g4">',`<div class="row" style="margin-top:10px">${quick}</div></section>\n    <div class="grid g4">`);
-  h=h.replace('<div class="cols c2">',guideHTML()+'<div class="cols c2">');
+  h=h.replace('<div class="cols c2">',guideHTML()+routineCardHTML()+'<div class="cols c2">');
   if(simple)h+=`<div class="row" style="justify-content:center;margin-top:18px"><button class="btn ghost" data-act="home-more">${ui.homeMore?'إخفاء التفاصيل':'عرض تفاصيل أكثر'}</button></div>`;
   return h;
 };
@@ -2371,6 +2420,7 @@ addEventListener('pagehide',()=>{if(state)flush();});
 /* ================= الأوامر ================= */
 const A={
   nav:el=>go(el.dataset.go),
+  'routine-toggle':el=>{const log=routineLog(el.dataset.key);log[el.dataset.task]=!log[el.dataset.task];save(true);renderMain();},
   'nav-day':el=>go('day',el.dataset.key),
   menu:()=>ui.menu?closeMenu():openMenu(),
   'menu-x':()=>closeMenu(),
